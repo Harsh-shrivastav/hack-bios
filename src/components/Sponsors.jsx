@@ -32,17 +32,19 @@ const Sponsors = () => {
 
             {/* Devfolio Logo centered */}
             <div className="mt-16 mb-4 flex items-center justify-center w-full">
-              {/* Using Devfolio's official white logo SVG hosted on their platform */}
-              <img 
-                src="https://raw.githubusercontent.com/devfolio/brand-assets/main/Logo/Devfolio_Logo-White.svg" 
-                onError={(e) => {
-                  e.target.onerror = null; 
-                  // Fallback logo URL if githubusercontent fails
-                  e.target.src = "https://devfolio.co/blog/content/images/2021/04/Devfolio_Logo-White.png";
-                }}
-                alt="DEVFOLIO LOGO" 
-                className="w-56 h-auto object-contain opacity-90 group-hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] group-hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]"
-              />
+              <a href="https://devfolio.co" target="_blank" rel="noreferrer" className="block outline-none">
+                {/* Using Devfolio's official white logo SVG hosted on their platform */}
+                <img 
+                  src="https://raw.githubusercontent.com/devfolio/brand-assets/main/Logo/Devfolio_Logo-White.svg" 
+                  onError={(e) => {
+                    e.target.onerror = null; 
+                    // Fallback logo URL if githubusercontent fails
+                    e.target.src = "https://devfolio.co/blog/content/images/2021/04/Devfolio_Logo-White.png";
+                  }}
+                  alt="DEVFOLIO LOGO" 
+                  className="w-56 h-auto object-contain opacity-90 group-hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] group-hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]"
+                />
+              </a>
             </div>
             
           </div>

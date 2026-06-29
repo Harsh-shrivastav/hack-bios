@@ -5,7 +5,8 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
-import { MessageCircle, Terminal } from "lucide-react";
+import { MessageCircle, Terminal, ArrowUpRight } from "lucide-react";
+import DevfolioButton from '../DevfolioButton';
 import { LocationMap } from "./expand-map";
 import { ShinyText } from "@/components/ui/shiny-text";
 
@@ -352,14 +353,7 @@ export function CinematicFooter() {
             <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
               {/* App Store Links (Primary) */}
               <div className="flex flex-wrap justify-center gap-4 w-full">
-                <MagneticButton as="a" href="#register" className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group border-[#00ff41]/30">
-                  <svg className="w-6 h-6 text-[#00ff41] group-hover:text-foreground transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                     <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
-                     <line x1="9" x2="9" y1="3" y2="18" />
-                     <line x1="15" x2="15" y1="6" y2="21" />
-                  </svg>
-                  Register Now
-                </MagneticButton>
+                <DevfolioButton />
                 
                 <MagneticButton as="a" href="https://discord.gg/JbtFtYrUds" target="_blank" rel="noopener noreferrer" className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group border-[#00e5ff]/30">
                   <svg className="w-6 h-6 text-[#00e5ff] group-hover:text-foreground transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

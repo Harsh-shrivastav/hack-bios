@@ -18,7 +18,6 @@ import SponsorMarquee from './components/SponsorMarquee';
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import { CinematicFooter } from './components/ui/motion-footer';
-import RegisterModal from './components/RegisterModal';
 import CallForSponsors from './components/CallForSponsors';
 
 import gsap from 'gsap';
@@ -28,15 +27,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const [booting, setBooting] = useState(true);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   const menuItems = [
     // { label: 'About', link: '#about' },
     // { label: 'Tracks', link: '#tracks' },
     // { label: 'Timeline', link: '#timeline' },
     { label: 'FAQ', link: '#faq' },
-    { label: 'Contact', link: '#contact' },
-    { label: 'Register', link: '#', onClick: () => setIsRegisterOpen(true) }
+    { label: 'Contact', link: '#contact' }
   ];
 
   const socialItems = [
@@ -106,7 +103,7 @@ function App() {
               <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#00e5ff]/5 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
             </div>
 
-            <div id="hero-section"><Hero onRegisterClick={() => setIsRegisterOpen(true)} /></div>
+            <div id="hero-section"><Hero /></div>
             <div className="relative z-10">
               <Stats />
               <GooeyBanner />
@@ -124,12 +121,6 @@ function App() {
           </main>
           
           <CinematicFooter />
-
-
-          <RegisterModal 
-            isOpen={isRegisterOpen} 
-            onClose={() => setIsRegisterOpen(false)} 
-          />
         </div>
       )}
     </div>

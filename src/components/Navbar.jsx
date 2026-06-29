@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
-const Navbar = ({ onRegisterClick }) => {
+const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -42,13 +42,6 @@ const Navbar = ({ onRegisterClick }) => {
               </li>
             ))}
           </ul>
-          
-          <button 
-            onClick={onRegisterClick}
-            className="px-6 py-2 border border-[#00ff41] text-[#00ff41] font-mono text-sm uppercase tracking-widest hover:bg-[#00ff41] hover:text-[#050a05] transition-all duration-300 box-shadow-neon interactive"
-          >
-            Register
-          </button>
         </div>
 
         {/* Mobile Toggle */}
@@ -76,16 +69,6 @@ const Navbar = ({ onRegisterClick }) => {
               </a>
             </li>
           ))}
-        </ul>
-        <button 
-          onClick={() => {
-            onRegisterClick();
-            setMobileMenuOpen(false);
-          }}
-          className="mt-12 px-8 py-3 border border-[#00ff41] text-[#00ff41] font-mono uppercase tracking-widest hover:bg-[#00ff41] hover:text-[#050a05] transition-all duration-300 neon-border interactive"
-        >
-          Register Now
-        </button>
       </div>
     </nav>
   );

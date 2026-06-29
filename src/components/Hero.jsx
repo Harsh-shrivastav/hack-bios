@@ -8,7 +8,9 @@ import AnimatedTextCycle from './ui/animated-text-cycle';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Hero = ({ onRegisterClick }) => {
+import DevfolioButton from './DevfolioButton';
+
+const Hero = () => {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
   const bgRef = useRef(null);
@@ -99,12 +101,7 @@ const Hero = ({ onRegisterClick }) => {
 
         <div className="hero-animate flex flex-col sm:row gap-6 justify-center items-center">
           <div className="flex flex-col sm:flex-row gap-6">
-            <button 
-              onClick={onRegisterClick}
-              className="px-8 py-4 bg-transparent border-2 border-[#00ff41] text-[#00ff41] font-mono text-lg uppercase tracking-widest hover:bg-[#00ff41] hover:text-[#050a05] transition-all duration-300 box-shadow-neon interactive hover:-translate-y-1"
-            >
-              Register Now
-            </button>
+            <DevfolioButton />
             
             <a 
               href="#" 

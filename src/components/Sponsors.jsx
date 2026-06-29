@@ -40,7 +40,7 @@ const Sponsors = () => {
                   // Fallback logo URL if githubusercontent fails
                   e.target.src = "https://devfolio.co/blog/content/images/2021/04/Devfolio_Logo-White.png";
                 }}
-                alt="Devfolio Logo" 
+                alt="DEVFOLIO LOGO" 
                 className="w-56 h-auto object-contain opacity-90 group-hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] group-hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]"
               />
             </div>

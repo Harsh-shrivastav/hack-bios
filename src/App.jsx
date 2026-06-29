@@ -88,10 +88,9 @@ function App() {
       <CustomCursor />
       <FloatingSocials />
       
-      {booting ? (
-        <BootAnimation onComplete={() => setBooting(false)} />
-      ) : (
-        <div className="animate-fade-in overflow-x-hidden">
+      {booting && <BootAnimation onComplete={() => setBooting(false)} />}
+      
+      <div className={`animate-fade-in overflow-x-hidden ${booting ? 'h-screen overflow-hidden' : ''}`}>
           <StaggeredMenu 
             items={menuItems}
             socialItems={socialItems}
@@ -123,8 +122,7 @@ function App() {
           </main>
           
           <CinematicFooter />
-        </div>
-      )}
+      </div>
     </div>
   );
 }

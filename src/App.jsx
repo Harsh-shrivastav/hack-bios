@@ -19,6 +19,7 @@ import Faq from './components/Faq';
 import Contact from './components/Contact';
 import { CinematicFooter } from './components/ui/motion-footer';
 import CallForSponsors from './components/CallForSponsors';
+import Sponsors from './components/Sponsors';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -111,6 +112,7 @@ function App() {
               {/* <Tracks /> */}
               {/* <PrizePool /> */}
               {/* <Timeline /> */}
+              <Sponsors />
               <CallForSponsors />
               <SponsorMarquee />
               <PreviousEdition />

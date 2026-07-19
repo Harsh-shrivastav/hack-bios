@@ -72,7 +72,9 @@ const CallForSponsors = () => {
             Sponsorship Deck
           </a>
           <a 
-            href="#contact" 
+            href="https://forms.gle/bdKvz7EBpAbYcNpv7" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-8 py-4 bg-transparent border-2 border-[#00e5ff] text-[#00e5ff] font-mono text-base uppercase tracking-widest hover:bg-[#00e5ff] hover:text-[#050a05] transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,229,255,0.3)] interactive hover:-translate-y-0.5 flex items-center gap-2"
           >
             <Mail size={18} />

@@ -65,7 +65,9 @@ const CallForSponsors = () => {
         {/* Call to Actions */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
           <a 
-            href="#" 
+            href="/sponsorship-brochure.pdf" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-8 py-4 bg-transparent border-2 border-[#00ff41] text-[#00ff41] font-mono text-base uppercase tracking-widest hover:bg-[#00ff41] hover:text-[#050a05] transition-all duration-300 box-shadow-neon interactive hover:-translate-y-0.5 flex items-center gap-2"
           >
             <Download size={18} />

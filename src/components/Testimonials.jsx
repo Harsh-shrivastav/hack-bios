@@ -4,58 +4,49 @@ import { TestimonialsColumn } from "./ui/testimonials-columns-1";
 
 const testimonials = [
   {
-    text: "HackBIOS completely pushed my limits. The environment was electric, and building our blockchain prototype alongside expert mentors was an experience of a lifetime.",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150&h=150",
+    text: "HackBIOS pushed us hard. Twenty-four hours to go from an idea to a working prototype is no joke, but that pressure is exactly what made it worth it.",
     name: "Priya Sharma",
-    role: "HackBIOS 2.0 Winner"
+    role: "Participant, HackBIOS 2025"
   },
   {
-    text: "The energy here is unmatched! From the midnight snacks to the 4 AM debugging sessions, every second I spent here helped me grow as a developer.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=150",
+    text: "The energy here is unmatched. From late-night debugging to the final demo, every hour taught me something I wouldn't have picked up in a semester of classes.",
     name: "Arjun Patel",
     role: "Frontend Developer"
   },
   {
-    text: "Incredible organization and infrastructure. We had zero downtime on our sponsor APIs and the tech talks were phenomenal networking opportunities.",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=150&h=150",
+    text: "Solid organization from start to finish — sponsor APIs worked without a hitch, and the tech talks turned into some genuinely useful networking.",
     name: "Rhea Iyer",
-    role: "AI/ML Track Lead"
+    role: "Participant, HackBIOS 2025"
   },
   {
-    text: "I came to HackBIOS with an idea and left with a fully functional startup prototype. The tracks are incredibly well thought out and challenging.",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=150&h=150",
+    text: "I came in with a rough idea and left with an actual working prototype. The healthcare track problem statement pushed us to think practically, not just build something flashy.",
     name: "Vikram Singh",
     role: "Fullstack Engineer"
   },
   {
-    text: "The sponsor bounties were fantastic. Our team managed to secure the Web3 prize, and the swag we got at the end was the cherry on top!",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150&h=150",
+    text: "Judging was sharp — the panel asked questions that actually tested whether our project worked, not just whether the pitch sounded good.",
     name: "Ananya Desai",
-    role: "Web3 Enthusiast"
+    role: "Finalist, HackBIOS 2025"
   },
   {
-    text: "Being a mentor at HackBIOS showed me the incredible talent hidden in Central India. These hackers are building the systems of tomorrow.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150",
+    text: "Mentoring at HackBIOS showed me how much talent is out there in Central India. These students build fast, and they're not afraid to scrap an idea at 2 AM and start over.",
     name: "Rahul Verma",
     role: "Industry Mentor"
   },
   {
-    text: "The sheer amount of caffeine and code output over the 48 hours was insane. HackBIOS is central India's finest technical playground.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150&h=150",
-    name: "Karan Johar",
-    role: "Cybersecurity Analyst"
+    text: "Twenty-four hours of nonstop building, way too much chai, and a working robotics demo by the deadline. HackBIOS doesn't slow down for anyone.",
+    name: "Karan Mehta",
+    role: "Student Hacker"
   },
   {
-    text: "A truly chaotic yet beautiful 48-hour sprint. Met amazing people, stayed awake on energy drinks, and learned more than I did in an entire semester.",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150&h=150",
+    text: "A genuinely intense sprint — met great people, barely slept, and still learned more building under pressure than I expected going in.",
     name: "Sara Khan",
     role: "Student Hacker"
   },
   {
-    text: "The hardware provided for the IoT track was top-notch. It was so seamless testing our smart-agri sensors thanks to the incredible SSTC lab support.",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150",
+    text: "The lab access at SSTC made testing our automation project so much smoother. Having real hardware on hand instead of just simulating everything made a big difference.",
     name: "Dev Malhotra",
-    role: "IoT Specialist"
+    role: "Participant, HackBIOS 2025"
   }
 ];
 
@@ -89,7 +80,7 @@ const Testimonials = () => {
             WHAT <span className="text-[#00ff41]">HACKERS</span> SAY
           </h2>
           <p className="text-gray-400 font-sans text-lg">
-            Read the output logs from our previous participants. Real stories of grit, code, and 48-hour caffeine fueled development.
+            Read the output logs from our previous participants. Real stories of grit, code, and 24-hour caffeine fueled development.
           </p>
         </motion.div>
 

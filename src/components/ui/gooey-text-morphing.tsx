@@ -111,13 +111,13 @@ export function GooeyText({
       </svg>
 
       <div
-        className="flex items-center justify-center w-full min-h-[120px]"
+        className="flex items-center justify-center w-full min-h-[44px] md:min-h-[64px] lg:min-h-[76px]"
         style={{ filter: "url(#threshold)" }}
       >
         <span
           ref={text1Ref}
           className={cn(
-            "absolute inline-block select-none text-center text-4xl md:text-7xl lg:text-8xl",
+            "absolute inline-block select-none text-center text-3xl md:text-5xl lg:text-6xl",
             "text-foreground",
             textClassName
           )}
@@ -125,7 +125,7 @@ export function GooeyText({
         <span
           ref={text2Ref}
           className={cn(
-            "absolute inline-block select-none text-center text-4xl md:text-7xl lg:text-8xl",
+            "absolute inline-block select-none text-center text-3xl md:text-5xl lg:text-6xl",
             "text-foreground",
             textClassName
           )}

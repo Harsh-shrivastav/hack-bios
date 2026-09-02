@@ -76,9 +76,9 @@ const Contact = () => {
                  <div className="absolute h-[200%] w-[1px] bg-[#00ff41]/50"></div>
                </div>
             </div>
-            {/* Embedded Google Map Placeholder - using an iframe for SSTC Bhilai */}
+            {/* Embedded Google Map - SSTC Admin Block, Junwani, Bhilai */}
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3718.3129188417757!2d81.29528931441857!3d21.21950488589694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a293d052a2ae555%3A0xc3af1179ab8de3ff!2sShri%20Shankaracharya%20Technical%20Campus!5e0!3m2!1sen!2sin!4v1689254000000!5m2!1sen!2sin" 
+              src="https://www.google.com/maps?q=21.217218,81.307414&output=embed" 
               className="w-full h-full grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
               style={{ border: 0 }} 
               allowFullScreen="" 

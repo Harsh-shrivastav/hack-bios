@@ -1,4 +1,4 @@
-import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { HackerText } from './ui/hacker-text';
 import './StaggeredMenu.css';
@@ -22,6 +22,7 @@ export const StaggeredMenu = ({
   onMenuClose
 }) => {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const openRef = useRef(false);
   const panelRef = useRef(null);
   const preLayersRef = useRef(null);
@@ -29,14 +30,10 @@ export const StaggeredMenu = ({
   const plusHRef = useRef(null);
   const plusVRef = useRef(null);
   const iconRef = useRef(null);
-  const textInnerRef = useRef(null);
-  const [textLines, setTextLines] = useState(['Menu', 'Close']);
 
   const openTlRef = useRef(null);
   const closeTweenRef = useRef(null);
   const spinTweenRef = useRef(null);
-  const textCycleAnimRef = useRef(null);
-  const colorTweenRef = useRef(null);
   const toggleBtnRef = useRef(null);
   const busyRef = useRef(false);
   const itemEntranceTweenRef = useRef(null);
@@ -48,8 +45,7 @@ export const StaggeredMenu = ({
       const plusH = plusHRef.current;
       const plusV = plusVRef.current;
       const icon = iconRef.current;
-      const textInner = textInnerRef.current;
-      if (!panel || !plusH || !plusV || !icon || !textInner) return;
+      if (!panel || !plusH || !plusV || !icon) return;
 
       let preLayers = [];
       if (preContainer) {
@@ -65,11 +61,9 @@ export const StaggeredMenu = ({
       gsap.set(plusH, { transformOrigin: '50% 50%', rotate: 0 });
       gsap.set(plusV, { transformOrigin: '50% 50%', rotate: 90 });
       gsap.set(icon, { rotate: 0, transformOrigin: '50% 50%' });
-      gsap.set(textInner, { yPercent: 0 });
-      if (toggleBtnRef.current) gsap.set(toggleBtnRef.current, { color: menuButtonColor });
     });
     return () => ctx.revert();
-  }, [menuButtonColor, position]);
+  }, [position]);
 
   const buildOpenTimeline = useCallback(() => {
     const panel = panelRef.current;
@@ -243,54 +237,6 @@ export const StaggeredMenu = ({
     }
   }, []);
 
-  const animateColor = useCallback(
-    opening => {
-      const btn = toggleBtnRef.current;
-      if (!btn) return;
-      colorTweenRef.current?.kill();
-      if (changeMenuColorOnOpen) {
-        const targetColor = opening ? openMenuButtonColor : menuButtonColor;
-        colorTweenRef.current = gsap.to(btn, {
-          color: targetColor,
-          delay: 0.18,
-          duration: 0.3,
-          ease: 'power2.out'
-        });
-      } else {
-        gsap.set(btn, { color: menuButtonColor });
-      }
-    },
-    [openMenuButtonColor, menuButtonColor, changeMenuColorOnOpen]
-  );
-
-  const animateText = useCallback(opening => {
-    const inner = textInnerRef.current;
-    if (!inner) return;
-    textCycleAnimRef.current?.kill();
-
-    const currentLabel = opening ? 'Menu' : 'Close';
-    const targetLabel = opening ? 'Close' : 'Menu';
-    const cycles = 3;
-    const seq = [currentLabel];
-    let last = currentLabel;
-    for (let i = 0; i < cycles; i++) {
-      last = last === 'Menu' ? 'Close' : 'Menu';
-      seq.push(last);
-    }
-    if (last !== targetLabel) seq.push(targetLabel);
-    seq.push(targetLabel);
-    setTextLines(seq);
-
-    gsap.set(inner, { yPercent: 0 });
-    const lineCount = seq.length;
-    const finalShift = ((lineCount - 1) / lineCount) * 100;
-    textCycleAnimRef.current = gsap.to(inner, {
-      yPercent: -finalShift,
-      duration: 0.5 + lineCount * 0.07,
-      ease: 'power4.out'
-    });
-  }, []);
-
   const toggleMenu = useCallback(() => {
     const target = !openRef.current;
     openRef.current = target;
@@ -303,9 +249,7 @@ export const StaggeredMenu = ({
       playClose();
     }
     animateIcon(target);
-    animateColor(target);
-    animateText(target);
-  }, [playOpen, playClose, animateIcon, animateColor, animateText, onMenuOpen, onMenuClose]);
+  }, [playOpen, playClose, animateIcon, onMenuOpen, onMenuClose]);
 
   const closeMenu = useCallback(() => {
     if (openRef.current) {
@@ -314,10 +258,8 @@ export const StaggeredMenu = ({
       onMenuClose?.();
       playClose();
       animateIcon(false);
-      animateColor(false);
-      animateText(false);
     }
-  }, [playClose, animateIcon, animateColor, animateText, onMenuClose]);
+  }, [playClose, animateIcon, onMenuClose]);
 
   React.useEffect(() => {
     if (!closeOnClickAway || !open) return;
@@ -339,6 +281,15 @@ export const StaggeredMenu = ({
     };
   }, [closeOnClickAway, open, closeMenu]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div
       className={(className ? className + ' ' : '') + 'staggered-menu-wrapper' + (isFixed ? ' fixed-wrapper' : '')}
@@ -357,34 +308,58 @@ export const StaggeredMenu = ({
           return arr.map((c, i) => <div key={i} className="sm-prelayer" style={{ background: c }} />);
         })()}
       </div>
-      <header className="staggered-menu-header" aria-label="Main navigation header">
-        <div className="sm-logo" aria-label="Logo">
-           <a href="#" className="flex items-center gap-2">
-            <span className="text-xl md:text-2xl font-bold font-mono text-white glitch" data-text="HACKBIOS">HACKBIOS</span>
-            <span className="text-[#00ff41] font-mono font-bold">3.0</span>
+      {/* Glassmorphic Cyberpunk Top Bar */}
+      <header className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 md:px-10 py-4 pointer-events-auto transition-all duration-300 ${
+        scrolled
+          ? 'bg-[#050a05]/85 backdrop-blur-md border-b border-[#00ff41]/20 shadow-[0_4px_30px_rgba(0,0,0,0.9)]'
+          : 'bg-transparent border-b border-transparent'
+      }`}>
+
+        {/* Logo & Live Status Beacon */}
+        <div className="flex items-center gap-3">
+          <a href="#" className="flex items-center gap-2 group">
+            <span className="text-xl md:text-2xl font-bold font-mono text-white glitch tracking-tight" data-text="HACKBIOS">HACKBIOS</span>
+            <span className="text-[#00ff41] font-mono font-bold text-xl md:text-2xl">3.0</span>
           </a>
+
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 rounded-full text-[10px] font-mono text-[#00ff41]">
+            <span className="w-2 h-2 rounded-full bg-[#00ff41] animate-ping"></span>
+            <span className="uppercase tracking-widest font-bold">LIVE // SYS_ONLINE</span>
+          </div>
         </div>
+
+        {/* Desktop Quick Nav Links - Properly Aligned */}
+        <nav className="hidden lg:flex items-center gap-8 font-mono text-xs uppercase tracking-[0.2em] font-semibold text-gray-300">
+          {items.map((item, idx) => (
+            <a
+              key={idx}
+              href={item.link}
+              className="hover:text-[#00ff41] transition-colors relative group py-1.5"
+            >
+              <span>{item.label}</span>
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00ff41] transition-all duration-300 group-hover:w-full"></span>
+            </a>
+          ))}
+        </nav>
+
+        {/* Cyberpunk Glass Pill Menu Toggle - Mobile & Tablet Only (Hidden on Desktop where links are shown) */}
         <button
           ref={toggleBtnRef}
-          className="sm-toggle"
+          className={`lg:hidden px-5 py-2 rounded-full border transition-all duration-300 interactive flex items-center gap-2.5 font-mono text-xs uppercase tracking-widest ${
+            open
+              ? 'bg-[#00ff41] text-[#050a05] border-[#00ff41] font-bold shadow-[0_0_20px_rgba(0,255,65,0.6)]'
+              : 'bg-[#0a120a]/90 text-[#00ff41] border-[#00ff41]/40 hover:border-[#00ff41] hover:shadow-[0_0_15px_rgba(0,255,65,0.3)]'
+          }`}
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls="staggered-menu-panel"
           onClick={toggleMenu}
           type="button"
         >
-          <span className="sm-toggle-textWrap" aria-hidden="true">
-            <span ref={textInnerRef} className="sm-toggle-textInner">
-              {textLines.map((l, i) => (
-                <span className="sm-toggle-line" key={i}>
-                  {l}
-                </span>
-              ))}
-            </span>
-          </span>
-          <span ref={iconRef} className="sm-icon" aria-hidden="true">
-            <span ref={plusHRef} className="sm-icon-line" />
-            <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />
+          <span className="font-bold">{open ? 'CLOSE' : 'MENU'}</span>
+          <span ref={iconRef} className="relative w-3.5 h-3.5 inline-flex items-center justify-center">
+            <span ref={plusHRef} className="absolute w-full h-[2px] bg-current rounded-full" />
+            <span ref={plusVRef} className="absolute w-full h-[2px] bg-current rounded-full" />
           </span>
         </button>
       </header>

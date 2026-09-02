@@ -6,13 +6,14 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
 import { MessageCircle, Terminal, ArrowUpRight } from "lucide-react";
-import DevfolioButton from '../DevfolioButton';
 import { LocationMap } from "./expand-map";
 import { ShinyText } from "@/components/ui/shiny-text";
 
-const GithubIcon = ({ className }: { className?: string }) => (
+const InstagramIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
   </svg>
 );
 
@@ -353,9 +354,12 @@ export function CinematicFooter() {
             <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
               {/* App Store Links (Primary) */}
               <div className="flex flex-wrap justify-center gap-4 w-full">
-                <DevfolioButton />
-                
-                <MagneticButton as="a" href="https://discord.gg/JbtFtYrUds" target="_blank" rel="noopener noreferrer" className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group border-[#00e5ff]/30">
+                <MagneticButton as="a" href="https://devfolio.co/" target="_blank" rel="noopener noreferrer" className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group border-[#00ff41]/30">
+                  <ArrowUpRight className="w-5 h-5 text-[#00ff41] group-hover:text-foreground transition-colors" />
+                  Register on Devfolio
+                </MagneticButton>
+
+                <MagneticButton as="a" href="https://discord.gg/kDpNBsU3qt" target="_blank" rel="noopener noreferrer" className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group border-[#00e5ff]/30">
                   <svg className="w-6 h-6 text-[#00e5ff] group-hover:text-foreground transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line>
                   </svg>
@@ -368,8 +372,8 @@ export function CinematicFooter() {
                 <MagneticButton as="a" href="#about" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00ff41]/10">
                   <span className="text-[#00ff41] mr-1 opacity-50">&gt;</span> About
                 </MagneticButton>
-                <MagneticButton as="a" href="#tracks" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00e5ff]/10">
-                  <span className="text-[#00e5ff] mr-1 opacity-50">&gt;</span> Tracks
+                <MagneticButton as="a" href="#faq" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00e5ff]/10">
+                  <span className="text-[#00e5ff] mr-1 opacity-50">&gt;</span> FAQ
                 </MagneticButton>
                 <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00ff41]/10">
                   <span className="text-[#00ff41] mr-1 opacity-50">&gt;</span> Code of Conduct
@@ -381,16 +385,16 @@ export function CinematicFooter() {
 
               {/* Social Icon Row */}
               <div className="flex gap-4 mt-6">
-                <MagneticButton as="a" href="#" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00ff41] hover:border-[#00ff41]/50 group">
-                  <GithubIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <MagneticButton as="a" href="https://www.instagram.com/hackbios?igsh=MXNkbGlnN3lybzB2ag==" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00ff41] hover:border-[#00ff41]/50 group">
+                  <InstagramIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </MagneticButton>
-                <MagneticButton as="a" href="#" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00e5ff] hover:border-[#00e5ff]/50 group">
+                <MagneticButton as="a" href="https://x.com/thehackBIOS" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00e5ff] hover:border-[#00e5ff]/50 group">
                   <TwitterIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </MagneticButton>
-                <MagneticButton as="a" href="#" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00ff41] hover:border-[#00ff41]/50 group">
+                <MagneticButton as="a" href="https://www.linkedin.com/company/hackbios-2k26/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00ff41] hover:border-[#00ff41]/50 group">
                   <LinkedinIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </MagneticButton>
-                <MagneticButton as="a" href="#" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00e5ff] hover:border-[#00e5ff]/50 group">
+                <MagneticButton as="a" href="https://discord.gg/kDpNBsU3qt" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00e5ff] hover:border-[#00e5ff]/50 group">
                   <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </MagneticButton>
               </div>
@@ -401,7 +405,7 @@ export function CinematicFooter() {
               <div className="opacity-70 scale-90 origin-left">
                 <LocationMap 
                   location="SSTC Bhilai, CG" 
-                  coordinates="21.1938° N, 81.3509° E"
+                  coordinates="21.2172° N, 81.3074° E"
                 />
               </div>
             </div>
@@ -412,8 +416,8 @@ export function CinematicFooter() {
                  <ShinyText text="System Online" className="font-mono text-[10px] uppercase tracking-widest font-bold text-[#00ff41]" />
               </div>
               <p className="font-mono text-xs text-muted-foreground/60 w-32 border-b border-white/5 pb-1 mb-1">SYS.DIAGNOSTICS</p>
-              <p className="font-mono text-[10px] text-muted-foreground/50">LAT: 21.1938 N</p>
-              <p className="font-mono text-[10px] text-muted-foreground/50">LON: 81.3509 E</p>
+              <p className="font-mono text-[10px] text-muted-foreground/50">LAT: 21.2172 N</p>
+              <p className="font-mono text-[10px] text-muted-foreground/50">LON: 81.3074 E</p>
               <p className="font-mono text-[10px] text-muted-foreground/50">MEM: 1024.0MB / 4096.0MB</p>
               <p className="font-mono text-[10px] text-muted-foreground/50">NET: UPLINK SECURE</p>
               <p className="font-mono text-[10px] text-muted-foreground/50 mt-2 text-[#00e5ff]/60">AWAITING INPUT...</p>

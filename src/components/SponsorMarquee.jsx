@@ -3,10 +3,10 @@ import React from 'react';
 const SponsorMarquee = () => {
   const sponsors = [
     "391.jpeg", "427.png", "506.png", "64.png", "696.png", "972.png",
-    "IMG_1683.PNG", "IMG_1684.JPG", "IMG_1685.JPG", "IMG_1686.PNG",
-    "IMG_1687.PNG", "IMG_1688.PNG", "IMG_1689.PNG", "IMG_1690.PNG",
-    "IMG_1691.PNG", "IMG_1692.PNG", "IMG_1693.PNG", "IMG_1694.PNG",
-    "IMG_1695.PNG", "IMG_1696.PNG", "IMG_1697.PNG"
+    "IMG_1683.jpg", "IMG_1684.JPG", "IMG_1685.JPG", "IMG_1686.jpg",
+    "IMG_1687.jpg", "IMG_1688.jpg", "IMG_1689.jpg", "IMG_1690.jpg",
+    "IMG_1691.jpg", "IMG_1692.jpg", "IMG_1693.jpg", "IMG_1694.jpg",
+    "IMG_1695.jpg", "IMG_1696.jpg", "IMG_1697.jpg"
   ];
 
   // Double the array for seamless looping

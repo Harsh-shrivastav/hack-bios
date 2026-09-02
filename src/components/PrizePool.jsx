@@ -14,7 +14,7 @@ const PrizePool = () => {
           </h2>
           <div className="flex items-center justify-center gap-4">
             <div className="h-[1px] w-12 bg-[#00ff41]/30"></div>
-            <p className="text-[#00e5ff] font-mono text-xl tracking-[0.2em] uppercase shadow-glow">₹ 1,00,000+ IN BOUNTY</p>
+            <p className="text-[#00e5ff] font-mono text-xl tracking-[0.2em] uppercase shadow-glow">₹ 1,10,000+ IN BOUNTY</p>
             <div className="h-[1px] w-12 bg-[#00ff41]/30"></div>
           </div>
         </div>
@@ -28,7 +28,7 @@ const PrizePool = () => {
               <Medal size={48} className="text-[#c0c0c0]" />
             </div>
             <h3 className="text-2xl font-mono text-[#c0c0c0] mb-3 uppercase tracking-wider">SILVER_PROTO</h3>
-            <div className="text-4xl font-black font-mono text-white mb-2">₹ 25,000</div>
+            <div className="text-4xl font-black font-mono text-white mb-2">₹ 35,000</div>
             <p className="text-gray-500 text-sm font-mono tracking-widest uppercase mb-6">Execution_Bonus: Swags + API</p>
           </div>
 
@@ -55,21 +55,31 @@ const PrizePool = () => {
               <Award size={48} className="text-[#cd7f32]" />
             </div>
             <h3 className="text-2xl font-mono text-[#cd7f32] mb-3 uppercase tracking-wider">BRONZE_NODE</h3>
-            <div className="text-4xl font-black font-mono text-white mb-2">₹ 10,000</div>
+            <div className="text-4xl font-black font-mono text-white mb-2">₹ 15,000</div>
             <p className="text-gray-500 text-sm font-mono tracking-widest uppercase mb-6">Node_Bonus: Swags + API</p>
           </div>
 
         </div>
 
         {/* Special prizes */}
-        <div className="mt-24 flex justify-center">
+        <div className="mt-24 flex flex-col sm:flex-row justify-center gap-6">
           <div className="cinematic-card group inline-flex items-center gap-6 bg-[#0a120a]/80 backdrop-blur-md border border-[#00e5ff]/40 px-10 py-6 rounded-sm shadow-[0_0_30px_rgba(0,229,255,0.15)] hover:border-[#00e5ff]">
             <div className="w-14 h-14 bg-[#00e5ff]/10 flex items-center justify-center rounded-full border border-[#00e5ff]/30 group-hover:scale-110 transition-all duration-500">
               <GraduationCap className="text-[#00e5ff]" size={32} />
             </div>
             <div className="text-left">
               <h4 className="text-[#00e5ff] font-mono text-xs uppercase tracking-[0.3em] font-bold opacity-70">Scholar_Uplink</h4>
-              <div className="text-3xl font-black font-mono text-white tracking-tighter">BEST_SCHOOL_TEAM: ₹ 5,000</div>
+              <div className="text-3xl font-black font-mono text-white tracking-tighter">ALL GIRLS SPECIAL: ₹ 5,000</div>
+            </div>
+          </div>
+
+          <div className="cinematic-card group inline-flex items-center gap-6 bg-[#0a120a]/80 backdrop-blur-md border border-[#00ff41]/40 px-10 py-6 rounded-sm shadow-[0_0_30px_rgba(0,255,65,0.15)] hover:border-[#00ff41]">
+            <div className="w-14 h-14 bg-[#00ff41]/10 flex items-center justify-center rounded-full border border-[#00ff41]/30 group-hover:scale-110 transition-all duration-500">
+              <GraduationCap className="text-[#00ff41]" size={32} />
+            </div>
+            <div className="text-left">
+              <h4 className="text-[#00ff41] font-mono text-xs uppercase tracking-[0.3em] font-bold opacity-70">Rookie_Uplink</h4>
+              <div className="text-3xl font-black font-mono text-white tracking-tighter">BEST BEGINNER: ₹ 5,000</div>
             </div>
           </div>
         </div>

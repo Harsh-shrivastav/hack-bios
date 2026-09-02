@@ -11,7 +11,7 @@ const stages = [
   { title: "Registrations Open", date: "TBA", desc: "Start assembling your squad. Registration portal officially opens." },
   { title: "Idea Submission", date: "TBA", desc: "Submit your initial pitch deck and project abstract." },
   { title: "Shortlisting", date: "TBA", desc: "Top teams will be filtered based on innovation and feasibility." },
-  { title: "Hackathon Day 1", date: "TBA", desc: "Opening ceremony. Hacking begins! 36 hours non-stop." },
+  { title: "Hackathon Day 1", date: "TBA", desc: "Opening ceremony. Hacking begins! 24 hours non-stop." },
   { title: "Hackathon Day 2", date: "TBA", desc: "Mentoring rounds, final development phase, and hard deadline." },
   { title: "Results & Closing", date: "TBA", desc: "Final pitches to the jury, prize distribution, and closing." },
 ];

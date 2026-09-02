@@ -30,7 +30,7 @@ function App() {
   const [booting, setBooting] = useState(true);
 
   const menuItems = [
-    // { label: 'About', link: '#about' },
+    { label: 'About', link: '#about' },
     // { label: 'Tracks', link: '#tracks' },
     // { label: 'Timeline', link: '#timeline' },
     { label: 'FAQ', link: '#faq' },
@@ -41,7 +41,7 @@ function App() {
     { label: 'GitHub', link: '#' },
     { label: 'Twitter', link: '#' },
     { label: 'LinkedIn', link: '#' },
-    { label: 'Discord', link: 'https://discord.gg/JbtFtYrUds' }
+    { label: 'Discord', link: 'https://discord.gg/kDpNBsU3qt' }
   ];
 
   useEffect(() => {
@@ -107,7 +107,7 @@ function App() {
             <div className="relative z-10">
               <Stats />
               <GooeyBanner />
-              {/* <About /> */}
+              <About />
               {/* <Tracks /> */}
               {/* <PrizePool /> */}
               {/* <Timeline /> */}

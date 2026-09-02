@@ -8,7 +8,8 @@ import AnimatedTextCycle from './ui/animated-text-cycle';
 
 gsap.registerPlugin(ScrollTrigger);
 
-import DevfolioButton from './DevfolioButton';
+
+const DEVFOLIO_LINK = 'https://hackbios2k26.devfolio.co/';
 
 const Hero = () => {
   const sectionRef = useRef(null);
@@ -59,7 +60,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-[#050a05]">
+    <section ref={sectionRef} className="relative w-full min-h-screen overflow-hidden flex items-center justify-center bg-[#050a05] py-24">
       <div ref={bgRef} className="absolute inset-0 z-0 opacity-40 mix-blend-screen">
         <GridScan
           sensitivity={0.8}
@@ -99,23 +100,30 @@ const Hero = () => {
           />.<br className="hidden md:block"/> { } Build, innovate, and conquer at Central India's premier hackathon.
         </p>
 
-        <div className="hero-animate flex flex-col sm:row gap-6 justify-center items-center">
-          <div className="flex flex-col sm:flex-row gap-6">
-            <DevfolioButton />
-            
-            <a 
-              href="#" 
-              className="px-8 py-4 bg-transparent border-2 border-[#00e5ff] text-[#00e5ff] font-mono text-lg uppercase tracking-widest hover:bg-[#00e5ff] hover:text-[#050a05] transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,229,255,0.3)] interactive hover:-translate-y-1"
-            >
-              Download Brochure
-            </a>
-          </div>
-        </div>
-      </div>
+        <div className="hero-animate flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <a
+            href={DEVFOLIO_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="interactive hover:-translate-y-1 transition-transform duration-300"
+          >
+            <img src="/devfolio-apply-button.png" alt="Apply with Devfolio" className="h-[52px] w-auto" />
+          </a>
 
-      <div className="absolute bottom-[100px] left-1/2 -translate-x-1/2 z-20 animate-bounce">
-        <p className="text-[#00ff41] font-mono text-xs uppercase tracking-widest mb-2 opacity-50">Scroll Down</p>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-[#00ff41] to-transparent mx-auto"></div>
+          <a
+            href="https://discord.gg/kDpNBsU3qt"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center min-w-[280px] px-8 py-4 bg-transparent border-2 border-[#00e5ff] text-[#00e5ff] font-mono text-lg uppercase tracking-widest hover:bg-[#00e5ff] hover:text-[#050a05] transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,229,255,0.3)] interactive hover:-translate-y-1 whitespace-nowrap"
+          >
+            Join Discord
+          </a>
+        </div>
+
+        <div className="hero-animate mt-16 flex flex-col items-center animate-bounce">
+          <p className="text-[#00ff41] font-mono text-xs uppercase tracking-widest mb-2 opacity-50">Scroll Down</p>
+          <div className="w-[1px] h-12 bg-gradient-to-b from-[#00ff41] to-transparent mx-auto"></div>
+        </div>
       </div>
 
 

@@ -15,7 +15,7 @@ export default function AnimatedTextCycle({
 }: AnimatedTextCycleProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [width, setWidth] = useState("auto");
-  const measureRef = useRef<HTMLDivElement>(null);
+  const measureRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (measureRef.current) {
@@ -63,7 +63,7 @@ export default function AnimatedTextCycle({
 
   return (
     <>
-      <div 
+      <span 
         ref={measureRef} 
         aria-hidden="true"
         className="absolute opacity-0 pointer-events-none"
@@ -74,7 +74,7 @@ export default function AnimatedTextCycle({
             {word}
           </span>
         ))}
-      </div>
+      </span>
 
       <motion.span 
         className="relative inline-flex items-center justify-center -translate-y-1"
@@ -104,4 +104,4 @@ export default function AnimatedTextCycle({
       </motion.span>
     </>
   );
-} 
+}

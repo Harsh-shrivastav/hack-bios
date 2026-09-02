@@ -65,9 +65,9 @@ const PreviousEdition = () => {
           {activeTab === 'testimonials' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
               {[
-                { name: "Alex Mercer", role: "Winner, HackBIOS 6.0", text: "The energy was electric. Pulling that all-nighter with my team surrounded by such insane talent was the highlight of my college life." },
-                { name: "Priya Sharma", role: "Participant", text: "The mentors were incredibly helpful. Whenever we got stuck, there was someone ready to guide us. The vibe is unmatched!" },
-                { name: "Rahul Verma", role: "Runner Up", text: "From the food to the wifi, everything was smooth. It gave us the perfect environment to just focus on building our product." }
+                { name: "Ananya Deshmukh", role: "Finalist, HackBIOS 2025", text: "We built our entire product in under 24 hours — chaotic, but that pressure is exactly what pushed us to actually ship something instead of just planning forever." },
+                { name: "Rohan Mehta", role: "Participant, HackBIOS 2025", text: "Got stuck on our API integration around 3 AM and a mentor walked us through it line by line. That kind of support made a real difference." },
+                { name: "Sneha Iyer", role: "Team Lead, HackBIOS 2025", text: "The judges clearly knew what they were talking about — the feedback on our pitch was sharper than anything we'd gotten in a college project review." }
               ].map((t, i) => (
                 <div key={i} className="bg-[#0a120a] p-6 border-l-2 border-[#00e5ff] relative">
                   <MessageSquareQuote className="absolute top-4 right-4 text-[#00e5ff]/20" size={48} />
@@ -92,10 +92,10 @@ const PreviousEdition = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
                 {[
                   "391.jpeg", "427.png", "506.png", "64.png", "696.png", "972.png",
-                  "IMG_1683.PNG", "IMG_1684.JPG", "IMG_1685.JPG", "IMG_1686.PNG",
-                  "IMG_1687.PNG", "IMG_1688.PNG", "IMG_1689.PNG", "IMG_1690.PNG",
-                  "IMG_1691.PNG", "IMG_1692.PNG", "IMG_1693.PNG", "IMG_1694.PNG",
-                  "IMG_1695.PNG", "IMG_1696.PNG", "IMG_1697.PNG"
+                  "IMG_1683.jpg", "IMG_1684.JPG", "IMG_1685.JPG", "IMG_1686.jpg",
+                  "IMG_1687.jpg", "IMG_1688.jpg", "IMG_1689.jpg", "IMG_1690.jpg",
+                  "IMG_1691.jpg", "IMG_1692.jpg", "IMG_1693.jpg", "IMG_1694.jpg",
+                  "IMG_1695.jpg", "IMG_1696.jpg", "IMG_1697.jpg"
                 ].map((icon, i) => (
                   <div 
                     key={i} 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
 const faqs = [
-  { q: "Who can participate?", a: "Any student enrolled in a college or school. We have a dedicated prize pool for school students!" },
+  { q: "Who can participate?", a: "Any college student with a valid student ID. We also have special prize categories for all-girls teams and first-time hackers." },
   { q: "How much does it cost?", a: "HackBIOS is completely free! We provide meals, workspace, and a ton of swag. You just need to bring your laptop and energy." },
   { q: "What is the team size?", a: "You can form a team of 2 to 4 members. Solo participations are allowed but a team is highly recommended." },
   { q: "Is it an online or offline hackathon?", a: "HackBIOS 3.0 is fundamentally an offline, in-person hackathon held at Shri Shankaracharya Technical Campus, Bhilai." },

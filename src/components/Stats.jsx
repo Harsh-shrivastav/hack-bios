@@ -62,11 +62,11 @@ const Stats = () => {
       {/* Ticker animation container */}
       <div className="w-full mx-auto container py-8">
         <div className="flex flex-wrap md:flex-nowrap justify-center md:justify-around items-center gap-8 md:gap-0">
-          <StatBox target={300} suffix="+" label="Participants" />
-          <StatBox target={100} suffix="+" label="Teams" />
+          <StatBox target={300} suffix="+" label="Attendees" />
+          <StatBox target={70} suffix="+" label="Teams" />
           <StatBox target={1} prefix="₹" suffix="L+" label="Prizes" />
-          <StatBox target={6} label="Editions" />
-          <StatBox target={250} suffix="+" label="Attendees" />
+          <StatBox target={3} label="Editions" />
+          <StatBox target={24} label="Hours" />
         </div>
       </div>
     </section>

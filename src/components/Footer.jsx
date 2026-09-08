@@ -61,7 +61,7 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-mono font-bold mb-6 text-lg tracking-wider">SYSTEM.LEGAL</h3>
             <ul className="space-y-3 font-mono text-sm">
-              <li><a href="#" className="text-gray-400 hover:text-[#00e5ff] transition-colors interactive inline-flex items-center gap-2"><span className="text-[#00e5ff]">&gt;</span> Code of Conduct</a></li>
+              <li><a href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md?ajs_uid=019e9343-5f37-9c75-a9d1-d56f9bab3cbc&utm_campaign=Member+Event+-+Onboarding+Reminder&utm_content=Onboarding+Needed&utm_medium=Email&utm_source=Customer.io" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#00e5ff] transition-colors interactive inline-flex items-center gap-2"><span className="text-[#00e5ff]">&gt;</span> MLH Code of Conduct</a></li>
               <li><a href="#" className="text-gray-400 hover:text-[#00e5ff] transition-colors interactive inline-flex items-center gap-2"><span className="text-[#00e5ff]">&gt;</span> Privacy Policy</a></li>
               <li><a href="#" className="text-gray-400 hover:text-[#00e5ff] transition-colors interactive inline-flex items-center gap-2"><span className="text-[#00e5ff]">&gt;</span> Terms of Service</a></li>
             </ul>

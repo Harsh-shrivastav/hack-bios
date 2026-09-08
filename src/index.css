@@ -253,3 +253,24 @@ html.lenis {
   }
 }
 
+/* MLH Trust Badge — Responsive */
+@media (max-width: 1024px) {
+  #mlh-trust-badge {
+    max-width: 90px !important;
+    right: 15px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #mlh-trust-badge {
+    max-width: 70px !important;
+    right: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #mlh-trust-badge {
+    max-width: 60px !important;
+    right: 8px !important;
+  }
+}

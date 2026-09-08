@@ -309,7 +309,7 @@ export const StaggeredMenu = ({
         })()}
       </div>
       {/* Glassmorphic Cyberpunk Top Bar */}
-      <header className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 md:px-10 py-4 pointer-events-auto transition-all duration-300 ${
+      <header className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 md:px-10 lg:pr-44 py-4 pointer-events-auto transition-all duration-300 ${
         scrolled
           ? 'bg-[#050a05]/85 backdrop-blur-md border-b border-[#00ff41]/20 shadow-[0_4px_30px_rgba(0,0,0,0.9)]'
           : 'bg-transparent border-b border-transparent'

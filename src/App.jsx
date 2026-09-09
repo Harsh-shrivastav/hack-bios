@@ -20,6 +20,7 @@ import Contact from './components/Contact';
 import { CinematicFooter } from './components/ui/motion-footer';
 import CallForSponsors from './components/CallForSponsors';
 import Sponsors from './components/Sponsors';
+import PartnerBanners from './components/PartnerBanners';
 import MLHBadge from './components/MLHBadge';
 
 import gsap from 'gsap';
@@ -42,7 +43,7 @@ function App() {
     { label: 'GitHub', link: '#' },
     { label: 'Twitter', link: '#' },
     { label: 'LinkedIn', link: '#' },
-    { label: 'Discord', link: 'https://discord.gg/kDpNBsU3qt' }
+    { label: 'Discord', link: 'https://discord.gg/JbtFtYrUds' }
   ];
 
   useEffect(() => {
@@ -113,6 +114,7 @@ function App() {
               {/* <Tracks /> */}
               {/* <PrizePool /> */}
               {/* <Timeline /> */}
+              <PartnerBanners />
               <Sponsors />
               <CallForSponsors />
               <SponsorMarquee />

@@ -441,7 +441,7 @@ export function CinematicFooter() {
 
               {/* Devfolio Verification Link */}
               <a 
-                href="https://devfolio.co" 
+                href="https://hackbios2k26.devfolio.co/overview" 
                 target="_blank" 
                 rel="noreferrer noopener" 
                 className="flex items-center justify-center footer-glass-pill px-6 py-3 rounded-full border-[#00e5ff]/20 hover:border-[#00e5ff]/60 transition-colors"

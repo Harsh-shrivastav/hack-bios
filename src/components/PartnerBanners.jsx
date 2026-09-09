@@ -12,7 +12,7 @@ const banners = [
     name: 'Devfolio',
     label: 'Platform Partner',
     logo: '/partners/devfolio.webp',
-    href: 'https://devfolio.co/',
+    href: 'https://hackbios2k26.devfolio.co/overview',
     color: '#00e5ff',
   },
 ];

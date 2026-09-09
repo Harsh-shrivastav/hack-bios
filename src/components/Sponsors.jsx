@@ -6,32 +6,34 @@ const tiers = [
     emoji: '💎',
     color: '#00e5ff',
     glow: 'rgba(0,229,255,0.1)',
-    glowHover: 'rgba(0,229,255,0.2)',
-    confirmed: true,
+    logos: [
+      { src: '/partners/github.png', alt: 'GitHub', href: 'https://github.com/' },
+      { src: '/partners/elevenlabs.png', alt: 'ElevenLabs', href: 'https://elevenlabs.io/' },
+      { src: '/partners/devfolio.webp', alt: 'Devfolio', href: 'https://devfolio.co/' },
+    ],
   },
   {
     name: 'Gold',
     emoji: '🥇',
     color: '#ffd700',
     glow: 'rgba(255,215,0,0.1)',
-    glowHover: 'rgba(255,215,0,0.2)',
-    confirmed: false,
+    logos: [],
   },
   {
     name: 'Silver',
     emoji: '🥈',
     color: '#c0c0c0',
     glow: 'rgba(192,192,192,0.1)',
-    glowHover: 'rgba(192,192,192,0.2)',
-    confirmed: false,
+    logos: [],
   },
   {
     name: 'Bronze',
     emoji: '🥉',
     color: '#cd7f32',
     glow: 'rgba(205,127,50,0.1)',
-    glowHover: 'rgba(205,127,50,0.2)',
-    confirmed: false,
+    logos: [
+      { src: '/partners/xyz.png', alt: '.xyz', href: 'https://gen.xyz/' },
+    ],
   },
 ];
 
@@ -76,20 +78,24 @@ const Sponsors = () => {
                   </span>
                 </div>
 
-                {tier.confirmed ? (
-                  /* Devfolio Logo centered - not a link, just a display badge */
-                  <div className="mt-16 mb-4 flex items-center justify-center w-full">
-                    {/* Using Devfolio's official white logo SVG hosted on their platform */}
-                    <img 
-                      src="https://raw.githubusercontent.com/devfolio/brand-assets/main/Logo/Devfolio_Logo-White.svg" 
-                      onError={(e) => {
-                        e.target.onerror = null; 
-                        // Fallback logo URL if githubusercontent fails
-                        e.target.src = "https://devfolio.co/blog/content/images/2021/04/Devfolio_Logo-White.png";
-                      }}
-                      alt="DEVFOLIO LOGO" 
-                      className="w-40 h-auto object-contain opacity-90 group-hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] group-hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]"
-                    />
+                {tier.logos.length > 0 ? (
+                  /* Confirmed sponsor logo(s), each clickable to their site */
+                  <div className="mt-16 mb-4 flex flex-wrap items-center justify-center gap-x-10 gap-y-6 w-full">
+                    {tier.logos.map((logo) => (
+                      <a
+                        key={logo.alt}
+                        href={logo.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block outline-none"
+                      >
+                        <img
+                          src={logo.src}
+                          alt={logo.alt}
+                          className="h-10 w-auto max-w-[160px] object-contain opacity-90 hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.25)]"
+                        />
+                      </a>
+                    ))}
                   </div>
                 ) : (
                   /* Empty placeholder slot awaiting a confirmed sponsor */

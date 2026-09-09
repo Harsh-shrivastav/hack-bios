@@ -447,7 +447,7 @@ export function CinematicFooter() {
                 className="flex items-center justify-center footer-glass-pill px-6 py-3 rounded-full border-[#00e5ff]/20 hover:border-[#00e5ff]/60 transition-colors"
               >
                 <img 
-                  src="https://raw.githubusercontent.com/devfolioco/brand-assets/main/Logo/Devfolio%20Logo%20-%20White.svg" 
+                  src="/partners/devfolio.webp" 
                   alt="DEVFOLIO LOGO" 
                   className="h-5 object-contain" 
                 />

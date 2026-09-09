@@ -21,6 +21,7 @@ import { CinematicFooter } from './components/ui/motion-footer';
 import CallForSponsors from './components/CallForSponsors';
 import Sponsors from './components/Sponsors';
 import PartnerBanners from './components/PartnerBanners';
+import MLHBadge from './components/MLHBadge';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -88,6 +89,7 @@ function App() {
     <div className="bg-[#050a05] text-white min-h-screen selection:bg-[#00ff41] selection:text-[#050a05]">
       <CustomCursor />
       <FloatingSocials />
+      {!booting && <MLHBadge />}
       
       {booting && <BootAnimation onComplete={() => setBooting(false)} />}
       

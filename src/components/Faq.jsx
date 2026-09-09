@@ -8,6 +8,22 @@ const faqs = [
   { q: "Is it an online or offline hackathon?", a: "HackBIOS 3.0 is fundamentally an offline, in-person hackathon held at Shri Shankaracharya Technical Campus, Bhilai." },
   { q: "Will there be food?", a: "Yes, absolutely! We will provide regular meals, midnight snacks, and endless coffee to keep you running." },
   { q: "What if I don't know how to code?", a: "Hackathons are the best place to learn! We'll have mentors, workshops, and beginner-friendly resources. Design and presentation skills are equally important." },
+  {
+    q: "What is the MLH Code of Conduct?",
+    a: (
+      <>
+        All participants, mentors, volunteers, and staff are required to follow the MLH Code of Conduct. We are dedicated to providing a respectful, inclusive, and safe environment for everyone throughout the hackathon.{" "}
+        <a
+          href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-[#00ff41] font-mono font-semibold underline underline-offset-2 hover:text-[#00e5ff] transition-colors duration-200"
+        >
+          Read the MLH Code of Conduct ↗
+        </a>
+      </>
+    ),
+  },
 ];
 
 const Faq = () => {
@@ -48,9 +64,9 @@ const Faq = () => {
               
               <div 
                 className="overflow-hidden transition-all duration-300"
-                style={{ maxHeight: openIndex === index ? '200px' : '0px' }}
+                style={{ maxHeight: openIndex === index ? '300px' : '0px' }}
               >
-                <div className="px-6 pb-4 text-gray-400 font-sans text-sm md:text-base border-t border-[#00ff41]/10 mt-2 pt-4">
+                <div className="px-6 pb-4 text-gray-400 font-sans text-sm md:text-base border-t border-[#00ff41]/10 mt-2 pt-4 leading-relaxed">
                   {faq.a}
                 </div>
               </div>

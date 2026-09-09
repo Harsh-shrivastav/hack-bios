@@ -9,7 +9,7 @@ const tiers = [
     logos: [
       { src: '/partners/github.png', alt: 'GitHub', href: 'https://github.com/' },
       { src: '/partners/elevenlabs.png', alt: 'ElevenLabs', href: 'https://elevenlabs.io/' },
-      { src: '/partners/devfolio.webp', alt: 'Devfolio', href: 'https://devfolio.co/' },
+      { src: '/partners/devfolio.webp', alt: 'Devfolio', href: 'https://hackbios2k26.devfolio.co/overview' },
     ],
   },
   {

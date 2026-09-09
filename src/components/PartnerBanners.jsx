@@ -14,6 +14,7 @@ const banners = [
     logo: '/partners/devfolio.webp',
     href: 'https://hackbios2k26.devfolio.co/overview',
     color: '#00e5ff',
+    lightBg: true,
   },
 ];
 
@@ -37,10 +38,16 @@ const PartnerBanners = () => {
             ></div>
 
             <div className="relative flex items-center justify-between gap-6 bg-[#050a05]/90 backdrop-blur-xl rounded-2xl px-8 py-6 border border-white/5">
-              <div className="flex items-center gap-6">
-                <img src={partner.logo} alt={partner.name} className="h-10 w-auto object-contain" />
-                <span className="hidden sm:block h-8 w-px bg-white/10"></span>
-                <span className="font-mono text-xs uppercase tracking-[0.2em] text-gray-400">{partner.label}</span>
+                            <div className="flex items-center gap-6">
+                {partner.lightBg ? (
+                  <div className="bg-white rounded-xl p-3">
+                    <img src={partner.logo} alt={partner.name} className="h-14 w-auto object-contain" />
+                  </div>
+                ) : (
+                  <img src={partner.logo} alt={partner.name} className="h-16 w-auto object-contain" />
+                )}
+                <span className="hidden sm:block h-10 w-px bg-white/10"></span>
+                <span className="font-mono text-sm md:text-base uppercase tracking-[0.2em] text-gray-300">{partner.label}</span>
               </div>
               <span
                 className="font-mono text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity"

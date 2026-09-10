@@ -6,7 +6,7 @@ const MLHBadge = () => {
       id="mlh-trust-badge"
       style={{
         display: 'block',
-        maxWidth: '120px',
+        maxWidth: '100px',
         minWidth: '60px',
         position: 'fixed',
         right: '50px',

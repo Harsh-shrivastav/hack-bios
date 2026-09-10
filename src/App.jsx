@@ -39,9 +39,8 @@ function App() {
   ];
 
   const socialItems = [
-    { label: 'GitHub', link: '#' },
-    { label: 'Twitter', link: '#' },
-    { label: 'LinkedIn', link: '#' },
+    { label: 'Twitter', link: 'https://x.com/thehackBIOS' },
+    { label: 'LinkedIn', link: 'https://www.linkedin.com/company/hackbios-2k26/' },
     { label: 'Discord', link: 'https://discord.gg/kDpNBsU3qt' }
   ];
 

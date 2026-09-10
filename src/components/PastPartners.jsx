@@ -1,14 +1,33 @@
 import React, { useMemo } from 'react';
 import './PastPartners.css';
 
-// Real files already sitting in public/past sponsors icons/ — filenames are
-// case-sensitive, keep the mixed .JPG casing exactly as on disk.
+// Real, properly-named sponsor logos in public/sponsors/
 const LOGO_FILES = [
-  '391.jpeg', '427.png', '506.png', '64.png', '696.png', '972.png',
-  'IMG_1683.jpg', 'IMG_1684.JPG', 'IMG_1685.JPG', 'IMG_1686.jpg',
-  'IMG_1687.jpg', 'IMG_1688.jpg', 'IMG_1689.jpg', 'IMG_1690.jpg',
-  'IMG_1691.jpg', 'IMG_1692.jpg', 'IMG_1693.jpg', 'IMG_1694.jpg',
-  'IMG_1695.jpg', 'IMG_1696.jpg', 'IMG_1697.jpg',
+  { file: 'Devfolio.png', name: 'Devfolio' },
+  { file: 'ETHIndia.png', name: 'ETHIndia' },
+  { file: 'SharpEconomy.png', name: 'Sharp Economy' },
+  { file: 'AlpifyTechnologies.png', name: 'Alpify Technologies' },
+  { file: 'AlpifyGlobal.png', name: 'Alpify Global' },
+  { file: 'InterviewBuddy.png', name: 'Interview Buddy' },
+  { file: 'LogiXHunt.png', name: 'LogiXHunt' },
+  { file: 'Postman.png', name: 'Postman' },
+  { file: 'Polygon.png', name: 'Polygon' },
+  { file: 'Replit.png', name: 'Replit' },
+  { file: 'Solana.png', name: 'Solana' },
+  { file: 'Filecoin.png', name: 'Filecoin' },
+  { file: 'XYZ.png', name: '.xyz' },
+  { file: 'Echo3d.png', name: 'echo3D' },
+  { file: 'Tezos.png', name: 'Tezos' },
+  { file: 'Trikon.png', name: 'TRIKON' },
+  { file: 'Balsamiq.png', name: 'balsamiq' },
+  { file: 'InterviewCake.png', name: 'Interview Cake' },
+  { file: 'NewtonSchool.png', name: 'Newton School' },
+  { file: 'VerbWire.png', name: 'VERBWIRE' },
+  { file: 'Beeceptor.png', name: 'Beeceptor' },
+  { file: 'Cybrancee.png', name: 'Cybrancee' },
+  { file: 'Rosenfeld.png', name: 'Rosenfeld' },
+  { file: 'GiveMyCertificate.png', name: 'GiveMyCertificate' },
+  { file: 'Cognitivesprints.png', name: 'Cognitive Sprints' },
 ];
 
 const PastPartners = () => {
@@ -42,9 +61,9 @@ const PastPartners = () => {
         </div>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-4 md:gap-6">
-          {LOGO_FILES.map((file, i) => (
+          {LOGO_FILES.map((partner, i) => (
             <div
-              key={file}
+              key={partner.file}
               className="float-tile bg-[#0a120a]/70 backdrop-blur-sm border border-[#00ff41]/10 rounded-xl h-24 p-4 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 hover:border-[#00ff41]/40 hover:bg-[#00ff41]/5 group"
               style={{
                 animationDuration: `${timings[i].duration}s`,
@@ -52,8 +71,8 @@ const PastPartners = () => {
               }}
             >
               <img
-                src={`/past sponsors icons/${file}`}
-                alt={`Past partner ${i + 1}`}
+                src={`/sponsors/${partner.file}`}
+                alt={partner.name}
                 className="max-w-full max-h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300"
               />
             </div>

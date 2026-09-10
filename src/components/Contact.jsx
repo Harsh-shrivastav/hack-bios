@@ -3,7 +3,9 @@ import { Phone, MapPin, Mail } from 'lucide-react';
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-24 relative overflow-hidden">
+        <section id="contact" className="py-24 relative overflow-hidden bg-[#020502]">
+
+
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Floating glass panel */}
         <div className="relative bg-[#050a05]/85 backdrop-blur-xl border border-[#00ff41]/10 rounded-xl p-8 md:p-12">
@@ -20,7 +22,8 @@ const Contact = () => {
               
               {/* Contact Info */}
               <div className="space-y-8">
-                <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg">
+                <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg overflow-hidden">
+                  <img src="/characters/trio.png" alt="" aria-hidden="true" className="absolute right-0 bottom-0 h-[85%] w-auto object-contain opacity-100 pointer-events-none select-none" style={{ maskImage: 'linear-gradient(to left, black 40%, transparent 95%)', WebkitMaskImage: 'linear-gradient(to left, black 40%, transparent 95%)' }} />
                   {/* Corner details */}
                   <div className="absolute top-4 left-4 w-3 h-3 border-t border-l border-[#00ff41]/30"></div>
                   <div className="absolute top-4 right-4 w-3 h-3 border-t border-r border-[#00ff41]/30"></div>
@@ -61,7 +64,8 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg">
+                <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg overflow-hidden">
+                  <img src="/decor/plumbers-base.png" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.08] pointer-events-none select-none" />
                   {/* Corner details */}
                   <div className="absolute top-4 left-4 w-3 h-3 border-t border-l border-[#00ff41]/30"></div>
                   <div className="absolute top-4 right-4 w-3 h-3 border-t border-r border-[#00ff41]/30"></div>

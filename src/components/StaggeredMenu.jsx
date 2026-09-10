@@ -329,7 +329,7 @@ export const StaggeredMenu = ({
         </div>
 
         {/* Desktop Quick Nav Links - Properly Aligned */}
-        <nav className="hidden lg:flex items-center gap-8 font-mono text-xs uppercase tracking-[0.2em] font-semibold text-gray-300">
+        <nav className="hidden lg:flex items-center gap-8 font-mono text-xs uppercase tracking-[0.2em] font-semibold text-gray-300 absolute left-1/2 -translate-x-1/2">
           {items.map((item, idx) => (
             <a
               key={idx}

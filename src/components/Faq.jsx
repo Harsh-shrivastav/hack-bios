@@ -19,6 +19,29 @@ const Faq = () => {
 
   return (
     <section id="faq" className="py-24 relative overflow-hidden">
+      {/* Hero character — left side, outside the panel, in the empty margin */}
+      <div className="hidden xl:block absolute left-4 bottom-16 z-10 pointer-events-none select-none">
+        <div className="relative">
+          <div className="absolute -top-20 left-4 bg-[#050a05]/90 border border-[#00ff41]/40 rounded-lg px-4 py-3 font-mono text-[#00ff41] text-xs leading-relaxed whitespace-nowrap drop-shadow-[0_0_8px_rgba(0,255,65,0.3)]">
+            Got questions?<br />I've got you covered.<br />Let's break it down.
+          </div>
+          <img
+            src="/characters/faq-hero.png"
+            alt=""
+            aria-hidden="true"
+            className="w-64 2xl:w-80 h-auto object-contain drop-shadow-[0_0_20px_rgba(0,255,65,0.15)]"
+          />
+        </div>
+      </div>
+
+      {/* Ship — right side, outside the panel, in the empty margin */}
+      <img
+        src="/characters/faq-ship.png"
+        alt=""
+        aria-hidden="true"
+        className="hidden xl:block absolute right-0 top-1/3 -translate-y-1/2 w-72 2xl:w-96 h-auto object-contain opacity-90 pointer-events-none select-none drop-shadow-[0_0_20px_rgba(0,255,65,0.15)]"
+      />
+
       <div className="container mx-auto px-4 md:px-8 relative z-10 max-w-3xl">
         {/* Floating glass panel */}
         <div className="relative bg-[#050a05]/85 backdrop-blur-xl border border-[#00ff41]/10 rounded-xl p-8 md:p-12">

@@ -7,6 +7,16 @@ const photos = [
   '2.jpg',
   '3.jpg',
   '4.jpg',
+  'DSC00060.JPG',
+  'DSC00118.JPG',
+  'DSC00132.JPG',
+  'DSC08925.JPG',
+  'DSC09184.JPG',
+  'DSC09204.JPG',
+  'DSC09248.JPG',
+  'DSC09283.JPG',
+  'DSC09322.JPG',
+  'DSC09336.JPG',
 ];
 
 // Duplicate the array so the marquee loops seamlessly
@@ -34,10 +44,10 @@ const PhotoMarquee = ({ direction = 'left', speed = 40 }) => (
             alt=""
             loading="lazy"
             onError={(e) => { e.target.style.display = 'none'; }}
-            className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+            className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-[filter,opacity,transform] duration-700"
           />
           {/* Subtle glow border on hover */}
-          <div className="absolute inset-0 border border-transparent group-hover:border-[#00ff41]/20 group-hover:shadow-[0_0_12px_rgba(0,255,65,0.1)] transition-all duration-500 rounded-lg pointer-events-none" />
+          <div className="absolute inset-0 border border-transparent group-hover:border-[#00ff41]/20 group-hover:shadow-[0_0_12px_rgba(0,255,65,0.1)] transition-[border-color,box-shadow] duration-500 rounded-lg pointer-events-none" />
         </div>
       ))}
     </div>

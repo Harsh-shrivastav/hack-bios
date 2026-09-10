@@ -2,7 +2,7 @@ import React from 'react';
 import { LocationTag } from './ui/location-tag';
 import AnimatedTextCycle from './ui/animated-text-cycle';
 
-const DEVFOLIO_LINK = 'https://hackbios2k26.devfolio.co/';
+const DEVFOLIO_LINK = 'https://hackbios2k26.devfolio.co/overview';
 
 const EventIntro = () => {
   return (

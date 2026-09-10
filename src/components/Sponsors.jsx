@@ -17,8 +17,7 @@ const tiers = [
     glowHover: 'rgba(0,229,255,0.25)',
     sponsors: [
       {
-        src: 'https://raw.githubusercontent.com/devfolio/brand-assets/main/Logo/Devfolio_Logo-White.svg',
-        fallback: 'https://devfolio.co/blog/content/images/2021/04/Devfolio_Logo-White.png',
+        src: '/sponsors/Devfolio.png',
         alt: 'DEVFOLIO',
       },
       {
@@ -68,12 +67,14 @@ const tiers = [
 /*  Circuit-trace connector between tiers — a glowing energy conduit  */
 /*  with staggered pulses flowing from one tier's color into the next */
 /* ------------------------------------------------------------------ */
-const TierConnector = ({ fromColor = '#00ff41', toColor = '#00ff41', id }) => {
+const TierConnector = ({ fromColor = '#00ff41', toColor = '#00ff41', id, extraGap = false }) => {
   const gradId = `tier-connector-grad-${id}`;
   const glowId = `tier-connector-glow-${id}`;
+  const svgHeight = extraGap ? 168 : 56;
+  const totalHeight = svgHeight + 8; // matches the svg's own top/bottom node padding
   return (
-    <div className="flex justify-center py-2 pointer-events-none select-none" aria-hidden="true">
-      <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+    <div className={extraGap ? 'flex justify-center py-6 md:py-10 pointer-events-none select-none' : 'flex justify-center py-2 pointer-events-none select-none'} aria-hidden="true">
+      <svg width="72" height={totalHeight} viewBox={`0 0 72 ${totalHeight}`} fill="none">
         <defs>
           <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor={fromColor} />
@@ -89,22 +90,22 @@ const TierConnector = ({ fromColor = '#00ff41', toColor = '#00ff41', id }) => {
         </defs>
 
         {/* soft ambient glow behind the whole conduit */}
-        <line x1="36" y1="4" x2="36" y2="68" stroke={`url(#${gradId})`} strokeWidth="8" opacity="0.12" filter={`url(#${glowId})`} />
+        <line x1="36" y1="4" x2="36" y2={totalHeight - 4} stroke={`url(#${gradId})`} strokeWidth="8" opacity="0.12" filter={`url(#${glowId})`} />
 
         {/* main spine */}
-        <line x1="36" y1="4" x2="36" y2="68" stroke={`url(#${gradId})`} strokeWidth="2" opacity="0.7" filter={`url(#${glowId})`} />
+        <line x1="36" y1="4" x2="36" y2={totalHeight - 4} stroke={`url(#${gradId})`} strokeWidth="2" opacity="0.7" filter={`url(#${glowId})`} />
 
         {/* diamond junction nodes, top and bottom */}
         <rect x="36" y="0" width="8" height="8" fill={fromColor} opacity="0.9" transform="rotate(45 36 4)" filter={`url(#${glowId})`} />
-        <rect x="36" y="64" width="8" height="8" fill={toColor} opacity="0.9" transform="rotate(45 36 68)" filter={`url(#${glowId})`} />
+        <rect x="36" y={totalHeight - 8} width="8" height="8" fill={toColor} opacity="0.9" transform={`rotate(45 36 ${totalHeight - 4})`} filter={`url(#${glowId})`} />
 
         {/* two staggered pulses flowing down the spine */}
         <circle cx="36" r="3" fill={toColor} filter={`url(#${glowId})`}>
-          <animate attributeName="cy" values="4;68" dur="2.2s" repeatCount="indefinite" />
+          <animate attributeName="cy" values={`4;${totalHeight - 4}`} dur="2.2s" repeatCount="indefinite" />
           <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.12;0.8;1" dur="2.2s" repeatCount="indefinite" />
         </circle>
         <circle cx="36" r="2" fill={toColor} filter={`url(#${glowId})`}>
-          <animate attributeName="cy" values="4;68" dur="2.2s" begin="1.1s" repeatCount="indefinite" />
+          <animate attributeName="cy" values={`4;${totalHeight - 4}`} dur="2.2s" begin="1.1s" repeatCount="indefinite" />
           <animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.12;0.8;1" dur="2.2s" begin="1.1s" repeatCount="indefinite" />
         </circle>
       </svg>
@@ -280,9 +281,45 @@ const Sponsors = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="sponsors" className="py-24 relative overflow-hidden bg-[#020502]">
+    <section ref={sectionRef} id="sponsors" className="py-24 relative overflow-visible bg-[#020502]">
       {/* Ambient glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#00e5ff]/4 rounded-full blur-[150px] pointer-events-none" />
+
+      {/* Alien X — atmospheric figure on the left. Positioned behind the container (z-10), so the
+          Diamond/Gold/Silver/Bronze cards naturally sit in front of and progressively obscure him
+          as the page scrolls — no fade mask needed, the cards themselves do that job.
+          Only shows from xl+ where the container actually leaves real side-margin to sit in
+          (Tailwind's container snaps to the breakpoint's own max-width, so md/lg have ~0 margin). */}
+      <img
+        src="/characters/alien-x-cropped.png"
+        alt=""
+        aria-hidden="true"
+        className="hidden xl:block absolute pointer-events-none select-none z-[1]
+                   xl:h-[22rem] xl:-left-8 xl:top-40
+                   2xl:h-[45rem] 2xl:-left-40 2xl:top-56
+                   w-auto opacity-80"
+        style={{
+          filter: 'drop-shadow(0 0 30px rgba(0,229,255,0.08))',
+        }}
+      />
+
+      {/* Echo Echo (+ duplicates) — sits in the Diamond→Gold gap, behind the container (z-10)
+          just like Alien X, so the cards naturally crop his top/bottom without any spacing changes.
+          xl+ only for the same reason as Alien X — no real margin exists below that. */}
+      <img
+        src="/characters/echo-echo.png"
+        alt=""
+        aria-hidden="true"
+        className="hidden xl:block absolute pointer-events-none select-none z-[1]"
+        style={{
+          width: 'min(44rem, 18vw)',
+          height: 'auto',
+          right: '1rem',
+          top: '95rem',
+          opacity: 0.9,
+          filter: 'drop-shadow(0 0 24px rgba(0,255,65,0.15))',
+        }}
+      />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Heading */}
@@ -308,7 +345,7 @@ const Sponsors = () => {
                 {/* Tier rig */}
                 <div
                   ref={(el) => (tierRefs.current[tierIndex] = el)}
-                  className="relative group w-full rounded-xl overflow-hidden"
+                  className="relative group w-full max-w-2xl mx-auto rounded-xl overflow-hidden"
                 >
                   {/* Gradient border */}
                   <div className="absolute inset-0 rounded-xl p-[1px]">
@@ -322,7 +359,7 @@ const Sponsors = () => {
 
                   {/* Card body */}
                   <div
-                    className="relative bg-[#050a05]/90 backdrop-blur-xl rounded-xl border border-white/5 transition-shadow duration-500 px-6 py-8 md:px-10 md:py-10"
+                    className="relative bg-[#050a05]/90 backdrop-blur-xl rounded-xl border border-white/5 transition-shadow duration-500 px-6 py-5 md:px-10 md:py-6"
                     style={{ boxShadow: `0 0 40px ${tier.glow}` }}
                   >
                     {/* Corner rivets */}
@@ -332,7 +369,7 @@ const Sponsors = () => {
                     <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r pointer-events-none" style={{ borderColor: `${tier.color}30` }} />
 
                     {/* Tier header */}
-                    <div className="text-center mb-8">
+                    <div className="text-center mb-5">
                       <h3
                         className="font-mono text-lg md:text-xl uppercase tracking-[0.25em] font-bold mb-2"
                         style={{ color: tier.color, textShadow: `0 0 16px ${tier.glow}` }}
@@ -372,7 +409,7 @@ const Sponsors = () => {
 
                 {/* Circuit connector to next tier */}
                 {tierIndex < tiers.length - 1 && (
-                  <TierConnector id={tierIndex} fromColor={tier.color} toColor={tiers[tierIndex + 1].color} />
+                  <TierConnector id={tierIndex} fromColor={tier.color} toColor={tiers[tierIndex + 1].color} extraGap />
                 )}
               </React.Fragment>
             );

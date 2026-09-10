@@ -4,7 +4,7 @@ import AnimatedTextCycle from './ui/animated-text-cycle';
 
 const FINAL_SCALE = 0.78;
 const REVEAL_VH = 180; // extra scroll distance (in viewport-heights) the reveal takes
-const DEVFOLIO_LINK = 'https://hackbios2k26.devfolio.co/';
+const DEVFOLIO_LINK = 'https://hackbios2k26.devfolio.co/overview';
 
 const ease = (t) => t * t * (3 - 2 * t);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));

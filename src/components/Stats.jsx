@@ -56,10 +56,27 @@ const StatBox = ({ target, label, prefix = "", suffix = "" }) => {
 
 const Stats = () => {
   return (
-    <section className="relative py-12 w-full overflow-hidden">
+    <section className="relative pt-24 pb-12 w-full overflow-visible">
       <div className="mx-auto container px-4">
-        <div className="relative bg-[#050a05]/85 backdrop-blur-xl border border-[#00ff41]/15 rounded-xl overflow-hidden">
-          <div className="absolute inset-0 bg-circuit-pattern opacity-[0.02] pointer-events-none"></div>
+        <div className="relative bg-[#050a05]/85 backdrop-blur-xl border border-[#00ff41]/15 rounded-xl overflow-visible">
+          <div className="absolute inset-0 bg-circuit-pattern opacity-[0.02] pointer-events-none rounded-xl overflow-hidden"></div>
+
+          {/* Driba — sitting on the left edge, legs resting on the bar */}
+          <img
+            src="/characters/driba.png"
+            alt=""
+            aria-hidden="true"
+            className="hidden sm:block absolute -top-20 md:-top-24 left-4 md:left-10 w-24 md:w-32 h-auto object-contain z-10 pointer-events-none select-none drop-shadow-[0_0_15px_rgba(0,255,65,0.15)]"
+          />
+
+          {/* Blubik — sitting on the right edge, legs resting on the bar */}
+          <img
+            src="/characters/blubik.png"
+            alt=""
+            aria-hidden="true"
+            className="hidden sm:block absolute -top-20 md:-top-24 right-4 md:right-10 w-24 md:w-32 h-auto object-contain z-10 pointer-events-none select-none drop-shadow-[0_0_15px_rgba(0,255,65,0.15)]"
+          />
+
           <div className="relative flex flex-wrap md:flex-nowrap justify-center md:justify-around items-center gap-8 md:gap-0">
             <StatBox target={300} suffix="+" label="Attendees" />
             <StatBox target={70} suffix="+" label="Teams" />

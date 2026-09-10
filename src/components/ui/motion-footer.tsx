@@ -40,10 +40,8 @@ if (typeof window !== "undefined") {
 // 1. THEME-ADAPTIVE INLINE STYLES
 // -------------------------------------------------------------------------
 const STYLES = `
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
-
 .cinematic-footer-wrapper {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Share Tech Mono', monospace;
   -webkit-font-smoothing: antialiased;
   
   /* Dynamic Variables using standard shadcn/tailwind v4 tokens */
@@ -354,7 +352,7 @@ export function CinematicFooter() {
             <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
               {/* App Store Links (Primary) */}
               <div className="flex flex-wrap justify-center gap-4 w-full">
-                <MagneticButton as="a" href="https://hackbios2k26.devfolio.co/overview" target="_blank" rel="noopener noreferrer" className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group border-[#00ff41]/30">
+                <MagneticButton as="a" href="https://devfolio.co/" target="_blank" rel="noopener noreferrer" className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group border-[#00ff41]/30">
                   <ArrowUpRight className="w-5 h-5 text-[#00ff41] group-hover:text-foreground transition-colors" />
                   Register on Devfolio
                 </MagneticButton>
@@ -441,13 +439,13 @@ export function CinematicFooter() {
 
               {/* Devfolio Verification Link */}
               <a 
-                href="https://hackbios2k26.devfolio.co/overview" 
+                href="https://devfolio.co" 
                 target="_blank" 
                 rel="noreferrer noopener" 
                 className="flex items-center justify-center footer-glass-pill px-6 py-3 rounded-full border-[#00e5ff]/20 hover:border-[#00e5ff]/60 transition-colors"
               >
                 <img 
-                  src="/partners/devfolio.webp" 
+                  src="https://raw.githubusercontent.com/devfolioco/brand-assets/main/Logo/Devfolio%20Logo%20-%20White.svg" 
                   alt="DEVFOLIO LOGO" 
                   className="h-5 object-contain" 
                 />

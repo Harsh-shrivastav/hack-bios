@@ -9,21 +9,20 @@ const SponsorMarquee = () => {
     "IMG_1695.jpg", "IMG_1696.jpg", "IMG_1697.jpg"
   ];
 
-  // Double the array for seamless looping
   const duplicatedSponsors = [...sponsors, ...sponsors];
 
   return (
-    <div className="py-12 bg-[#050a05] border-y border-[#00ff41]/10 overflow-hidden relative">
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#050a05] to-transparent z-10"></div>
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#050a05] to-transparent z-10"></div>
+    <section className="py-16 overflow-hidden relative">
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-transparent to-transparent z-10"></div>
+      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-transparent to-transparent z-10"></div>
       
-      <div className="mb-6 px-4">
+      <div className="mb-8 px-4 relative z-20">
         <h3 className="text-center font-mono text-[#00ff41] text-xs uppercase tracking-[0.5em] opacity-50">
           / PAST_PARTNERS_DATABASE
         </h3>
       </div>
 
-      <div className="flex animate-marquee hover:pause whitespace-nowrap">
+      <div className="flex animate-marquee hover:pause whitespace-nowrap relative z-20">
         {duplicatedSponsors.map((icon, i) => (
           <div 
             key={i} 
@@ -37,22 +36,7 @@ const SponsorMarquee = () => {
           </div>
         ))}
       </div>
-
-      <style jsx="true">{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-          animation: marquee 40s linear infinite;
-          display: flex;
-          width: max-content;
-        }
-        .animate-marquee:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
-    </div>
+    </section>
   );
 };
 

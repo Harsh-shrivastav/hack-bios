@@ -46,7 +46,7 @@ const StatBox = ({ target, label, prefix = "", suffix = "" }) => {
 
   return (
     <div ref={boxRef} className="flex flex-col items-center justify-center p-6 border-r border-[#00ff41]/20 last:border-r-0 min-w-[200px]">
-      <h3 className="text-4xl md:text-5xl font-mono font-bold text-[#00ff41] mb-2 box-shadow-neon" style={{ textShadow: "0 0 10px rgba(0,255,65,0.5)" }}>
+      <h3 className="text-4xl md:text-5xl font-mono font-bold text-[#00ff41] mb-2" style={{ textShadow: "0 0 10px rgba(0,255,65,0.5)" }}>
         {prefix}{count}{suffix}
       </h3>
       <p className="font-sans text-gray-400 uppercase tracking-widest text-sm">{label}</p>
@@ -56,17 +56,17 @@ const StatBox = ({ target, label, prefix = "", suffix = "" }) => {
 
 const Stats = () => {
   return (
-    <section className="border-y border-[#00ff41]/30 bg-[#020502] w-full overflow-hidden relative">
-      <div className="absolute inset-0 bg-circuit-pattern opacity-[0.02]"></div>
-      
-      {/* Ticker animation container */}
-      <div className="w-full mx-auto container py-8">
-        <div className="flex flex-wrap md:flex-nowrap justify-center md:justify-around items-center gap-8 md:gap-0">
-          <StatBox target={300} suffix="+" label="Attendees" />
-          <StatBox target={70} suffix="+" label="Teams" />
-          <StatBox target={1} prefix="₹" suffix="L+" label="Prizes" />
-          <StatBox target={3} label="Editions" />
-          <StatBox target={24} label="Hours" />
+    <section className="relative py-12 w-full overflow-hidden">
+      <div className="mx-auto container px-4">
+        <div className="relative bg-[#050a05]/85 backdrop-blur-xl border border-[#00ff41]/15 rounded-xl overflow-hidden">
+          <div className="absolute inset-0 bg-circuit-pattern opacity-[0.02] pointer-events-none"></div>
+          <div className="relative flex flex-wrap md:flex-nowrap justify-center md:justify-around items-center gap-8 md:gap-0">
+            <StatBox target={300} suffix="+" label="Attendees" />
+            <StatBox target={70} suffix="+" label="Teams" />
+            <StatBox target={1} prefix="₹" suffix="L+" label="Prizes" />
+            <StatBox target={3} label="Editions" />
+            <StatBox target={24} label="Hours" />
+          </div>
         </div>
       </div>
     </section>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Lenis from '@studio-freight/lenis';
 
-import BootAnimation from './components/BootAnimation';
 import CustomCursor from './components/CustomCursor';
 import StaggeredMenu from './components/StaggeredMenu';
 import FloatingSocials from './components/FloatingSocials';
+import CircuitBorders from './components/CircuitBorders';
+import CodonStream from './components/CodonStream';
 import Hero from './components/Hero';
 import Stats from './components/Stats';
 import GooeyBanner from './components/GooeyBanner';
@@ -13,15 +14,12 @@ import Tracks from './components/Tracks';
 import PrizePool from './components/PrizePool';
 import Timeline from './components/Timeline';
 import PreviousEdition from './components/PreviousEdition';
-import Testimonials from './components/Testimonials';
 import SponsorMarquee from './components/SponsorMarquee';
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import { CinematicFooter } from './components/ui/motion-footer';
-import CallForSponsors from './components/CallForSponsors';
 import Sponsors from './components/Sponsors';
-import PartnerBanners from './components/PartnerBanners';
-import MLHBadge from './components/MLHBadge';
+import PastPartners from './components/PastPartners';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -29,8 +27,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
-  const [booting, setBooting] = useState(true);
-
+  const introDone = true;
   const menuItems = [
     { label: 'About', link: '#about' },
     // { label: 'Tracks', link: '#tracks' },
@@ -43,7 +40,7 @@ function App() {
     { label: 'GitHub', link: '#' },
     { label: 'Twitter', link: '#' },
     { label: 'LinkedIn', link: '#' },
-    { label: 'Discord', link: 'https://discord.gg/JbtFtYrUds' }
+    { label: 'Discord', link: 'https://discord.gg/kDpNBsU3qt' }
   ];
 
   useEffect(() => {
@@ -57,15 +54,23 @@ function App() {
       lerp: 0.08,
     });
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+    // Keep GSAP ScrollTrigger in sync with Lenis's smoothed scroll —
+    // required for the Hero pin/scrub reveal to track accurately.
+    // Driving Lenis through GSAP's own ticker (instead of a separate rAF
+    // loop) is the documented-correct integration — running both at once
+    // is what was causing the Hero pin to mis-measure and never engage.
+    const lenisTick = (time) => lenis.raf(time * 1000);
+    gsap.ticker.add(lenisTick);
+    gsap.ticker.lagSmoothing(0);
+    lenis.on('scroll', ScrollTrigger.update);
 
-    requestAnimationFrame(raf);
+    // Layout (webfonts, images) can still be settling on first mount;
+    // re-measure once things stabilize so the Hero pin's scroll distance
+    // is calculated correctly.
+    const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 300);
 
     // Global Scroll Transitions
-    if (!booting) {
+    if (introDone) {
       const sections = document.querySelectorAll('section, main > div');
       sections.forEach((section) => {
         section.classList.add('section-reveal');
@@ -80,24 +85,32 @@ function App() {
     }
 
     return () => {
+      clearTimeout(refreshTimer);
+      gsap.ticker.remove(lenisTick);
       lenis.destroy();
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
-  }, [booting]);
+  }, [introDone]);
 
   return (
-    <div className="bg-[#050a05] text-white min-h-screen selection:bg-[#00ff41] selection:text-[#050a05]">
-      <CustomCursor />
-      <FloatingSocials />
-      {!booting && <MLHBadge />}
+    <div className="bg-transparent text-white min-h-screen selection:bg-[#00ff41] selection:text-[#050a05]">
+         <CustomCursor />
+   <FloatingSocials />
+   
+   {introDone && (
+     <>
+       <CodonStream />
+       <CircuitBorders />
+     </>
+   )}
       
-      {booting && <BootAnimation onComplete={() => setBooting(false)} />}
-      
-      <div className={`animate-fade-in overflow-x-hidden ${booting ? 'h-screen overflow-hidden' : ''}`}>
-          <StaggeredMenu 
-            items={menuItems}
-            socialItems={socialItems}
-          />
+      <div className={`animate-fade-in ${!introDone ? 'h-screen overflow-hidden' : ''}`}>
+          {introDone && (
+            <StaggeredMenu 
+              items={menuItems}
+              socialItems={socialItems}
+            />
+          )}
           
           <main className="relative">
             {/* Global cinematic background particles/glow could go here */}
@@ -108,24 +121,22 @@ function App() {
 
             <div id="hero-section"><Hero /></div>
             <div className="relative z-10">
+              {/* <EventIntro /> — merged into Hero */}
               <Stats />
-              <GooeyBanner />
               <About />
               {/* <Tracks /> */}
               {/* <PrizePool /> */}
               {/* <Timeline /> */}
-              <PartnerBanners />
               <Sponsors />
-              <CallForSponsors />
-              <SponsorMarquee />
+              <PastPartners />
               <PreviousEdition />
-              <Testimonials />
-              <Faq />
               <Contact />
+              <Faq />
+              <CinematicFooter />
             </div>
           </main>
           
-          <CinematicFooter />
+          
       </div>
     </div>
   );

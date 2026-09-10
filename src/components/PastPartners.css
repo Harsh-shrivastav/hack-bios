@@ -1,0 +1,17 @@
+/* Gentle independent vertical drift for each past-partner logo tile.
+   Duration/delay are randomized per-tile via inline style in the component,
+   so tiles never move in sync with each other. */
+@keyframes float-y {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-tile {
+  animation-name: float-y;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}

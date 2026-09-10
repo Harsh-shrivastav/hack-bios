@@ -3,9 +3,7 @@ import { GooeyText } from "./ui/gooey-text-morphing";
 
 const GooeyBanner = () => {
   return (
-    <section className="relative py-6 md:py-8 bg-[#050a05] overflow-hidden border-t border-b border-[#00ff41]/10 flex items-center justify-center">
-      <div className="absolute inset-0 bg-circuit-pattern opacity-[0.03] pointer-events-none"></div>
-      
+    <section className="relative py-8 md:py-12 overflow-hidden flex items-center justify-center">
       {/* Background glow for the gooey text */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-[#00ff41]/5 rounded-full blur-[100px] pointer-events-none z-0 mix-blend-screen"></div>
 

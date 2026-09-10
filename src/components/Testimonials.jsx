@@ -56,10 +56,9 @@ const thirdColumn = testimonials.slice(6, 9);
 
 const Testimonials = () => {
   return (
-    <section id="testimonials" className="py-24 bg-[#050a05] relative overflow-hidden border-t border-[#00ff41]/20">
+    <section id="testimonials" className="py-24 relative overflow-hidden">
       
       {/* Background Ambience */}
-      <div className="absolute inset-0 bg-circuit-pattern opacity-[0.02] pointer-events-none"></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#00ff41]/5 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -71,13 +70,13 @@ const Testimonials = () => {
           className="flex flex-col items-center justify-center max-w-2xl mx-auto text-center"
         >
           <div className="flex justify-center mb-4">
-            <div className="border border-[#00e5ff]/30 text-[#00e5ff] py-1.5 px-4 rounded-full font-mono text-sm tracking-widest uppercase bg-[#00e5ff]/5 backdrop-blur-sm">
-              Terminal Logs
+            <div className="border border-[#00ff41]/30 text-[#00ff41] py-1.5 px-4 rounded-full font-mono text-xs tracking-widest uppercase bg-[#00ff41]/5 backdrop-blur-sm">
+              / TERMINAL_LOGS
             </div>
           </div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-mono text-white tracking-tighter mb-6 glitch" data-text="WHAT HACKERS SAY">
-            WHAT <span className="text-[#00ff41]">HACKERS</span> SAY
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-mono font-bold text-white tracking-tighter mb-6 glitch uppercase" data-text="/ WHAT HACKERS SAY">
+            <span className="text-[#00ff41]">/</span> WHAT <span className="text-[#00ff41]">HACKERS</span> SAY
           </h2>
           <p className="text-gray-400 font-sans text-lg">
             Read the output logs from our previous participants. Real stories of grit, code, and 24-hour caffeine fueled development.

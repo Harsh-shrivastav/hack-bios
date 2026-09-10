@@ -77,7 +77,7 @@ export default function AnimatedTextCycle({
       </span>
 
       <motion.span 
-        className="relative inline-flex items-center justify-center -translate-y-1"
+        className="relative inline-flex items-center justify-center "
         animate={{ 
           width,
           transition: { 

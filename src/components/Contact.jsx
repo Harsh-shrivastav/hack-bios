@@ -3,91 +3,104 @@ import { Phone, MapPin, Mail } from 'lucide-react';
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-24 relative bg-[#050a05] border-t border-[#00ff41]/20">
-      <div className="absolute inset-0 bg-circuit-pattern opacity-[0.03]"></div>
-      
+    <section id="contact" className="py-24 relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-mono font-bold mb-4 glitch uppercase" data-text="/ CONTACT">
-            <span className="text-[#00ff41]">/</span> CONTACT
-          </h2>
-          <p className="text-gray-400 font-sans">Reach out for any inquiries.</p>
-        </div>
+        {/* Floating glass panel */}
+        <div className="relative bg-[#050a05]/85 backdrop-blur-xl border border-[#00ff41]/10 rounded-xl p-8 md:p-12">
+          <div className="absolute inset-0 bg-circuit-pattern opacity-[0.03] pointer-events-none rounded-xl"></div>
+          <div className="relative">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-mono font-bold mb-6 glitch uppercase tracking-tighter" data-text="/ CONTACT">
+                <span className="text-[#00ff41]">/</span> CONTACT
+              </h2>
+              <p className="text-gray-400 font-sans">Reach out for any inquiries.</p>
+            </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          
-          {/* Contact Info */}
-          <div className="space-y-8">
-            <div className="bg-[#0a120a] p-8 border border-[#00e5ff]/30 box-shadow-neon relative">
-              <div className="absolute top-0 right-0 w-8 h-8 border-l border-b border-[#00e5ff]/30 bg-[#00e5ff]/5"></div>
-              <h3 className="text-2xl font-mono text-white mb-6 uppercase tracking-wider text-[#00e5ff]">Organizers</h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#00e5ff]/10 flex items-center justify-center border border-[#00e5ff]/50">
-                    <Phone className="text-[#00e5ff]" size={18} />
-                  </div>
-                  <div>
-                    <p className="font-mono text-white">Harsh Shrivastava</p>
-                    <p className="font-mono text-[#00e5ff] text-sm">+91 88178 70843</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#00e5ff]/10 flex items-center justify-center border border-[#00e5ff]/50">
-                    <Phone className="text-[#00e5ff]" size={18} />
-                  </div>
-                  <div>
-                    <p className="font-mono text-white">Priyanshu Yadav</p>
-                    <p className="font-mono text-[#00e5ff] text-sm">+91 62616 73875</p>
+              {/* Contact Info */}
+              <div className="space-y-8">
+                <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00e5ff]/30 relative rounded-lg">
+                  {/* Corner details */}
+                  <div className="absolute top-4 left-4 w-3 h-3 border-t border-l border-[#00e5ff]/30"></div>
+                  <div className="absolute top-4 right-4 w-3 h-3 border-t border-r border-[#00e5ff]/30"></div>
+                  <div className="absolute bottom-4 left-4 w-3 h-3 border-b border-l border-[#00e5ff]/30"></div>
+                  <div className="absolute bottom-4 right-4 w-3 h-3 border-b border-r border-[#00e5ff]/30"></div>
+                  <h3 className="text-2xl font-mono text-white mb-6 uppercase tracking-wider text-[#00e5ff]">Organizers</h3>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-[#00e5ff]/10 flex items-center justify-center border border-[#00e5ff]/50">
+                        <Phone className="text-[#00e5ff]" size={18} />
+                      </div>
+                      <div>
+                        <p className="font-mono text-white">Harsh Shrivastava</p>
+                        <p className="font-mono text-[#00e5ff] text-sm">+91 88178 70843</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-[#00e5ff]/10 flex items-center justify-center border border-[#00e5ff]/50">
+                        <Phone className="text-[#00e5ff]" size={18} />
+                      </div>
+                      <div>
+                        <p className="font-mono text-white">Priyanshu Yadav</p>
+                        <p className="font-mono text-[#00e5ff] text-sm">+91 62616 73875</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-[#00e5ff]/10 flex items-center justify-center border border-[#00e5ff]/50">
+                        <Phone className="text-[#00e5ff]" size={18} />
+                      </div>
+                      <div>
+                        <p className="font-mono text-white">Yuvraj Singh Sahu</p>
+                        <p className="font-mono text-[#00e5ff] text-sm">+91 78048 48124</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#00e5ff]/10 flex items-center justify-center border border-[#00e5ff]/50">
-                    <Phone className="text-[#00e5ff]" size={18} />
-                  </div>
-                  <div>
-                    <p className="font-mono text-white">Yuvraj Singh Sahu</p>
-                    <p className="font-mono text-[#00e5ff] text-sm">+91 78048 48124</p>
-                  </div>
+                <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg">
+                  {/* Corner details */}
+                  <div className="absolute top-4 left-4 w-3 h-3 border-t border-l border-[#00ff41]/30"></div>
+                  <div className="absolute top-4 right-4 w-3 h-3 border-t border-r border-[#00ff41]/30"></div>
+                  <div className="absolute bottom-4 left-4 w-3 h-3 border-b border-l border-[#00ff41]/30"></div>
+                  <div className="absolute bottom-4 right-4 w-3 h-3 border-b border-r border-[#00ff41]/30"></div>
+                  <h3 className="text-2xl font-mono text-white mb-6 uppercase tracking-wider text-[#00ff41]">Faculty Supervisors</h3>
+                  <p className="font-mono text-gray-300 text-sm leading-loose">
+                    Dr. Siddhartha Choubey <br/>
+                    Dr. Abha Choubey <br/>
+                    SSTC Hackathon Committee
+                  </p>
                 </div>
               </div>
-            </div>
 
-            <div className="bg-[#0a120a] p-8 border border-[#00ff41]/30 box-shadow-neon">
-              <h3 className="text-2xl font-mono text-white mb-6 uppercase tracking-wider text-[#00ff41]">Faculty Supervisors</h3>
-              <p className="font-mono text-gray-300 text-sm leading-loose">
-                Dr. Siddhartha Choubey <br/>
-                Dr. Abha Choubey <br/>
-                SSTC Hackathon Committee
-              </p>
+              {/* Map */}
+              <div className="bg-[#0a120a]/80 backdrop-blur-sm border border-[#00ff41]/30 p-2 relative h-[400px] lg:h-auto overflow-hidden group rounded-lg">
+                <div className="absolute top-0 left-0 w-full h-1 bg-[#00ff41] z-10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500"></div>
+                <div className="absolute inset-0 bg-transparent pointer-events-none group-hover:bg-[#00ff41]/5 transition-colors duration-500 z-10 flex items-center justify-center">
+                   {/* Map overlay targeted crosshair */}
+                   <div className="w-12 h-12 border border-[#00ff41] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-150 group-hover:scale-100">
+                     <div className="w-2 h-2 bg-[#00ff41] rounded-full"></div>
+                     <div className="absolute w-[200%] h-[1px] bg-[#00ff41]/50"></div>
+                     <div className="absolute h-[200%] w-[1px] bg-[#00ff41]/50"></div>
+                   </div>
+                </div>
+                {/* Embedded Google Map - SSTC Admin Block, Junwani, Bhilai */}
+                <iframe 
+                  src="https://www.google.com/maps?q=21.217218,81.307414&output=embed" 
+                  className="w-full h-full grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 rounded-lg"
+                  style={{ border: 0 }} 
+                  allowFullScreen="" 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="SSTC Bhilai Map"
+                ></iframe>
+              </div>
+
             </div>
           </div>
-
-          {/* Map */}
-          <div className="bg-[#020502] border border-[#00ff41]/30 p-2 relative h-[400px] lg:h-auto overflow-hidden group">
-            <div className="absolute top-0 left-0 w-full h-1 bg-[#00ff41] z-10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500"></div>
-            <div className="absolute inset-0 bg-transparent pointer-events-none group-hover:bg-[#00ff41]/5 transition-colors duration-500 z-10 flex items-center justify-center">
-               {/* Map overlay targeted crosshair */}
-               <div className="w-12 h-12 border border-[#00ff41] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-150 group-hover:scale-100">
-                 <div className="w-2 h-2 bg-[#00ff41] rounded-full"></div>
-                 <div className="absolute w-[200%] h-[1px] bg-[#00ff41]/50"></div>
-                 <div className="absolute h-[200%] w-[1px] bg-[#00ff41]/50"></div>
-               </div>
-            </div>
-            {/* Embedded Google Map - SSTC Admin Block, Junwani, Bhilai */}
-            <iframe 
-              src="https://www.google.com/maps?q=21.217218,81.307414&output=embed" 
-              className="w-full h-full grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
-              style={{ border: 0 }} 
-              allowFullScreen="" 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-              title="SSTC Bhilai Map"
-            ></iframe>
-          </div>
-
         </div>
       </div>
     </section>

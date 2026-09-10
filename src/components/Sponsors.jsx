@@ -20,17 +20,14 @@ const tiers = [
         src: 'https://raw.githubusercontent.com/devfolio/brand-assets/main/Logo/Devfolio_Logo-White.svg',
         fallback: 'https://devfolio.co/blog/content/images/2021/04/Devfolio_Logo-White.png',
         alt: 'DEVFOLIO',
-        href: 'https://hackbios2k26.devfolio.co/',
       },
       {
         src: 'https://cdn.simpleicons.org/github/ffffff',
         alt: 'GITHUB',
-        href: 'https://github.com/',
       },
       {
         src: 'https://cdn.simpleicons.org/elevenlabs/ffffff',
         alt: 'ELEVENLABS',
-        href: 'https://elevenlabs.io/',
       },
     ],
   },
@@ -62,29 +59,58 @@ const tiers = [
   {
     src: '/past sponsors icons/xyz.webp',
     alt: 'XYZ DOMAINS',
-    href: 'https://gen.xyz/',
   },
 ],
   },
 ];
 
 /* ------------------------------------------------------------------ */
-/*  Circuit-trace connector between tiers                             */
+/*  Circuit-trace connector between tiers — a glowing energy conduit  */
+/*  with staggered pulses flowing from one tier's color into the next */
 /* ------------------------------------------------------------------ */
-const TierConnector = ({ color = '#00ff41' }) => (
-  <div className="flex justify-center py-2 pointer-events-none select-none" aria-hidden="true">
-    <svg width="28" height="36" viewBox="0 0 28 36" fill="none" className="opacity-30">
-      <line x1="14" y1="0" x2="14" y2="12" stroke={color} strokeWidth="1" />
-      <polyline points="14,12 22,12 22,24" stroke={color} strokeWidth="1" fill="none" />
-      <line x1="22" y1="24" x2="14" y2="24" stroke={color} strokeWidth="1" />
-      <circle cx="14" cy="12" r="2" fill={color} opacity="0.6" />
-      <circle cx="22" cy="12" r="1.5" fill={color} opacity="0.5" />
-      <circle cx="22" cy="24" r="1.5" fill={color} opacity="0.5" />
-      <circle cx="14" cy="24" r="2" fill={color} opacity="0.6" />
-      <line x1="14" y1="24" x2="14" y2="36" stroke={color} strokeWidth="1" />
-    </svg>
-  </div>
-);
+const TierConnector = ({ fromColor = '#00ff41', toColor = '#00ff41', id }) => {
+  const gradId = `tier-connector-grad-${id}`;
+  const glowId = `tier-connector-glow-${id}`;
+  return (
+    <div className="flex justify-center py-2 pointer-events-none select-none" aria-hidden="true">
+      <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+        <defs>
+          <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={fromColor} />
+            <stop offset="100%" stopColor={toColor} />
+          </linearGradient>
+          <filter id={glowId} x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* soft ambient glow behind the whole conduit */}
+        <line x1="36" y1="4" x2="36" y2="68" stroke={`url(#${gradId})`} strokeWidth="8" opacity="0.12" filter={`url(#${glowId})`} />
+
+        {/* main spine */}
+        <line x1="36" y1="4" x2="36" y2="68" stroke={`url(#${gradId})`} strokeWidth="2" opacity="0.7" filter={`url(#${glowId})`} />
+
+        {/* diamond junction nodes, top and bottom */}
+        <rect x="36" y="0" width="8" height="8" fill={fromColor} opacity="0.9" transform="rotate(45 36 4)" filter={`url(#${glowId})`} />
+        <rect x="36" y="64" width="8" height="8" fill={toColor} opacity="0.9" transform="rotate(45 36 68)" filter={`url(#${glowId})`} />
+
+        {/* two staggered pulses flowing down the spine */}
+        <circle cx="36" r="3" fill={toColor} filter={`url(#${glowId})`}>
+          <animate attributeName="cy" values="4;68" dur="2.2s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.12;0.8;1" dur="2.2s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="36" r="2" fill={toColor} filter={`url(#${glowId})`}>
+          <animate attributeName="cy" values="4;68" dur="2.2s" begin="1.1s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.12;0.8;1" dur="2.2s" begin="1.1s" repeatCount="indefinite" />
+        </circle>
+      </svg>
+    </div>
+  );
+};
 
 /* ------------------------------------------------------------------ */
 /*  Individual sponsor capsule                                        */
@@ -137,21 +163,20 @@ const SponsorCapsule = ({ sponsor, tierColor, tierGlow, tierGlowHover, refProp, 
           background: `linear-gradient(180deg, ${tierColor}08 0%, transparent 40%, ${tierColor}05 100%)`,
         }}
       />
-            <a href={sponsor.href} target="_blank" rel="noopener noreferrer" className="relative z-10 flex items-center justify-center w-full h-full">
-        <img
-          src={sponsor.src}
-          alt={sponsor.alt}
-          onError={(e) => {
-            e.target.onerror = null;
-            if (sponsor.fallback) e.target.src = sponsor.fallback;
-          }}
-          className="h-6 md:h-8 w-auto object-contain"
-          style={{ filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.08))' }}
-        />
-      </a>
+      <img
+        src={sponsor.src}
+        alt={sponsor.alt}
+        onError={(e) => {
+          e.target.onerror = null;
+          if (sponsor.fallback) e.target.src = sponsor.fallback;
+        }}
+        className="h-6 md:h-8 w-auto object-contain pointer-events-none relative z-10"
+        style={{ filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.08))' }}
+      />
     </div>
   );
 };
+
 /* ------------------------------------------------------------------ */
 /*  Empty-state capsule (Gold / Silver)                               */
 /* ------------------------------------------------------------------ */
@@ -255,7 +280,7 @@ const Sponsors = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="sponsors" className="py-24 relative overflow-hidden">
+    <section ref={sectionRef} id="sponsors" className="py-24 relative overflow-hidden bg-[#020502]">
       {/* Ambient glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#00e5ff]/4 rounded-full blur-[150px] pointer-events-none" />
 
@@ -347,7 +372,7 @@ const Sponsors = () => {
 
                 {/* Circuit connector to next tier */}
                 {tierIndex < tiers.length - 1 && (
-                  <TierConnector color={tier.color} />
+                  <TierConnector id={tierIndex} fromColor={tier.color} toColor={tiers[tierIndex + 1].color} />
                 )}
               </React.Fragment>
             );

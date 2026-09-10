@@ -20,42 +20,42 @@ const Contact = () => {
               
               {/* Contact Info */}
               <div className="space-y-8">
-                <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00e5ff]/30 relative rounded-lg">
+                <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg">
                   {/* Corner details */}
-                  <div className="absolute top-4 left-4 w-3 h-3 border-t border-l border-[#00e5ff]/30"></div>
-                  <div className="absolute top-4 right-4 w-3 h-3 border-t border-r border-[#00e5ff]/30"></div>
-                  <div className="absolute bottom-4 left-4 w-3 h-3 border-b border-l border-[#00e5ff]/30"></div>
-                  <div className="absolute bottom-4 right-4 w-3 h-3 border-b border-r border-[#00e5ff]/30"></div>
-                  <h3 className="text-2xl font-mono text-white mb-6 uppercase tracking-wider text-[#00e5ff]">Organizers</h3>
+                  <div className="absolute top-4 left-4 w-3 h-3 border-t border-l border-[#00ff41]/30"></div>
+                  <div className="absolute top-4 right-4 w-3 h-3 border-t border-r border-[#00ff41]/30"></div>
+                  <div className="absolute bottom-4 left-4 w-3 h-3 border-b border-l border-[#00ff41]/30"></div>
+                  <div className="absolute bottom-4 right-4 w-3 h-3 border-b border-r border-[#00ff41]/30"></div>
+                  <h3 className="text-2xl font-mono text-white mb-6 uppercase tracking-wider text-[#00ff41]">Organizers</h3>
                   
                   <div className="space-y-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-[#00e5ff]/10 flex items-center justify-center border border-[#00e5ff]/50">
-                        <Phone className="text-[#00e5ff]" size={18} />
+                      <div className="w-10 h-10 rounded-full bg-[#00ff41]/10 flex items-center justify-center border border-[#00ff41]/50">
+                        <Phone className="text-[#00ff41]" size={18} />
                       </div>
                       <div>
                         <p className="font-mono text-white">Harsh Shrivastava</p>
-                        <p className="font-mono text-[#00e5ff] text-sm">+91 88178 70843</p>
+                        <p className="font-mono text-[#00ff41] text-sm">+91 88178 70843</p>
                       </div>
                     </div>
                     
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-[#00e5ff]/10 flex items-center justify-center border border-[#00e5ff]/50">
-                        <Phone className="text-[#00e5ff]" size={18} />
+                      <div className="w-10 h-10 rounded-full bg-[#00ff41]/10 flex items-center justify-center border border-[#00ff41]/50">
+                        <Phone className="text-[#00ff41]" size={18} />
                       </div>
                       <div>
                         <p className="font-mono text-white">Priyanshu Yadav</p>
-                        <p className="font-mono text-[#00e5ff] text-sm">+91 62616 73875</p>
+                        <p className="font-mono text-[#00ff41] text-sm">+91 62616 73875</p>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-[#00e5ff]/10 flex items-center justify-center border border-[#00e5ff]/50">
-                        <Phone className="text-[#00e5ff]" size={18} />
+                      <div className="w-10 h-10 rounded-full bg-[#00ff41]/10 flex items-center justify-center border border-[#00ff41]/50">
+                        <Phone className="text-[#00ff41]" size={18} />
                       </div>
                       <div>
                         <p className="font-mono text-white">Yuvraj Singh Sahu</p>
-                        <p className="font-mono text-[#00e5ff] text-sm">+91 78048 48124</p>
+                        <p className="font-mono text-[#00ff41] text-sm">+91 78048 48124</p>
                       </div>
                     </div>
                   </div>

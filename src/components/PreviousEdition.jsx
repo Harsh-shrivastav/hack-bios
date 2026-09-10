@@ -15,8 +15,8 @@ const doublePhotos = [...photos, ...photos];
 const PhotoMarquee = ({ direction = 'left', speed = 40 }) => (
   <div className="relative overflow-hidden">
     {/* Edge fades */}
-    <div className="absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-[#050a05] to-transparent z-10 pointer-events-none" />
-    <div className="absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-[#050a05] to-transparent z-10 pointer-events-none" />
+    <div className="absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-[#020502] to-transparent z-10 pointer-events-none" />
+    <div className="absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-[#020502] to-transparent z-10 pointer-events-none" />
 
     <div
       className="flex gap-4 md:gap-5 w-max"
@@ -46,11 +46,17 @@ const PhotoMarquee = ({ direction = 'left', speed = 40 }) => (
 
 const PreviousEdition = () => {
   return (
-    <section className="py-20 md:py-28 relative overflow-hidden">
-      {/* Minimal label */}
-      <div className="container mx-auto px-4 md:px-8 relative z-10 mb-10">
-        <p className="text-center font-mono text-[#00ff41] text-xs uppercase tracking-[0.5em] opacity-40">
-          / GLIMPSES
+    <section className="py-20 md:py-28 relative overflow-hidden bg-[#020502]">
+      {/* Section heading — now matches the animated glitch treatment used by every other section title */}
+      <div className="container mx-auto px-4 md:px-8 relative z-10 mb-12">
+        <h2
+          className="text-center text-4xl md:text-5xl lg:text-6xl font-mono font-bold mb-4 glitch uppercase tracking-tighter"
+          data-text="/ GLIMPSES"
+        >
+          <span className="text-[#00ff41]">/</span> GLIMPSES
+        </h2>
+        <p className="text-center text-gray-400 font-sans text-sm md:text-base max-w-xl mx-auto opacity-70">
+          Moments from previous editions of HackBIOS.
         </p>
       </div>
 

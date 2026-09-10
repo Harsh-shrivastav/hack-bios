@@ -23,6 +23,8 @@ import PastPartners from './components/PastPartners';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import MLHBadge from './components/MLHBadge';
+import PartnerBanners from './components/PartnerBanners';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -96,7 +98,7 @@ function App() {
     <div className="bg-transparent text-white min-h-screen selection:bg-[#00ff41] selection:text-[#050a05]">
          <CustomCursor />
    <FloatingSocials />
-   
+   <MLHBadge />
    {introDone && (
      <>
        <CodonStream />
@@ -127,6 +129,7 @@ function App() {
               {/* <Tracks /> */}
               {/* <PrizePool /> */}
               {/* <Timeline /> */}
+              <PartnerBanners />
               <Sponsors />
               <PastPartners />
               <PreviousEdition />

@@ -20,14 +20,17 @@ const tiers = [
         src: 'https://raw.githubusercontent.com/devfolio/brand-assets/main/Logo/Devfolio_Logo-White.svg',
         fallback: 'https://devfolio.co/blog/content/images/2021/04/Devfolio_Logo-White.png',
         alt: 'DEVFOLIO',
+        href: 'https://hackbios2k26.devfolio.co/',
       },
       {
         src: 'https://cdn.simpleicons.org/github/ffffff',
         alt: 'GITHUB',
+        href: 'https://github.com/',
       },
       {
         src: 'https://cdn.simpleicons.org/elevenlabs/ffffff',
         alt: 'ELEVENLABS',
+        href: 'https://elevenlabs.io/',
       },
     ],
   },
@@ -59,6 +62,7 @@ const tiers = [
   {
     src: '/past sponsors icons/xyz.webp',
     alt: 'XYZ DOMAINS',
+    href: 'https://gen.xyz/',
   },
 ],
   },
@@ -133,20 +137,21 @@ const SponsorCapsule = ({ sponsor, tierColor, tierGlow, tierGlowHover, refProp, 
           background: `linear-gradient(180deg, ${tierColor}08 0%, transparent 40%, ${tierColor}05 100%)`,
         }}
       />
-      <img
-        src={sponsor.src}
-        alt={sponsor.alt}
-        onError={(e) => {
-          e.target.onerror = null;
-          if (sponsor.fallback) e.target.src = sponsor.fallback;
-        }}
-        className="h-6 md:h-8 w-auto object-contain pointer-events-none relative z-10"
-        style={{ filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.08))' }}
-      />
+            <a href={sponsor.href} target="_blank" rel="noopener noreferrer" className="relative z-10 flex items-center justify-center w-full h-full">
+        <img
+          src={sponsor.src}
+          alt={sponsor.alt}
+          onError={(e) => {
+            e.target.onerror = null;
+            if (sponsor.fallback) e.target.src = sponsor.fallback;
+          }}
+          className="h-6 md:h-8 w-auto object-contain"
+          style={{ filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.08))' }}
+        />
+      </a>
     </div>
   );
 };
-
 /* ------------------------------------------------------------------ */
 /*  Empty-state capsule (Gold / Silver)                               */
 /* ------------------------------------------------------------------ */

@@ -7,6 +7,11 @@ const CustomCursor = () => {
   const ringPos = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
+    // Touch devices have no mouse to track — mounting the RAF loop and
+    // DOM writes below would just burn battery/CPU every frame for a
+    // cursor that can never be seen. Bail out before any of that starts.
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
     const onMouseMove = (e) => {
       mousePos.current.x = e.clientX;
       mousePos.current.y = e.clientY;

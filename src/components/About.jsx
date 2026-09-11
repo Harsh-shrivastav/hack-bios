@@ -3,7 +3,7 @@ import { TextGenerateEffect } from './ui/text-generate-effect';
 
 const About = () => {
   return (
-    <section id="about" className="py-24 relative overflow-hidden bg-[#020502]">
+    <section id="about" className="pt-8 pb-24 md:py-24 relative overflow-hidden bg-[#020502]">
       {/* Dynamic Background Gradients */}
       <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-[#00ff41]/5 blur-[120px] rounded-full pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-[#00e5ff]/5 blur-[120px] rounded-full pointer-events-none"></div>

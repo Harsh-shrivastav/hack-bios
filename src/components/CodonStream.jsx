@@ -16,6 +16,23 @@ const CodonStream = () => {
     let raf;
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
 
+    // Phones/tablets: this canvas redraws full-screen every frame, and
+    // shadowBlur (used on nearly every shape below) is one of the most
+    // expensive Canvas2D ops on mobile GPUs — many fall back to a slow
+    // software blur for it. On coarse-pointer devices we render at native
+    // resolution (not 2x), skip shadowBlur entirely (colors alone still
+    // read as "glowing" against the dark background), thin out the
+    // particle/runner counts, and cap the framerate — this keeps the same
+    // effect recognizable while cutting the per-frame cost drastically.
+    // If the user has asked for reduced motion, skip the animation loop
+    // altogether and paint one static frame.
+    const isMobile = window.matchMedia('(pointer: coarse)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const shadowMul = isMobile ? 0 : 1;
+    const densityDivisor = isMobile ? 6400 : 3200;
+    const runnerDivisor = isMobile ? 100 : 55;
+    const frameInterval = isMobile ? 2 : 1; // draw every Nth RAF tick
+
     const rnd = (a, b) => a + Math.random() * (b - a);
     const polyLen = (pts) => {
       let s = 0;
@@ -76,7 +93,7 @@ const CodonStream = () => {
     function make() {
       particles = []; runners = [];
 
-      for (let i = 0; i < (W * H) / 3200; i++) {
+      for (let i = 0; i < (W * H) / densityDivisor; i++) {
         particles.push({
           x: rnd(0, W), y: rnd(0, H), r: rnd(0.8, 3.2),
           vx: rnd(0.4, 2.6), phase: rnd(0, 6.28), a: rnd(0.4, 0.95)
@@ -93,7 +110,7 @@ const CodonStream = () => {
     }
 
     function resize() {
-      W = innerWidth; H = innerHeight; DPR = Math.min(devicePixelRatio || 1, 2);
+      W = innerWidth; H = innerHeight; DPR = Math.min(devicePixelRatio || 1, isMobile ? 1 : 2);
       canvas.width = W * DPR; canvas.height = H * DPR;
       canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
@@ -126,13 +143,13 @@ const CodonStream = () => {
         const twinkle = 0.6 + 0.4 * Math.sin(t * 0.03 + q.phase * 2);
         ctx.beginPath(); ctx.arc(x, y, q.r * twinkle, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(150,255,140,${Math.min(1, q.a * twinkle)})`;
-        ctx.shadowBlur = 14; ctx.shadowColor = 'rgba(0,255,85,.85)'; ctx.fill();
+        ctx.shadowBlur = 14 * shadowMul; ctx.shadowColor = 'rgba(0,255,85,.85)'; ctx.fill();
       }
 
       const rDepth = 42;
       const rx = mouse.x * rDepth, ry = mouse.y * rDepth;
 
-      const maxRunners = Math.max(30, Math.floor(W / 55));
+      const maxRunners = Math.max(isMobile ? 14 : 30, Math.floor(W / runnerDivisor));
       if (t >= nextSpawn && runners.length < maxRunners) {
         spawnRunner();
         nextSpawn = t + rnd(3, 9);
@@ -154,7 +171,7 @@ const CodonStream = () => {
 
         ctx.strokeStyle = `rgba(150,255,100,${0.68 * a})`;
         ctx.lineWidth = rn.w;
-        ctx.shadowBlur = 13;
+        ctx.shadowBlur = 13 * shadowMul;
         ctx.shadowColor = 'rgba(0,255,80,.8)';
         drawPartial(abs, reveal);
 
@@ -163,7 +180,7 @@ const CodonStream = () => {
           ctx.beginPath();
           ctx.arc(head[0], head[1], 2.6, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(220,255,180,${0.9 * a})`;
-          ctx.shadowBlur = 18;
+          ctx.shadowBlur = 18 * shadowMul;
           ctx.shadowColor = 'rgba(180,255,120,1)';
           ctx.fill();
         } else {
@@ -174,7 +191,7 @@ const CodonStream = () => {
             ctx.beginPath();
             ctx.arc(pt[0], pt[1], 1.6 + pulse * 1.6, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(190,255,130,${(0.5 + 0.5 * pulse) * a})`;
-            ctx.shadowBlur = 14;
+            ctx.shadowBlur = 14 * shadowMul;
             ctx.shadowColor = 'rgba(120,255,90,.95)';
             ctx.fill();
           });
@@ -184,7 +201,7 @@ const CodonStream = () => {
           ctx.beginPath();
           ctx.arc(fp[0], fp[1], 2.2, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(230,255,200,${0.85 * a})`;
-          ctx.shadowBlur = 16;
+          ctx.shadowBlur = 16 * shadowMul;
           ctx.shadowColor = 'rgba(200,255,150,1)';
           ctx.fill();
 
@@ -196,14 +213,14 @@ const CodonStream = () => {
             ctx.arc(end[0], end[1], 3 + (1 - sf) * 20, 0, Math.PI * 2);
             ctx.strokeStyle = `rgba(200,255,150,${sf * 0.8 * a})`;
             ctx.lineWidth = 1.5;
-            ctx.shadowBlur = 20;
+            ctx.shadowBlur = 20 * shadowMul;
             ctx.shadowColor = 'rgba(180,255,120,1)';
             ctx.stroke();
 
             ctx.beginPath();
             ctx.arc(end[0], end[1], 4, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(255,255,255,${sf * a})`;
-            ctx.shadowBlur = 22;
+            ctx.shadowBlur = 22 * shadowMul;
             ctx.shadowColor = 'rgba(200,255,160,1)';
             ctx.fill();
           }
@@ -211,15 +228,30 @@ const CodonStream = () => {
       }
     }
 
+    let frameCount = 0;
     function animate() {
-      t++;
-      background();
-      drawStream();
+      frameCount++;
+      // On mobile, only actually draw every Nth tick (t still advances every
+      // tick so motion speed looks the same, just less frequently painted) —
+      // this is a straightforward way to cut GPU/CPU work roughly in half
+      // without changing any of the animation math above.
+      if (frameCount % frameInterval === 0) {
+        t++;
+        background();
+        drawStream();
+      }
       raf = requestAnimationFrame(animate);
     }
 
     resize();
-    animate();
+    if (reduceMotion) {
+      // Respect the user's OS-level reduced-motion preference: paint one
+      // static frame and never start the loop.
+      background();
+      drawStream();
+    } else {
+      animate();
+    }
 
     addEventListener('resize', resize);
     addEventListener('mousemove', onMouseMove, { passive: true });

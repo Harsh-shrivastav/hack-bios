@@ -4,17 +4,11 @@ import Lenis from '@studio-freight/lenis';
 import CustomCursor from './components/CustomCursor';
 import StaggeredMenu from './components/StaggeredMenu';
 import FloatingSocials from './components/FloatingSocials';
-import CircuitBorders from './components/CircuitBorders';
 import CodonStream from './components/CodonStream';
 import Hero from './components/Hero';
 import Stats from './components/Stats';
-import GooeyBanner from './components/GooeyBanner';
 import About from './components/About';
-import Tracks from './components/Tracks';
-import PrizePool from './components/PrizePool';
-import Timeline from './components/Timeline';
 import PreviousEdition from './components/PreviousEdition';
-import SponsorMarquee from './components/SponsorMarquee';
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import { CinematicFooter } from './components/ui/motion-footer';
@@ -124,12 +118,7 @@ function App() {
          <CustomCursor />
    <FloatingSocials />
    <MLHBadge />
-   {introDone && (
-     <>
-       <CodonStream />
-       <CircuitBorders />
-     </>
-   )}
+   {introDone && <CodonStream />}
       
       <div className={`animate-fade-in ${!introDone ? 'h-screen overflow-hidden' : ''}`}>
           {introDone && (
@@ -148,12 +137,13 @@ function App() {
 
             <div id="hero-section"><Hero /></div>
             <div className="relative z-10">
-              {/* <EventIntro /> — merged into Hero */}
+              {/* EventIntro — merged into Hero */}
               <Stats />
               <About />
-              {/* <Tracks /> */}
-              {/* <PrizePool /> */}
-              {/* <Timeline /> */}
+              {/* Tracks, PrizePool, Timeline — not currently used on the site;
+                  see src/components/ if reintroducing them (Timeline in
+                  particular pulls in three.js — only import it if it's
+                  actually going back on the page) */}
               <PartnerBanners />
               <Sponsors />
               <PastPartners />

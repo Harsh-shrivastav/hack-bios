@@ -311,3 +311,38 @@ html.lenis {
 .accent-breathe {
   animation: breathe 4.5s ease-in-out infinite;
 }
+
+/* ---- Mobile/tablet GPU cost reduction ----
+   backdrop-filter (the frosted-glass panels) and large filter: blur()
+   glows are two of the heaviest things a mobile GPU can be asked to
+   composite, especially while scrolling. None of the individual
+   components set these per-breakpoint, so capping them once here brings
+   every panel/glow in the app down together without hunting through each
+   file. Values are trimmed, not removed — the frosted-glass/glow look is
+   kept, just cheaper to render. Desktop is completely unaffected. */
+@media (max-width: 768px) {
+  [class*="backdrop-blur"] {
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+  }
+  [class*="blur-["] {
+    filter: blur(40px) !important;
+  }
+  .animate-pulse,
+  .accent-breathe {
+    animation: none !important;
+    opacity: 0.6;
+  }
+}
+
+/* Respect the OS-level "reduce motion" preference everywhere, not just
+   on the canvas background — infinite decorative animations are pure
+   GPU/battery cost for someone who's asked for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse,
+  .accent-breathe,
+  .glitch-heading::before,
+  .glitch-heading::after {
+    animation: none !important;
+  }
+}

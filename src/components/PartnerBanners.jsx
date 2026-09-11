@@ -34,9 +34,6 @@ const PartnerBanners = () => {
               key feel across: he's physically reaching for the sponsors, not just floating nearby. */}
           <div className="md:hidden relative z-20 flex justify-start w-full -mb-10 pointer-events-none select-none">
             <div className="relative ml-2">
-              <p className="font-mono text-[#00ff41] text-[10px] italic tracking-wide mb-1 drop-shadow-[0_0_8px_rgba(0,255,65,0.6)]">
-                mine... all mine...
-              </p>
               <img
                 src="/characters/sly.png"
                 alt=""
@@ -49,7 +46,7 @@ const PartnerBanners = () => {
           {/* Argit — desktop: grabbing the MLH card. Same image rendered twice, clipped in half:
               body layer sits BEHIND the card (negative z-index), arm/claw layer sits ABOVE it (z-30).
               Both layers share this absolutely-positioned wrapper so cards never shift/resize. */}
-          <div className="hidden md:block absolute md:-left-[18rem] lg:-left-[26rem] xl:-left-[30rem] md:top-[-12rem] lg:top-[-12rem] xl:top-[-12rem] pointer-events-none select-none w-72 lg:w-[34rem] xl:w-[40rem]">
+<div className="hidden md:block absolute md:-left-[18rem] lg:-left-[26rem] xl:-left-[30rem] md:top-[-12rem] lg:top-[-12rem] xl:top-[-12rem] pointer-events-none select-none w-64 lg:w-[30rem] xl:w-[36rem]">
             {/* invisible sizer — establishes the wrapper's real width/height so the two absolute layers below line up exactly */}
             <img src="/characters/sly.png" alt="" aria-hidden="true" className="w-full h-auto object-contain opacity-0" />
 

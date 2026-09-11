@@ -75,7 +75,7 @@ const Contact = () => {
                   <p className="font-mono text-gray-300 text-sm leading-loose">
                     Dr. Siddhartha Choubey <br/>
                     Dr. Abha Choubey <br/>
-                    SSTC Hackbios Committee
+                    SSTC HackBIOS Committee
                   </p>
                 </div>
               </div>

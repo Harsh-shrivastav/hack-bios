@@ -3,7 +3,7 @@ import { LocationTag } from './ui/location-tag';
 import AnimatedTextCycle from './ui/animated-text-cycle';
 
 const FINAL_SCALE = 0.78;
-const REVEAL_VH_DESKTOP = -10; // extra scroll distance (in viewport-heights) the reveal takes
+const REVEAL_VH_DESKTOP = 0; // extra scroll distance (in viewport-heights) the reveal takes
 const REVEAL_VH_MOBILE = 40;   // same reveal, compressed — 180vh reads as dead/empty scroll on a narrow portrait screen
 const DEVFOLIO_LINK = 'https://hackbios2k26.devfolio.co/overview';
 

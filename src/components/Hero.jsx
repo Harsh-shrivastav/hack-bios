@@ -3,8 +3,8 @@ import { LocationTag } from './ui/location-tag';
 import AnimatedTextCycle from './ui/animated-text-cycle';
 
 const FINAL_SCALE = 0.78;
-const REVEAL_VH_DESKTOP = 180; // extra scroll distance (in viewport-heights) the reveal takes
-const REVEAL_VH_MOBILE = 60;   // same reveal, compressed — 180vh reads as dead/empty scroll on a narrow portrait screen
+const REVEAL_VH_DESKTOP = -10; // extra scroll distance (in viewport-heights) the reveal takes
+const REVEAL_VH_MOBILE = 40;   // same reveal, compressed — 180vh reads as dead/empty scroll on a narrow portrait screen
 const DEVFOLIO_LINK = 'https://hackbios2k26.devfolio.co/overview';
 
 const ease = (t) => t * t * (3 - 2 * t);
@@ -16,15 +16,18 @@ const Hero = () => {
   const windowRef = useRef(null);    // the physical window: glass + content + frame, scales as ONE object
   const stationRef = useRef(null);   // ancient station architecture, hidden until reveal
   const frameRef = useRef(null);     // window frame chrome, hidden until reveal
-  const [revealVh, setRevealVh] = useState(REVEAL_VH_DESKTOP);
+const [revealVh, setRevealVh] = useState(REVEAL_VH_DESKTOP);
 
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
-    const applyRevealVh = () => setRevealVh(mq.matches ? REVEAL_VH_MOBILE : REVEAL_VH_DESKTOP);
-    applyRevealVh();
-    mq.addEventListener('change', applyRevealVh);
-    return () => mq.removeEventListener('change', applyRevealVh);
-  }, []);
+useEffect(() => {
+  const mq = window.matchMedia('(max-width: 767px)');
+  const applyRevealVh = () =>
+    setRevealVh(mq.matches ? REVEAL_VH_MOBILE : REVEAL_VH_DESKTOP);
+
+  applyRevealVh();
+  mq.addEventListener('change', applyRevealVh);
+
+  return () => mq.removeEventListener('change', applyRevealVh);
+}, []);
 
   useEffect(() => {
     // Staggered entrance for the content on first load — independent of the scroll reveal.
@@ -66,7 +69,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div ref={outerRef} className="relative w-full" style={{ height: `${100 + revealVh}vh` }}>
+    <div ref={outerRef} className="relative w-full" style={{ height: `${60 + revealVh}vh` }}>
     <div ref={wrapRef} className="sticky top-0 w-full h-screen overflow-hidden bg-transparent">
       {/* ================= ANCIENT STATION — hidden until reveal ================= */}
       <div ref={stationRef} className="absolute inset-0 z-0 opacity-0 pointer-events-none">

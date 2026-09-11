@@ -281,7 +281,7 @@ const Sponsors = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="sponsors" className="py-24 relative overflow-visible bg-[#020502]">
+    <section ref={sectionRef} id="sponsors" className="py-24 relative overflow-hidden xl:overflow-visible bg-[#020502]">
       {/* Ambient glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#00e5ff]/4 rounded-full blur-[150px] pointer-events-none" />
 
@@ -333,6 +333,27 @@ const Sponsors = () => {
           <p className="text-gray-400 font-sans text-sm md:text-base max-w-xl mx-auto opacity-70">
             Each tier powers a different layer of HackBIOS 3.0.
           </p>
+
+          {/* Mobile-only compact character row — Alien X + Echo Echo side by side, in normal
+              flow (not overlapping cards like the desktop versions, which need real side-margin
+              that doesn't exist below xl). Keeps some character presence on phones instead of
+              just disappearing entirely. */}
+          <div className="xl:hidden flex items-end justify-center gap-4 mt-8 pointer-events-none select-none">
+            <img
+              src="/characters/alien-x-cropped.png"
+              alt=""
+              aria-hidden="true"
+              className="h-20 sm:h-28 w-auto object-contain opacity-90"
+              style={{ filter: 'drop-shadow(0 0 20px rgba(0,229,255,0.12))' }}
+            />
+            <img
+              src="/characters/echo-echo.png"
+              alt=""
+              aria-hidden="true"
+              className="h-16 sm:h-24 w-auto object-contain opacity-90"
+              style={{ filter: 'drop-shadow(0 0 16px rgba(0,255,65,0.15))' }}
+            />
+          </div>
         </div>
 
         {/* Tier stack — full width, vertically connected */}

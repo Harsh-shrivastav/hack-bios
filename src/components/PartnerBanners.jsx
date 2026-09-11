@@ -27,17 +27,23 @@ const PartnerBanners = () => {
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="relative flex flex-col items-center gap-6 max-w-3xl mx-auto">
 
-          {/* Argit — mobile: simple, stacked above the cards, no overlap needed since there's no side room */}
-          <div className="md:hidden relative mb-2 pointer-events-none select-none">
-            <p className="font-mono text-[#00ff41] text-xs italic tracking-wide mb-1 ml-2 drop-shadow-[0_0_8px_rgba(0,255,65,0.6)]">
-              mine... all mine...
-            </p>
-            <img
-              src="/characters/sly.png"
-              alt=""
-              aria-hidden="true"
-              className="w-32 sm:w-44 h-auto object-contain mx-auto drop-shadow-[0_0_20px_rgba(0,255,65,0.15)]"
-            />
+          {/* Argit — mobile: reaching onto the top-left corner of the first (MLH) card, matching
+              the "grabbing" personality from desktop. Simpler than the desktop version (single
+              image, no clip-path split-layer) since that technique needs per-viewport tuning
+              that's too fragile to get right blind on narrow screens — this still gets the
+              key feel across: he's physically reaching for the sponsors, not just floating nearby. */}
+          <div className="md:hidden relative z-20 flex justify-start w-full -mb-10 pointer-events-none select-none">
+            <div className="relative ml-2">
+              <p className="font-mono text-[#00ff41] text-[10px] italic tracking-wide mb-1 drop-shadow-[0_0_8px_rgba(0,255,65,0.6)]">
+                mine... all mine...
+              </p>
+              <img
+                src="/characters/sly.png"
+                alt=""
+                aria-hidden="true"
+                className="w-44 sm:w-56 h-auto object-contain drop-shadow-[0_0_20px_rgba(0,255,65,0.15)]"
+              />
+            </div>
           </div>
 
           {/* Argit — desktop: grabbing the MLH card. Same image rendered twice, clipped in half:
@@ -61,16 +67,9 @@ const PartnerBanners = () => {
               className="absolute inset-0 w-full h-full object-contain"
               style={{ clipPath: 'inset(0 0 0 52%)', zIndex: 30 }}
             />
-
-            <p
-              className="absolute -top-4 left-4 font-mono text-[#00ff41] text-xs italic tracking-wide drop-shadow-[0_0_8px_rgba(0,255,65,0.6)]"
-              style={{ zIndex: 30 }}
-            >
-              mine... all mine...
-            </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 md:gap-8 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8 w-full relative z-10">
             {banners.map((partner) => (
               <a
                 key={partner.name}
@@ -82,8 +81,15 @@ const PartnerBanners = () => {
                 <span className="font-mono text-sm md:text-lg uppercase tracking-[0.15em] font-bold text-white mb-3 text-center">
                   {partner.label}
                 </span>
-                <div className="w-full bg-white rounded-lg border-2 border-red-500 px-6 py-8 md:py-10 flex items-center justify-center shadow-[0_0_20px_rgba(255,0,0,0.15)] transition-transform duration-300 group-hover:scale-105">
-                  <img src={partner.logo} alt={partner.name} className="h-10 md:h-14 w-auto object-contain" />
+                <div className="w-full h-[152px] md:h-[152px] bg-white rounded-lg border-2 border-red-500 px-6 flex items-center justify-center shadow-[0_0_20px_rgba(255,0,0,0.15)] transition-transform duration-300 group-hover:scale-105">
+<img
+  src={partner.logo}
+  alt={partner.name}
+  className={partner.name === 'Devfolio'
+    ? 'h-24 md:h-32 w-auto object-contain'
+    : 'h-10 md:h-14 w-auto object-contain'
+  }
+/>
                 </div>
               </a>
             ))}

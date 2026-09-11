@@ -4,7 +4,7 @@ import { ChevronDown } from 'lucide-react';
 const faqs = [
   { q: "Who can participate?", a: "Any college student with a valid student ID. We also have special prize categories for all-girls teams and first-time hackers." },
   { q: "How much does it cost?", a: "HackBIOS is completely free! We provide meals, workspace, and a ton of swag. You just need to bring your laptop and energy." },
-  { q: "What is the team size?", a: "You can form a team of 2 to 4 members. Solo participations are allowed but a team is highly recommended." },
+  { q: "What is the team size?", a: "You can form a team of 2 to 4 members." },
   { q: "Is it an online or offline hackathon?", a: "HackBIOS 3.0 is fundamentally an offline, in-person hackathon held at Shri Shankaracharya Technical Campus, Bhilai." },
   { q: "Will there be food?", a: "Yes, absolutely! We will provide regular meals, midnight snacks, and endless coffee to keep you running." },
   { q: "What if I don't know how to code?", a: "Hackathons are the best place to learn! We'll have mentors, workshops, and beginner-friendly resources. Design and presentation skills are equally important." },
@@ -52,6 +52,30 @@ const Faq = () => {
                 <span className="text-[#00ff41]">/</span> FAQ
               </h2>
               <p className="text-gray-400 font-sans">Common queries from the grid.</p>
+
+              {/* Mobile-only compact character row — hero + speech bubble + ship, in normal
+                  flow (the desktop versions need real side-margin outside this panel that
+                  doesn't exist below xl, so they can't just be un-hidden as-is). */}
+              <div className="xl:hidden flex items-end justify-center gap-3 mt-6 pointer-events-none select-none">
+                <img
+                  src="/characters/faq-ship.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-12 sm:h-16 w-auto object-contain opacity-80 mb-2"
+                  style={{ filter: 'drop-shadow(0 0 12px rgba(0,255,65,0.12))' }}
+                />
+                <div className="relative">
+                  <div className="absolute -top-14 left-1/2 -translate-x-1/2 bg-[#050a05]/90 border border-[#00ff41]/40 rounded-lg px-3 py-2 font-mono text-[#00ff41] text-[10px] leading-tight whitespace-nowrap drop-shadow-[0_0_8px_rgba(0,255,65,0.3)]">
+                    Got questions? I've got you.
+                  </div>
+                  <img
+                    src="/characters/faq-hero.png"
+                    alt=""
+                    aria-hidden="true"
+                    className="h-20 sm:h-28 w-auto object-contain drop-shadow-[0_0_16px_rgba(0,255,65,0.15)]"
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="space-y-4">

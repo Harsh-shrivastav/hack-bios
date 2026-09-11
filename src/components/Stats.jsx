@@ -45,7 +45,7 @@ const StatBox = ({ target, label, prefix = "", suffix = "" }) => {
   }, [target]);
 
   return (
-    <div ref={boxRef} className="flex flex-col items-center justify-center p-6 border-r border-[#00ff41]/20 last:border-r-0 min-w-[200px]">
+    <div ref={boxRef} className="flex flex-col items-center justify-center p-6 border-r border-[#00ff41]/20 last:border-r-0 min-w-[140px] sm:min-w-[200px]">
       <h3 className="text-4xl md:text-5xl font-mono font-bold text-[#00ff41] mb-2" style={{ textShadow: "0 0 10px rgba(0,255,65,0.5)" }}>
         {prefix}{count}{suffix}
       </h3>
@@ -66,7 +66,7 @@ const Stats = () => {
             src="/characters/driba.png"
             alt=""
             aria-hidden="true"
-            className="hidden sm:block absolute -top-20 md:-top-24 left-4 md:left-10 w-24 md:w-32 h-auto object-contain z-10 pointer-events-none select-none drop-shadow-[0_0_15px_rgba(0,255,65,0.15)]"
+            className="block absolute -top-16 md:-top-24 left-2 md:left-10 w-16 md:w-32 h-auto object-contain z-10 pointer-events-none select-none drop-shadow-[0_0_15px_rgba(0,255,65,0.15)]"
           />
 
           {/* Blubik — sitting on the right edge, legs resting on the bar */}
@@ -74,7 +74,7 @@ const Stats = () => {
             src="/characters/blubik.png"
             alt=""
             aria-hidden="true"
-            className="hidden sm:block absolute -top-20 md:-top-24 right-4 md:right-10 w-24 md:w-32 h-auto object-contain z-10 pointer-events-none select-none drop-shadow-[0_0_15px_rgba(0,255,65,0.15)]"
+            className="block absolute -top-16 md:-top-24 right-2 md:right-10 w-16 md:w-32 h-auto object-contain z-10 pointer-events-none select-none drop-shadow-[0_0_15px_rgba(0,255,65,0.15)]"
           />
 
           <div className="relative flex flex-wrap md:flex-nowrap justify-center md:justify-around items-center gap-8 md:gap-0">

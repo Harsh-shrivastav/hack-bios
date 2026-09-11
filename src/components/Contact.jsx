@@ -23,7 +23,7 @@ const Contact = () => {
               {/* Contact Info */}
               <div className="space-y-8">
                 <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg overflow-hidden">
-                  <img src="/characters/trio.png" alt="" aria-hidden="true" className="absolute right-0 bottom-0 h-[85%] w-auto object-contain opacity-100 pointer-events-none select-none" style={{ maskImage: 'linear-gradient(to left, black 40%, transparent 95%)', WebkitMaskImage: 'linear-gradient(to left, black 40%, transparent 95%)' }} />
+                  <img src="/characters/trio.png" alt="" aria-hidden="true" className="absolute right-0 bottom-0 h-[85%] w-auto object-contain opacity-30 pointer-events-none select-none" style={{ maskImage: 'linear-gradient(to left, black 40%, transparent 95%)', WebkitMaskImage: 'linear-gradient(to left, black 40%, transparent 95%)' }} />
                   {/* Corner details */}
                   <div className="absolute top-4 left-4 w-3 h-3 border-t border-l border-[#00ff41]/30"></div>
                   <div className="absolute top-4 right-4 w-3 h-3 border-t border-r border-[#00ff41]/30"></div>
@@ -75,7 +75,7 @@ const Contact = () => {
                   <p className="font-mono text-gray-300 text-sm leading-loose">
                     Dr. Siddhartha Choubey <br/>
                     Dr. Abha Choubey <br/>
-                    SSTC Hackathon Committee
+                    SSTC Hackbios Committee
                   </p>
                 </div>
               </div>

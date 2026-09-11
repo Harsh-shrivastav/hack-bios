@@ -70,9 +70,33 @@ function App() {
     // is calculated correctly.
     const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 300);
 
+    // Mobile browsers resize the real viewport (address bar collapsing/
+    // expanding) as the user scrolls, and webfonts can finish loading late —
+    // both silently shift where sections actually sit. Without re-measuring,
+    // the section-reveal triggers below fire at stale positions, which is
+    // what causes content (e.g. Stats) to stay invisible for a stretch of
+    // scroll before suddenly popping in.
+    const handleViewportChange = () => ScrollTrigger.refresh();
+    window.visualViewport?.addEventListener('resize', handleViewportChange);
+    window.addEventListener('resize', handleViewportChange);
+    document.fonts?.ready.then(() => ScrollTrigger.refresh());
+
     // Global Scroll Transitions
+    // NOTE: scoped to `main section` only — NOT the structural wrapper divs
+    // (the fixed glow layer, #hero-section, the `relative z-10` content
+    // wrapper). Every real content block (Stats, About, Contact, Faq, etc.)
+    // is already a <section>. Previously this also matched `main > div`,
+    // which caught that content wrapper as its own separate fade-in target
+    // stacked on top of each section's own trigger — since a parent at
+    // opacity:0 hides its children regardless of their own opacity, every
+    // section stayed invisible until BOTH triggers fired. The wrapper's
+    // trigger position sits right at the end of Hero's 280vh scroll-reveal
+    // zone, the least stable measurement on the page (it shifts with screen
+    // height, address-bar collapse, and font load timing), which is why the
+    // empty gap before Stats showed up differently — but always — across
+    // phones.
     if (introDone) {
-      const sections = document.querySelectorAll('section, main > div');
+      const sections = document.querySelectorAll('main section');
       sections.forEach((section) => {
         section.classList.add('section-reveal');
         
@@ -87,6 +111,8 @@ function App() {
 
     return () => {
       clearTimeout(refreshTimer);
+      window.visualViewport?.removeEventListener('resize', handleViewportChange);
+      window.removeEventListener('resize', handleViewportChange);
       gsap.ticker.remove(lenisTick);
       lenis.destroy();
       ScrollTrigger.getAll().forEach(t => t.kill());

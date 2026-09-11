@@ -139,9 +139,16 @@ const Hero = () => {
       <div ref={windowRef} className="absolute inset-0 z-[5]" style={{ transformOrigin: 'center center' }}>
         <div className="scanline z-10 opacity-15 pointer-events-none"></div>
 
-        {/* Readability scrim */}
+        {/* Readability scrim — full window darkening on mobile (no wide screen to reveal an
+            atmospheric scene on the right there), the original left-to-right gradient from md+ */}
         <div
           className="absolute inset-0 z-[15] pointer-events-none"
+          style={{
+            background: 'rgba(1,4,1,0.72)'
+          }}
+        ></div>
+        <div
+          className="hidden md:block absolute inset-0 z-[15] pointer-events-none"
           style={{
             background:
               'linear-gradient(to right, rgba(1,4,1,0.78) 0%, rgba(1,4,1,0.55) 35%, rgba(1,4,1,0.15) 65%, transparent 85%)'
@@ -187,7 +194,7 @@ const Hero = () => {
             . Build, innovate, and conquer at Central India's premier hackathon.
           </p>
 
-          <div className="hero-animate flex flex-row gap-4 md:gap-6 items-center">
+          <div className="hero-animate flex flex-col sm:flex-row gap-4 md:gap-6 items-center">
             <a
               href={DEVFOLIO_LINK}
               target="_blank"

@@ -69,7 +69,7 @@ useEffect(() => {
   }, []);
 
   return (
-    <div ref={outerRef} className="relative w-full" style={{ height: `${60 + revealVh}vh` }}>
+    <div ref={outerRef} className="relative w-full" style={{ height: `${100 + revealVh}vh` }}>
     <div ref={wrapRef} className="sticky top-0 w-full h-screen overflow-hidden bg-transparent">
       {/* ================= ANCIENT STATION — hidden until reveal ================= */}
       <div ref={stationRef} className="absolute inset-0 z-0 opacity-0 pointer-events-none">

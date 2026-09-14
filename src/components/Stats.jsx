@@ -80,7 +80,7 @@ const Stats = () => {
           <div className="relative flex flex-wrap md:flex-nowrap justify-center md:justify-around items-center gap-8 md:gap-0">
             <StatBox target={300} suffix="+" label="Attendees" />
             <StatBox target={70} suffix="+" label="Teams" />
-            <StatBox target={1} prefix="₹" suffix="L+" label="Prizes" />
+            <StatBox target={10} prefix="₹" suffix="L+" label="Prizes" />
             <StatBox target={3} label="Editions" />
             <StatBox target={24} label="Hours" />
           </div>

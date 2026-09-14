@@ -436,20 +436,6 @@ export function CinematicFooter() {
                 <span className="text-muted-foreground text-[10px] md:text-xs font-bold uppercase tracking-widest font-mono">Booting Reality by</span>
                 <span className="text-foreground font-black text-xs md:text-sm tracking-normal ml-1 font-mono text-[#00ff41]">SSTC</span>
               </div>
-
-              {/* Devfolio Verification Link */}
-              <a 
-                href="https://hackbios2k26.devfolio.co/overview" 
-                target="_blank" 
-                rel="noreferrer noopener" 
-                className="flex items-center justify-center footer-glass-pill px-6 py-3 rounded-full border-[#00e5ff]/20 hover:border-[#00e5ff]/60 transition-colors"
-              >
-                <img 
-                  src="https://raw.githubusercontent.com/devfolioco/brand-assets/main/Logo/Devfolio%20Logo%20-%20White.svg" 
-                  alt="DEVFOLIO LOGO" 
-                  className="h-5 object-contain" 
-                />
-              </a>
             </div>
 
             {/* Back to top */}

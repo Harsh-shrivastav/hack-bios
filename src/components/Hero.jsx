@@ -3,8 +3,8 @@ import { LocationTag } from './ui/location-tag';
 import AnimatedTextCycle from './ui/animated-text-cycle';
 
 const FINAL_SCALE = 0.78;
-const REVEAL_VH_DESKTOP = 0; // extra scroll distance (in viewport-heights) the reveal takes
-const REVEAL_VH_MOBILE = 40;   // same reveal, compressed — 180vh reads as dead/empty scroll on a narrow portrait screen
+const REVEAL_VH_DESKTOP = 10; // extra scroll distance (in viewport-heights) the reveal takes
+const REVEAL_VH_MOBILE = 10;   // same reveal, compressed — 180vh reads as dead/empty scroll on a narrow portrait screen
 const DEVFOLIO_LINK = 'https://hackbios2k26.devfolio.co/overview';
 
 const ease = (t) => t * t * (3 - 2 * t);
@@ -59,7 +59,7 @@ useEffect(() => {
 
         if (windowRef.current) windowRef.current.style.transform = `scale(${scale})`;
         if (stationRef.current) stationRef.current.style.opacity = String(t);
-        if (frameRef.current) frameRef.current.style.opacity = String(clamp((raw - 0.08) / 0.45, 0, 1));
+        if (frameRef.current) frameRef.current.style.opacity = String(clamp((raw - 0.08) / 0.92, 0, 1));
       }
       raf = requestAnimationFrame(update);
     }

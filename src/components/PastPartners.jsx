@@ -27,7 +27,6 @@ const LOGO_FILES = [
   { file: 'Cybrancee.png', name: 'Cybrancee' },
   { file: 'Rosenfeld.png', name: 'Rosenfeld' },
   { file: 'GiveMyCertificate.png', name: 'GiveMyCertificate' },
-  { file: 'Cognitivesprints.png', name: 'Cognitive Sprints' },
 ];
 
 const PastPartners = () => {

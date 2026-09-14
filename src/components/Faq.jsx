@@ -8,6 +8,8 @@ const faqs = [
   { q: "Is it an online or offline hackathon?", a: "HackBIOS 3.0 is fundamentally an offline, in-person hackathon held at Shri Shankaracharya Technical Campus, Bhilai." },
   { q: "Will there be food?", a: "Yes, absolutely! We will provide regular meals, midnight snacks, and endless coffee to keep you running." },
   { q: "What if I don't know how to code?", a: "Hackathons are the best place to learn! We'll have mentors, workshops, and beginner-friendly resources. Design and presentation skills are equally important." },
+  { q: "Will there be any accommodation provided?", a: "No, accommodation will not be provided. However, a common rest area will be available." },
+  { q: "Will Travel expenses be reimbursed?", a: "No, travel expenses will need to be borne by the participants themselves." },
 ];
 
 const Faq = () => {

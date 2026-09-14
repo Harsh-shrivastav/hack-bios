@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Lenis from '@studio-freight/lenis';
 
 import CustomCursor from './components/CustomCursor';
 import StaggeredMenu from './components/StaggeredMenu';
 import FloatingSocials from './components/FloatingSocials';
 import CodonStream from './components/CodonStream';
+import IntroGate from './components/IntroGate';
 import Hero from './components/Hero';
 import Stats from './components/Stats';
 import About from './components/About';
@@ -23,7 +24,34 @@ import PartnerBanners from './components/PartnerBanners';
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
-  const introDone = true;
+  const [introDone, setIntroDone] = useState(false);
+  const [muted, setMuted] = useState(false);
+  const themeIntroRef = useRef(null);
+  const themeLoopRef = useRef(null);
+
+  const startTheme = () => {
+    const intro = new Audio('/audio/theme-intro.wav');
+    const loop = new Audio('/audio/theme-loop.m4a');
+    loop.loop = true;
+    themeIntroRef.current = intro;
+    themeLoopRef.current = loop;
+
+    intro.volume = muted ? 0 : 0.5;
+    loop.volume = muted ? 0 : 0.5;
+
+    intro.addEventListener('ended', () => {
+      loop.play().catch(() => {});
+    });
+
+    intro.play().catch(() => {}); // fired from the Enter click, so this is a real user gesture
+  };
+
+  // Mute toggles both the currently-playing piece and whichever one starts next.
+  useEffect(() => {
+    if (themeIntroRef.current) themeIntroRef.current.volume = muted ? 0 : 0.5;
+    if (themeLoopRef.current) themeLoopRef.current.volume = muted ? 0 : 0.5;
+  }, [muted]);
+
   const menuItems = [
     { label: 'About', link: '#about' },
     // { label: 'Tracks', link: '#tracks' },
@@ -118,43 +146,76 @@ function App() {
          <CustomCursor />
    <FloatingSocials />
    <MLHBadge />
+
+   {/* One shared mute control — covers the intro's dial/transform sounds
+       AND the theme music. Persists across the whole session (not inside
+       IntroGate) since the theme keeps playing after the intro unmounts. */}
+   <button
+     onClick={() => setMuted((m) => !m)}
+     aria-label={muted ? 'Unmute' : 'Mute'}
+     className="interactive fixed bottom-5 right-5 md:bottom-7 md:right-7 z-[200] w-14 h-14 flex items-center justify-center border border-[#00ff41]/40 text-[#00ff41] bg-[#010401]/60 backdrop-blur-sm hover:bg-[#00ff41]/10 transition-colors duration-200"
+   >
+     {muted ? (
+       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+         <path d="M11 5 6 9H2v6h4l5 4V5Z" />
+         <line x1="23" y1="9" x2="17" y2="15" />
+         <line x1="17" y1="9" x2="23" y2="15" />
+       </svg>
+     ) : (
+       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+         <path d="M11 5 6 9H2v6h4l5 4V5Z" />
+         <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+         <path d="M18.5 5.5a9 9 0 0 1 0 13" />
+       </svg>
+     )}
+   </button>
+
+   {!introDone && (
+     <IntroGate
+       muted={muted}
+       onEnter={() => {
+         startTheme();
+         setIntroDone(true);
+       }}
+     />
+   )}
    {introDone && <CodonStream />}
       
       <div className={`animate-fade-in ${!introDone ? 'h-screen overflow-hidden' : ''}`}>
           {introDone && (
-            <StaggeredMenu 
-              items={menuItems}
-              socialItems={socialItems}
-            />
-          )}
-          
-          <main className="relative">
-            {/* Global cinematic background particles/glow could go here */}
-            <div className="fixed inset-0 pointer-events-none z-0">
-              <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#00ff41]/5 rounded-full blur-[120px] animate-pulse"></div>
-              <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#00e5ff]/5 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
-            </div>
+            <>
+              <StaggeredMenu 
+                items={menuItems}
+                socialItems={socialItems}
+              />
 
-            <div id="hero-section"><Hero /></div>
-            <div className="relative z-10">
-              {/* EventIntro — merged into Hero */}
-              <Stats />
-              <About />
-              {/* Tracks, PrizePool, Timeline — not currently used on the site;
-                  see src/components/ if reintroducing them (Timeline in
-                  particular pulls in three.js — only import it if it's
-                  actually going back on the page) */}
-              <PartnerBanners />
-              <Sponsors />
-              <PastPartners />
-              <PreviousEdition />
-              <Contact />
-              <Faq />
-              <CinematicFooter />
-            </div>
-          </main>
-          
-          
+              <main className="relative">
+                {/* Global cinematic background particles/glow could go here */}
+                <div className="fixed inset-0 pointer-events-none z-0">
+                  <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#00ff41]/5 rounded-full blur-[120px] animate-pulse"></div>
+                  <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#00e5ff]/5 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+                </div>
+
+                <div id="hero-section"><Hero /></div>
+                <div className="relative z-10">
+                  {/* EventIntro — merged into Hero */}
+                  <Stats />
+                  <About />
+                  {/* Tracks, PrizePool, Timeline — not currently used on the site;
+                      see src/components/ if reintroducing them (Timeline in
+                      particular pulls in three.js — only import it if it's
+                      actually going back on the page) */}
+                  <PartnerBanners />
+                  <Sponsors />
+                  <PastPartners />
+                  <PreviousEdition />
+                  <Contact />
+                  <Faq />
+                  <CinematicFooter />
+                </div>
+              </main>
+            </>
+          )}
       </div>
     </div>
   );

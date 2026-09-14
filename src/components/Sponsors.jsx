@@ -435,6 +435,25 @@ const Sponsors = () => {
               </React.Fragment>
             );
           })}
+
+          {/* Campus Success Partner — connected off the last tier (Bronze), same
+              white-card/red-border format as the PartnerBanners badges */}
+          <TierConnector id="campus-success" fromColor={tiers[tiers.length - 1].color} toColor="#00ff41" extraGap />
+          <div className="w-full max-w-md mx-auto text-center">
+            <h3 className="font-mono text-lg md:text-xl uppercase tracking-[0.25em] font-bold mb-5 text-white">
+              Campus Success Partner
+            </h3>
+            <a
+              href="#"
+              className="block w-full h-[160px] bg-white rounded-lg border-2 border-red-500 px-6 flex items-center justify-center shadow-[0_0_20px_rgba(255,0,0,0.15)] transition-transform duration-300 hover:scale-105"
+            >
+              <img
+                src="/quillbot-logo.png"
+                alt="Campus Success Partner"
+                className="h-28 md:h-32 w-auto object-contain"
+              />
+            </a>
+          </div>
         </div>
       </div>
     </section>

@@ -1,0 +1,107 @@
+.omniwatch-scene {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.omniwatch-glow {
+  position: absolute;
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(171, 242, 40, 0.14) 0%,
+    rgba(171, 242, 40, 0.04) 45%,
+    transparent 70%
+  );
+  filter: blur(2px);
+  pointer-events: none;
+  animation: omniwatch-glow-breathe 4s ease-in-out infinite;
+}
+
+@keyframes omniwatch-glow-breathe {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* the watch case never moves at all */
+.omniwatch-watch {
+  position: relative;
+  width: 80%;
+  height: 80%;
+}
+
+.omniwatch-base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* the gem ring: steps 90 degrees at a time, then holds */
+.omniwatch-gems {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform-origin: 50% 50%;
+  transition: transform 0.4s cubic-bezier(0.34, 1, 0.4, 1);
+  z-index: 4;
+}
+
+/* frame sits on top of the (enlarged) diamond; its punched hole lets the
+   diamond's middle show through while covering the tall tips that poke
+   past the ring boundary, so the diamond reads as tucked behind the case */
+.omniwatch-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  z-index: 3;
+}
+
+/* the diamond screen sits still in the center, enlarged to reach the ring */ .omniwatch-dial-slot {
+  position: absolute;
+  top: 8%;
+  left: 8%;   
+  width: 85%;   
+  height: 85%;   
+  z-index: 3;   
+  /* Clip the oversized alien/diamond to the circular dial */   
+  border-radius: 50%;   
+  overflow: hidden; }
+.omniwatch-dial-icon {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.omniwatch-dial-icon.active {
+  opacity: 1;
+}

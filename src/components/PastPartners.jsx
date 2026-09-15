@@ -104,7 +104,7 @@ const PastPartners = () => {
             className="text-4xl md:text-5xl font-mono font-bold mb-4 glitch uppercase tracking-tighter"
             data-text="/ COMMUNITY SPONSORS"
             >
-            <span className="text-[#00ff41]">/</span> COMMUNITY SPONSORS
+            <span className="text-[#00ff41]">/</span> COMMUNITY PARTNERS
           </h2>
         </div>
         <div className="flex flex-wrap justify-center gap-4 md:gap-6">

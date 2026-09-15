@@ -42,7 +42,8 @@ const COMMUNITY_LOGO_FILES = [
   { file:'entropyzero.png', name:'EntropyZero'},
   { file:'nexhack.png', name:'Nexhack'},
   { file:'techsociety.png', name:'TechSociety'},
-  { file:'OSEN.png', name:'OSEN'},];
+  { file:'OSEN.png', name:'OSEN'},
+  { file: 'GFG.png', name: 'GEEKSFORGEEKS' },];
 
 const PastPartners = () => {
   // Randomize each tile's animation duration/delay once per mount so the

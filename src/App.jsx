@@ -13,7 +13,7 @@ import PreviousEdition from './components/PreviousEdition';
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import { CinematicFooter } from './components/ui/motion-footer';
-import Sponsors from './components/Sponsors';
+//import Sponsors from './components/PastPartners';
 import PastPartners from './components/PastPartners';
 
 import gsap from 'gsap';
@@ -206,7 +206,7 @@ function App() {
                       particular pulls in three.js — only import it if it's
                       actually going back on the page) */}
                   <PartnerBanners />
-                  <Sponsors />
+                  {/* <Sponsors /> */}
                   <PastPartners />
                   <PreviousEdition />
                   <Contact />

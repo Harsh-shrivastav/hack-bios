@@ -85,7 +85,7 @@ const PartnerBanners = () => {
               are swapped accordingly: body (behind, z=-1) keeps the right portion, claw
               (front, z=30) keeps the left portion — his claw ends up reaching inward toward
               the card either way. */}
-          <div className="hidden md:block absolute md:-right-[18rem] lg:-right-[26rem] xl:-right-[30rem] md:top-[-12rem] lg:top-[-12rem] xl:top-[-12rem] pointer-events-none select-none w-64 lg:w-[30rem] xl:w-[36rem]">
+          <div className="hidden md:block absolute md:-right-[18rem] lg:-right-[26rem] xl:-right-[30rem] md:top-[-15rem] lg:top-[-15rem] xl:top-[-15rem] pointer-events-none select-none w-64 lg:w-[30rem] xl:w-[36rem]">
             <img src="/characters/simian.png" alt="" aria-hidden="true" className="w-full h-auto object-contain opacity-0" />
 
             <img

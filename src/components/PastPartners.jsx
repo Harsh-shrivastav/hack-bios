@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import './PastPartners.css';
 
 // Real, properly-named sponsor logos in public/sponsors/
-const LOGO_FILES = [
+{/*const LOGO_FILES = [
   { file: 'Devfolio.png', name: 'Devfolio' },
   { file: 'ETHIndia.png', name: 'ETHIndia' },
   { file: 'SharpEconomy.png', name: 'Sharp Economy' },
@@ -27,7 +27,22 @@ const LOGO_FILES = [
   { file: 'Cybrancee.png', name: 'Cybrancee' },
   { file: 'Rosenfeld.png', name: 'Rosenfeld' },
   { file: 'GiveMyCertificate.png', name: 'GiveMyCertificate' },
-];
+];*/}
+const LOGO_FILES = [
+  { file: 'Devfolio.png', name: 'Devfolio' },
+  { file: 'mlh.png', name: 'MLH' },
+  { file: 'XYZ.png', name: '.xyz' },
+  { file: 'github.png', name: 'GitHub' },
+  { file: 'elevenlabs.png', name: 'ElevenLabs' },
+  { file: 'purebutton.png', name: 'PureButton' },
+  { file: 'quillbot.png', name: 'QuillBot' },];
+const COMMUNITY_LOGO_FILES = [
+  { file: 'GDG.png', name: 'GDG' },
+  { file:'syntaxLogo.png', name:'Syntax'},
+  { file:'entropyzero.png', name:'EntropyZero'},
+  { file:'nexhack.png', name:'Nexhack'},
+  { file:'techsociety.png', name:'TechSociety'},
+  { file:'OSEN.png', name:'OSEN'},];
 
 const PastPartners = () => {
   // Randomize each tile's animation duration/delay once per mount so the
@@ -41,29 +56,36 @@ const PastPartners = () => {
       })),
     []
   );
+  const communityTimings = useMemo(
+  () =>
+    COMMUNITY_LOGO_FILES.map(() => ({
+      duration: (3 + Math.random() * 3).toFixed(2),
+      delay: (Math.random() * 2).toFixed(2),
+    })),
+  []
+);
 
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section className="py-24 relative ">
       <div className="absolute inset-0 bg-circuit-pattern opacity-[0.02] pointer-events-none" />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="text-center mb-14">
           <h2
             className="text-4xl md:text-5xl font-mono font-bold mb-4 glitch uppercase tracking-tighter"
-            data-text="/ PAST PARTNERS"
+            data-text="/ SPONSORS"
           >
-            <span className="text-[#00ff41]">/</span> PAST PARTNERS
+            <span className="text-[#00ff41]">/</span> SPONSORS
           </h2>
-          <p className="text-gray-400 font-sans text-sm md:text-base max-w-xl mx-auto opacity-70">
+          {/*<p className="text-gray-400 font-sans text-sm md:text-base max-w-xl mx-auto opacity-70">
             Organizations that powered previous editions of HackBIOS.
-          </p>
+          </p>*/}
         </div>
-
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-4 md:gap-6">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6">
           {LOGO_FILES.map((partner, i) => (
             <div
               key={partner.file}
-              className="float-tile bg-[#0a120a]/70 backdrop-blur-sm border border-[#00ff41]/10 rounded-xl h-24 p-4 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 hover:border-[#00ff41]/40 hover:bg-[#00ff41]/5 group"
+              className="float-tile w-[45%] sm:w-[30%] md:w-[22%] bg-[#0a120a]/70 backdrop-blur-sm border border-[#00ff41]/10 rounded-xl h-32 md:h-36 p-4 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 hover:border-[#00ff41]/40 hover:bg-[#00ff41]/5 group"
               style={{
                 animationDuration: `${timings[i].duration}s`,
                 animationDelay: `${timings[i].delay}s`,
@@ -77,6 +99,52 @@ const PastPartners = () => {
             </div>
           ))}
         </div>
+                <div className="text-center mb-14 mt-20">
+          <h2
+            className="text-4xl md:text-5xl font-mono font-bold mb-4 glitch uppercase tracking-tighter"
+            data-text="/ COMMUNITY SPONSORS"
+            >
+            <span className="text-[#00ff41]">/</span> COMMUNITY SPONSORS
+          </h2>
+        </div>
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+  {COMMUNITY_LOGO_FILES.map((partner, i) => (
+    <div
+      key={partner.file}
+      className="float-tile w-[45%] sm:w-[30%] md:w-[22%] bg-[#0a120a]/70 backdrop-blur-sm border border-[#00ff41]/10 rounded-xl h-32 md:h-36 p-4 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 hover:border-[#00ff41]/40 hover:bg-[#00ff41]/5 group"
+      style={{
+        animationDuration: `${communityTimings[i].duration}s`,
+        animationDelay: `${communityTimings[i].delay}s`,
+      }}
+    >
+      <img
+        src={`/sponsors/${partner.file}`}
+        alt={partner.name}
+        className="max-w-full max-h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+      />
+    </div>
+  ))}
+</div>
+<img
+  src="/characters/benson.png"
+  alt=""
+  aria-hidden="true"
+  className="hidden xl:block absolute pointer-events-none select-none z-[5]
+             xl:h-[26rem] xl:left-[-10%] xl:bottom-[-12%]
+             2xl:h-[30rem]
+             w-auto opacity-95"
+  style={{ filter: 'drop-shadow(0 0 30px rgba(0,255,65,0.15))' }}
+/>
+<img
+  src="/characters/ben-kai.png"
+  alt=""
+  aria-hidden="true"
+  className="hidden xl:block absolute pointer-events-none select-none z-[5]
+             xl:h-[24rem] xl:right-[-15%] xl:bottom-[-15%]
+             2xl:h-[25rem]
+             w-auto opacity-95"
+  style={{ filter: 'drop-shadow(0 0 30px rgba(0,255,65,0.15))' }}
+/>
       </div>
     </section>
   );

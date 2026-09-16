@@ -313,7 +313,7 @@ export function CinematicFooter() {
         style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
       >
         {/* The actual footer stays fixed to the viewport underneath everything */}
-        <footer className="fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-hidden bg-background text-foreground cinematic-footer-wrapper">
+        <footer className="fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-y-auto overflow-x-hidden md:overflow-hidden bg-background text-foreground cinematic-footer-wrapper">
           
           {/* Ambient Light & Grid Background */}
           <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
@@ -336,28 +336,28 @@ export function CinematicFooter() {
           </div>
 
           {/* 2. Main Center Content */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 mt-20 w-full max-w-5xl mx-auto">
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 mt-10 md:mt-20 w-full max-w-5xl mx-auto">
             <h2
               ref={headingRef}
-              className="text-5xl md:text-8xl font-black tracking-tighter mb-6 text-center"
+              className="text-4xl md:text-8xl font-black tracking-tighter mb-3 md:mb-6 text-center"
             >
               <ShinyText text="Ready to hack?" />
             </h2>
             
-            <p className="text-muted-foreground font-mono text-sm md:text-base max-w-lg text-center mb-12 opacity-80 z-10">
+            <p className="text-muted-foreground font-mono text-sm md:text-base max-w-lg text-center mb-6 md:mb-12 opacity-80 z-10">
               Central India's premier hackathon. Join us to boot your ideas into reality. Organized by SSTC Bhilai.
             </p>
 
             {/* Interactive Magnetic Pills Layout */}
-            <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
+            <div ref={linksRef} className="flex flex-col items-center gap-3 md:gap-6 w-full">
               {/* App Store Links (Primary) */}
-              <div className="flex flex-wrap justify-center gap-4 w-full">
-                <MagneticButton as="a" href="https://hackbios2k26.devfolio.co/overview" target="_blank" rel="noopener noreferrer" className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group border-[#00ff41]/30">
+              <div className="flex flex-wrap justify-center gap-3 md:gap-4 w-full">
+                <MagneticButton as="a" href="https://hackbios2k26.devfolio.co/overview" target="_blank" rel="noopener noreferrer" className="footer-glass-pill px-6 py-3 md:px-10 md:py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group border-[#00ff41]/30">
                   <ArrowUpRight className="w-5 h-5 text-[#00ff41] group-hover:text-foreground transition-colors" />
                   Register on Devfolio
                 </MagneticButton>
 
-                <MagneticButton as="a" href="https://discord.gg/kDpNBsU3qt" target="_blank" rel="noopener noreferrer" className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group border-[#00e5ff]/30">
+                <MagneticButton as="a" href="https://discord.gg/kDpNBsU3qt" target="_blank" rel="noopener noreferrer" className="footer-glass-pill px-6 py-3 md:px-10 md:py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group border-[#00e5ff]/30">
                   <svg className="w-6 h-6 text-[#00e5ff] group-hover:text-foreground transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line>
                   </svg>
@@ -366,33 +366,33 @@ export function CinematicFooter() {
               </div>
 
               {/* Secondary Text Links */}
-              <div className="flex flex-wrap justify-center gap-3 md:gap-6 w-full mt-2">
-                <MagneticButton as="a" href="#about" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00ff41]/10">
+              <div className="flex flex-wrap justify-center gap-2 md:gap-6 w-full mt-1 md:mt-2">
+                <MagneticButton as="a" href="#about" className="footer-glass-pill px-4 py-2 md:px-6 md:py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00ff41]/10">
                   <span className="text-[#00ff41] mr-1 opacity-50">&gt;</span> About
                 </MagneticButton>
-                <MagneticButton as="a" href="#faq" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00e5ff]/10">
+                <MagneticButton as="a" href="#faq" className="footer-glass-pill px-4 py-2 md:px-6 md:py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00e5ff]/10">
                   <span className="text-[#00e5ff] mr-1 opacity-50">&gt;</span> FAQ
                 </MagneticButton>
-                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00ff41]/10">
+                <MagneticButton as="a" href="#" className="footer-glass-pill px-4 py-2 md:px-6 md:py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00ff41]/10">
                   <span className="text-[#00ff41] mr-1 opacity-50">&gt;</span> Code of Conduct
                 </MagneticButton>
-                <MagneticButton as="a" href="#" className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00e5ff]/10">
+                <MagneticButton as="a" href="#" className="footer-glass-pill px-4 py-2 md:px-6 md:py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground border-[#00e5ff]/10">
                   <span className="text-[#00e5ff] mr-1 opacity-50">&gt;</span> Privacy Policy
                 </MagneticButton>
               </div>
 
               {/* Social Icon Row */}
-              <div className="flex gap-4 mt-6">
-                <MagneticButton as="a" href="https://www.instagram.com/hackbios?igsh=MXNkbGlnN3lybzB2ag==" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00ff41] hover:border-[#00ff41]/50 group">
+              <div className="flex gap-3 md:gap-4 mt-3 md:mt-6">
+                <MagneticButton as="a" href="https://www.instagram.com/hackbios?igsh=MXNkbGlnN3lybzB2ag==" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00ff41] hover:border-[#00ff41]/50 group">
                   <InstagramIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </MagneticButton>
-                <MagneticButton as="a" href="https://x.com/thehackBIOS" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00e5ff] hover:border-[#00e5ff]/50 group">
+                <MagneticButton as="a" href="https://x.com/thehackBIOS" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00e5ff] hover:border-[#00e5ff]/50 group">
                   <TwitterIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </MagneticButton>
-                <MagneticButton as="a" href="https://www.linkedin.com/company/hackbios-2k26/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00ff41] hover:border-[#00ff41]/50 group">
+                <MagneticButton as="a" href="https://www.linkedin.com/company/hackbios-2k26/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00ff41] hover:border-[#00ff41]/50 group">
                   <LinkedinIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </MagneticButton>
-                <MagneticButton as="a" href="https://discord.gg/kDpNBsU3qt" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00e5ff] hover:border-[#00e5ff]/50 group">
+                <MagneticButton as="a" href="https://discord.gg/kDpNBsU3qt" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 rounded-full footer-glass-pill flex items-center justify-center text-muted-foreground hover:text-[#00e5ff] hover:border-[#00e5ff]/50 group">
                   <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </MagneticButton>
               </div>
@@ -423,16 +423,16 @@ export function CinematicFooter() {
           </div>
 
           {/* 3. Bottom Bar / Credits */}
-          <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="relative z-20 w-full pb-4 md:pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-6">
             
             {/* Copyright */}
             <div className="text-muted-foreground text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1 font-mono">
               © {new Date().getFullYear()} HackBIOS 3.0. All rights reserved.
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 order-1 md:order-2">
+            <div className="flex flex-col sm:flex-row items-center gap-2 md:gap-4 order-1 md:order-2">
               {/* "Made with Love" Badge */}
-              <div className="footer-glass-pill px-6 py-3 rounded-full flex items-center gap-2 cursor-default border-[#00ff41]/20">
+              <div className="footer-glass-pill px-4 py-2 md:px-6 md:py-3 rounded-full flex items-center gap-2 cursor-default border-[#00ff41]/20">
                 <span className="text-muted-foreground text-[10px] md:text-xs font-bold uppercase tracking-widest font-mono">Booting Reality by</span>
                 <span className="text-foreground font-black text-xs md:text-sm tracking-normal ml-1 font-mono text-[#00ff41]">SSTC</span>
               </div>

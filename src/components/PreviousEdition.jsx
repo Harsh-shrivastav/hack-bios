@@ -24,9 +24,11 @@ const doublePhotos = [...photos, ...photos];
 
 const PhotoMarquee = ({ direction = 'left', speed = 40 }) => (
   <div className="relative overflow-hidden">
-    {/* Edge fades */}
-    <div className="absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-[#020502] to-transparent z-10 pointer-events-none" />
-    <div className="absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-[#020502] to-transparent z-10 pointer-events-none" />
+
+    {/* Edge fades — transparent to preserve CodonStream */}
+    <div className="absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-transparent to-transparent z-10 pointer-events-none" />
+
+    <div className="absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-transparent to-transparent z-10 pointer-events-none" />
 
     <div
       className="flex gap-4 md:gap-5 w-max"
@@ -43,9 +45,12 @@ const PhotoMarquee = ({ direction = 'left', speed = 40 }) => (
             src={`/past photos/${photo}`}
             alt=""
             loading="lazy"
-            onError={(e) => { e.target.style.display = 'none'; }}
+            onError={(e) => {
+              e.target.style.display = 'none';
+            }}
             className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-[filter,opacity,transform] duration-700"
           />
+
           {/* Subtle glow border on hover */}
           <div className="absolute inset-0 border border-transparent group-hover:border-[#00ff41]/20 group-hover:shadow-[0_0_12px_rgba(0,255,65,0.1)] transition-[border-color,box-shadow] duration-500 rounded-lg pointer-events-none" />
         </div>
@@ -56,8 +61,9 @@ const PhotoMarquee = ({ direction = 'left', speed = 40 }) => (
 
 const PreviousEdition = () => {
   return (
-    <section className="py-20 md:py-28 relative overflow-hidden bg-[#020502]">
-      {/* Section heading — now matches the animated glitch treatment used by every other section title */}
+    <section className="py-20 md:py-28 relative overflow-hidden">
+
+      {/* Section heading */}
       <div className="container mx-auto px-4 md:px-8 relative z-10 mb-12">
         <h2
           className="text-center text-4xl md:text-5xl lg:text-6xl font-mono font-bold mb-4 glitch uppercase tracking-tighter"
@@ -65,6 +71,7 @@ const PreviousEdition = () => {
         >
           <span className="text-[#00ff41]">/</span> GLIMPSES
         </h2>
+
         <p className="text-center text-gray-400 font-sans text-sm md:text-base max-w-xl mx-auto opacity-70">
           Moments from previous editions of HackBIOS.
         </p>
@@ -73,27 +80,39 @@ const PreviousEdition = () => {
       {/* Row 1 — scrolls left */}
       <PhotoMarquee direction="left" speed={35} />
 
-      {/* Row 2 — scrolls right (reverse direction) */}
+      {/* Row 2 — scrolls right */}
       <div className="mt-4 md:mt-5">
         <PhotoMarquee direction="right" speed={42} />
       </div>
 
-      {/* Row 3 — scrolls left, offset start for visual variety */}
+      {/* Row 3 — scrolls left */}
       <div className="mt-4 md:mt-5">
         <PhotoMarquee direction="left" speed={50} />
       </div>
 
-      {/* Keyframes injected once */}
+      {/* Keyframes */}
       <style>{`
         @keyframes marquee-left {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% {
+            transform: translateX(0);
+          }
+
+          100% {
+            transform: translateX(-50%);
+          }
         }
+
         @keyframes marquee-right {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
+          0% {
+            transform: translateX(-50%);
+          }
+
+          100% {
+            transform: translateX(0);
+          }
         }
       `}</style>
+
     </section>
   );
 };

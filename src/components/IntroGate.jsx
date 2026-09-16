@@ -77,10 +77,10 @@ const IntroGate = ({ onEnter, muted }) => {
         )}
 
         <button
-          onClick={handleEnter}
-          className="interactive mt-10 md:mt-12 px-10 py-3.5 border-2 border-[#00ff41] text-[#00ff41] font-mono text-sm md:text-base uppercase tracking-[0.3em] hover:bg-[#00ff41] hover:text-[#010401] transition-all duration-300 hover:shadow-[0_0_25px_rgba(0,255,65,0.5)]"
+        onClick={handleEnter}
+        className="omniverse-enter interactive"
         >
-          Enter
+        <span>ENTER THE OMNIVERSE</span>
         </button>
       </div>
 

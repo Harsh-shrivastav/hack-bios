@@ -34,7 +34,7 @@ const LOGO_FILES = [
   { file: 'XYZ.png', name: '.xyz' },
   { file: 'github.png', name: 'GitHub' },
   { file: 'elevenlabs.png', name: 'ElevenLabs' },
-  { file: 'purebutton.png', name: 'PureButton' },
+  { file: 'purebutton.png', name: 'PureButton', href: 'https://mlh.link/MLHPureButtons-hackathons' },
   { file: 'quillbot.png', name: 'QuillBot' },];
 const COMMUNITY_LOGO_FILES = [
   { file: 'GDG.png', name: 'GDG' },
@@ -83,22 +83,29 @@ const PastPartners = () => {
           </p>*/}
         </div>
         <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-          {LOGO_FILES.map((partner, i) => (
-            <div
-              key={partner.file}
-              className="float-tile w-[45%] sm:w-[30%] md:w-[22%] bg-[#0a120a]/70 backdrop-blur-sm border border-[#00ff41]/10 rounded-xl h-32 md:h-36 p-4 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 hover:border-[#00ff41]/40 hover:bg-[#00ff41]/5 group"
-              style={{
-                animationDuration: `${timings[i].duration}s`,
-                animationDelay: `${timings[i].delay}s`,
-              }}
-            >
-              <img
-                src={`/sponsors/${partner.file}`}
-                alt={partner.name}
-                className="max-w-full max-h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300"
-              />
-            </div>
-          ))}
+          {LOGO_FILES.map((partner, i) => {
+            const Tile = partner.href ? 'a' : 'div';
+            const tileProps = partner.href
+              ? { href: partner.href, target: '_blank', rel: 'noopener noreferrer' }
+              : {};
+            return (
+              <Tile
+                key={partner.file}
+                {...tileProps}
+                className="float-tile w-[45%] sm:w-[30%] md:w-[22%] bg-[#0a120a]/70 backdrop-blur-sm border border-[#00ff41]/10 rounded-xl h-32 md:h-36 p-4 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 hover:border-[#00ff41]/40 hover:bg-[#00ff41]/5 group"
+                style={{
+                  animationDuration: `${timings[i].duration}s`,
+                  animationDelay: `${timings[i].delay}s`,
+                }}
+              >
+                <img
+                  src={`/sponsors/${partner.file}`}
+                  alt={partner.name}
+                  className="max-w-full max-h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+                />
+              </Tile>
+            );
+          })}
         </div>
                 <div className="text-center mb-14 mt-20">
           <h2

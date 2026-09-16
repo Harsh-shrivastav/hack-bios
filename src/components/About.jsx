@@ -12,7 +12,7 @@ const About = () => {
         src="/decor/plumbers-base.png"
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-cover opacity-[0.07] pointer-events-none select-none"
+        className="absolute inset-0 w-full h-full object-cover opacity-[0.3] pointer-events-none select-none"
       />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">

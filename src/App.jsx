@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Lenis from '@studio-freight/lenis';
 
 import CustomCursor from './components/CustomCursor';
@@ -15,13 +16,50 @@ import Contact from './components/Contact';
 import { CinematicFooter } from './components/ui/motion-footer';
 //import Sponsors from './components/PastPartners';
 import PastPartners from './components/PastPartners';
-
+import TeamPage from './components/TeamPage';
+import Tracks from './components/Tracks';
+import Submission from './components/Submission';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MLHBadge from './components/MLHBadge';
 import PartnerBanners from './components/PartnerBanners';
 
+
+
 gsap.registerPlugin(ScrollTrigger);
+
+function HomePage() {
+  return (
+    <main className="relative">
+      {/* Global cinematic background particles/glow could go here */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#00ff41]/5 rounded-full blur-[120px] animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#00e5ff]/5 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+      </div>
+
+      <div id="hero-section"><Hero /></div>
+      <div className="relative z-10">
+        {/* EventIntro — merged into Hero */}
+        <Submission />
+        <Stats />
+        <About />
+        <Tracks />
+        {/* PrizePool, Timeline — not currently used on the site;
+            see src/components/ if reintroducing them (Timeline in
+            particular pulls in three.js — only import it if it's
+            actually going back on the page) */}
+        <PartnerBanners />
+        {/* <Sponsors /> */}
+        <PastPartners />
+        <PreviousEdition />
+        <Contact />
+        <Faq />
+        <CinematicFooter />
+      </div>
+    </main>
+  );
+}
+
 
 function App() {
   const [introDone, setIntroDone] = useState(false);
@@ -29,21 +67,26 @@ function App() {
   const themeIntroRef = useRef(null);
   const themeLoopRef = useRef(null);
 
-  const startTheme = () => {
-    const intro = new Audio('/audio/theme-intro.wav');
+  useEffect(() => {
+    const intro = new Audio('/audio/theme-intro.m4a');
     const loop = new Audio('/audio/theme-loop.m4a');
+    intro.preload = 'auto';
+    loop.preload = 'auto';
     loop.loop = true;
-    themeIntroRef.current = intro;
-    themeLoopRef.current = loop;
-
     intro.volume = muted ? 0 : 0.5;
     loop.volume = muted ? 0 : 0.5;
-
     intro.addEventListener('ended', () => {
       loop.play().catch(() => {});
     });
+    themeIntroRef.current = intro;
+    themeLoopRef.current = loop;
+    intro.load();
+    loop.load();
+  }, []);
 
-    intro.play().catch(() => {}); // fired from the Enter click, so this is a real user gesture
+  const startTheme = () => {
+    const intro = themeIntroRef.current;
+    if (intro) intro.play().catch(() => {}); // fired from the Enter click, so this counts as a real user gesture
   };
 
   // Mute toggles both the currently-playing piece and whichever one starts next.
@@ -56,6 +99,7 @@ function App() {
     { label: 'About', link: '#about' },
     // { label: 'Tracks', link: '#tracks' },
     // { label: 'Timeline', link: '#timeline' },
+    { label: 'Team', link: '/team' },
     { label: 'FAQ', link: '#faq' },
     { label: 'Contact', link: '#contact' }
   ];
@@ -171,54 +215,33 @@ function App() {
    </button>
 
    {!introDone && (
-     <IntroGate
-       muted={muted}
-       onEnter={() => {
-         startTheme();
-         setIntroDone(true);
-       }}
-     />
-   )}
-   {introDone && <CodonStream />}
-      
-      <div className={`animate-fade-in ${!introDone ? 'h-screen overflow-hidden' : ''}`}>
-          {introDone && (
-            <>
-              <StaggeredMenu 
-                items={menuItems}
-                socialItems={socialItems}
-              />
-
-              <main className="relative">
-                {/* Global cinematic background particles/glow could go here */}
-                <div className="fixed inset-0 pointer-events-none z-0">
-                  <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#00ff41]/5 rounded-full blur-[120px] animate-pulse"></div>
-                  <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#00e5ff]/5 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
-                </div>
-
-                <div id="hero-section"><Hero /></div>
-                <div className="relative z-10">
-                  {/* EventIntro — merged into Hero */}
-                  <Stats />
-                  <About />
-                  {/* Tracks, PrizePool, Timeline — not currently used on the site;
-                      see src/components/ if reintroducing them (Timeline in
-                      particular pulls in three.js — only import it if it's
-                      actually going back on the page) */}
-                  <PartnerBanners />
-                  {/* <Sponsors /> */}
-                  <PastPartners />
-                  <PreviousEdition />
-                  <Contact />
-                  <Faq />
-                  <CinematicFooter />
-                </div>
-              </main>
-            </>
-          )}
-      </div>
-    </div>
-  );
-}
-
-export default App;
+           <IntroGate
+             muted={muted}
+             onEnter={() => {
+               startTheme();
+               setIntroDone(true);
+             }}
+           />
+         )}
+         {introDone && <CodonStream />}
+   
+         <div className={`animate-fade-in ${!introDone ? 'h-screen overflow-hidden' : ''}`}>
+           {introDone && (
+             <>
+               <StaggeredMenu
+                 items={menuItems}
+                 socialItems={socialItems}
+               />
+   
+               <Routes>
+                 <Route path="/" element={<HomePage />} />
+                 <Route path="/team" element={<TeamPage />} />
+               </Routes>
+             </>
+           )}
+         </div>
+       </div>
+     );
+   }
+   
+   export default App;

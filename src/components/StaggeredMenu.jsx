@@ -1,7 +1,14 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { HackerText } from './ui/hacker-text';
 import './StaggeredMenu.css';
+
+// Internal routes (like /team) must go through React Router so the SPA
+// swaps views client-side instead of doing a full browser reload, which
+// would reset all React state (e.g. App.jsx's `introDone`).
+// Hash links (#about, #faq) and external URLs stay as normal <a> tags.
+const isInternalRoute = (link) => typeof link === 'string' && link.startsWith('/');
 
 export const StaggeredMenu = ({
   position = 'right',
@@ -317,10 +324,10 @@ export const StaggeredMenu = ({
 
         {/* Logo & Live Status Beacon */}
         <div className="flex items-center gap-3">
-          <a href="#" className="flex items-center gap-2 group">
+          <Link to="/" className="flex items-center gap-2 group">
             <span className="text-xl md:text-2xl font-bold font-mono text-white tracking-tight" style={{ textShadow: '0 0 8px rgba(0,255,65,0.5)' }}>HACKBIOS</span>
             <span className="text-[#00ff41] font-mono font-bold text-xl md:text-2xl">3.0</span>
-          </a>
+          </Link>
 
           <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-[#00ff41]/10 border border-[#00ff41]/30 rounded-full text-[10px] font-mono text-[#00ff41]">
             <span className="w-2 h-2 rounded-full bg-[#00ff41] animate-ping"></span>
@@ -330,16 +337,27 @@ export const StaggeredMenu = ({
 
         {/* Desktop Quick Nav Links - Properly Aligned */}
         <nav className="hidden lg:flex items-center gap-8 font-mono text-xs uppercase tracking-[0.2em] font-semibold text-gray-300 absolute left-1/2 -translate-x-1/2">
-          {items.map((item, idx) => (
-            <a
-              key={idx}
-              href={item.link}
-              className="hover:text-[#00ff41] transition-colors relative group py-1.5"
-            >
-              <span>{item.label}</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00ff41] transition-all duration-300 group-hover:w-full"></span>
-            </a>
-          ))}
+          {items.map((item, idx) =>
+            isInternalRoute(item.link) ? (
+              <Link
+                key={idx}
+                to={item.link}
+                className="hover:text-[#00ff41] transition-colors relative group py-1.5"
+              >
+                <span>{item.label}</span>
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00ff41] transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            ) : (
+              <a
+                key={idx}
+                href={item.link}
+                className="hover:text-[#00ff41] transition-colors relative group py-1.5"
+              >
+                <span>{item.label}</span>
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00ff41] transition-all duration-300 group-hover:w-full"></span>
+              </a>
+            )
+          )}
         </nav>
 
         {/* Cyberpunk Glass Pill Menu Toggle - Mobile & Tablet Only (Hidden on Desktop where links are shown) */}
@@ -370,21 +388,39 @@ export const StaggeredMenu = ({
             {items && items.length ? (
               items.map((it, idx) => (
                 <li className="sm-panel-itemWrap" key={it.label + idx}>
-                  <a 
-                    className="sm-panel-item" 
-                    href={it.link} 
-                    aria-label={it.ariaLabel} 
-                    data-index={idx + 1} 
-                    onClick={(e) => {
-                      if (it.onClick) {
-                        e.preventDefault();
-                        it.onClick();
-                      }
-                      closeMenu();
-                    }}
-                  >
-                    <HackerText text={it.label} as="span" className="sm-panel-itemLabel" />
-                  </a>
+                  {isInternalRoute(it.link) ? (
+                    <Link
+                      className="sm-panel-item"
+                      to={it.link}
+                      aria-label={it.ariaLabel}
+                      data-index={idx + 1}
+                      onClick={(e) => {
+                        if (it.onClick) {
+                          e.preventDefault();
+                          it.onClick();
+                        }
+                        closeMenu();
+                      }}
+                    >
+                      <HackerText text={it.label} as="span" className="sm-panel-itemLabel" />
+                    </Link>
+                  ) : (
+                    <a
+                      className="sm-panel-item"
+                      href={it.link}
+                      aria-label={it.ariaLabel}
+                      data-index={idx + 1}
+                      onClick={(e) => {
+                        if (it.onClick) {
+                          e.preventDefault();
+                          it.onClick();
+                        }
+                        closeMenu();
+                      }}
+                    >
+                      <HackerText text={it.label} as="span" className="sm-panel-itemLabel" />
+                    </a>
+                  )}
                 </li>
               ))
             ) : (

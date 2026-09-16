@@ -231,7 +231,13 @@ html.lenis {
   .cinematic-card {
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+  }
+
+  @media (min-width: 768px) {
+    .cinematic-card {
+      overflow: hidden;
+    }
   }
 
   .cinematic-card:hover {
@@ -374,4 +380,102 @@ html.lenis {
   0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; }
   60%  { transform: translate(-50%, -50%) scale(50); opacity: 0.7; }
   100% { transform: translate(-50%, -50%) scale(60); opacity: 0; }
+}
+.omniverse-enter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px 38px;
+  min-width: 300px;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  transform: skewX(-4deg);
+}
+
+/* Green futuristic frame */
+.omniverse-enter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  border: 3px solid #5dff3a;
+
+  clip-path: polygon(
+    5% 0,
+    95% 0,
+    100% 25%,
+    100% 75%,
+    95% 100%,
+    5% 100%,
+    0 75%,
+    0 25%
+  );
+
+  box-shadow:
+    0 0 8px rgba(93, 255, 58, 0.9),
+    0 0 20px rgba(93, 255, 58, 0.35);
+
+  z-index: 0;
+}
+
+/* Dark interior */
+.omniverse-enter::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+
+  background: rgba(0, 12, 3, 0.85);
+
+  clip-path: polygon(
+    5% 0,
+    95% 0,
+    100% 25%,
+    100% 75%,
+    95% 100%,
+    5% 100%,
+    0 75%,
+    0 25%
+  );
+
+  z-index: 1;
+}
+
+/* Actual title */
+.omniverse-enter span {
+  position: relative;
+  z-index: 2;
+
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: clamp(25px, 3vw, 44px);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+
+  color: white;
+
+  /* Thick black comic outline */
+  -webkit-text-stroke: 6px #000;
+  paint-order: stroke fill;
+
+  /* Only black shadow — NO green shadow */
+  text-shadow:
+    5px 5px 0 #000;
+
+  letter-spacing: 1px;
+}
+
+/* Hover */
+.omniverse-enter:hover::before {
+  box-shadow:
+    0 0 10px rgba(93, 255, 58, 1),
+    0 0 30px rgba(93, 255, 58, 0.6);
+}
+
+.omniverse-enter:hover span {
+  transform: scale(1.03);
 }

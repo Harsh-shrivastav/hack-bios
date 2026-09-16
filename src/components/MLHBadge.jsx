@@ -4,16 +4,7 @@ const MLHBadge = () => {
   return (
     <a
       id="mlh-trust-badge"
-      style={{
-        display: 'block',
-        maxWidth: '100px',
-        minWidth: '60px',
-        position: 'fixed',
-        right: '50px',
-        top: 0,
-        width: '10%',
-        zIndex: 10000,
-      }}
+      className="block fixed top-0 right-2 w-10 min-w-[40px] max-w-[56px] md:right-[50px] md:w-[10%] md:min-w-[60px] md:max-w-[100px] z-[10000]"
       href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=white"
       target="_blank"
       rel="noopener noreferrer"

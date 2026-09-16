@@ -132,23 +132,23 @@ const TeamGrid = ({ members }) => (
       >
         <Photo
           m={m}
-          className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500"
+          className="w-full h-full object-cover object-top grayscale-0 lg:grayscale lg:group-hover:grayscale-0 transition-all duration-500"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 lg:opacity-70 lg:group-hover:opacity-90 transition-opacity" />
 
-        <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-8 group-hover:translate-y-0 transition-transform duration-300">
+        <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-0 lg:translate-y-8 lg:group-hover:translate-y-0 transition-transform duration-300">
           <h3 className="font-mono font-bold text-white text-xs uppercase">
             {m.name}
           </h3>
 
-          <p className="font-mono text-[#5dff3a] text-[9px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity delay-100 mb-2">
+          <p className="font-mono text-[#5dff3a] text-[9px] uppercase tracking-widest opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity delay-100 mb-2">
             {m.role}
           </p>
 
           <SocialRow
             m={m}
-            className="opacity-0 group-hover:opacity-100 transition-opacity delay-150"
+            className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity delay-150"
           />
         </div>
       </div>

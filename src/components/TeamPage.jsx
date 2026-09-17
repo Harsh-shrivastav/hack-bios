@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CodonStream from './CodonStream';
 
 // ============ EDIT YOUR TEAM HERE ============
@@ -127,8 +127,8 @@ const TeamGrid = ({ members }) => (
   <div className="flex flex-wrap justify-center gap-4">
     {members.map((m, i) => (
       <div
-        key={i}
-        className="relative w-[45%] sm:w-[30%] lg:w-[22%] min-w-[120px] sm:min-w-[150px] h-[220px] sm:h-[300px] lg:h-[500px] overflow-hidden group cursor-pointer"
+        key={`${m.photo || m.name}-${i}`}
+        className="relative w-[45%] sm:w-[30%] lg:w-[22%] min-w-[120px] sm:min-w-[150px] h-[220px] sm:h-[300px] lg:h-[500px] overflow-hidden group interactive cursor-pointer"
       >
         <Photo
           m={m}
@@ -159,6 +159,24 @@ const TeamGrid = ({ members }) => (
 const TeamPage = () => {
   const [categoryIndex, setCategoryIndex] = useState(0);
   const activeCategory = CATEGORIES[categoryIndex];
+
+  // Warm the browser's cache for every member's photo up front. Without
+  // this, switching category tabs would key-remount fresh <img>s (see the
+  // key change on TeamGrid above — needed so a stale photo from the old
+  // category never sits under the new person's name) but each one would
+  // still show blank/broken until it finished loading over the network
+  // for the first time. Preloading here means that by the time someone
+  // taps a tab, the images are already cached and just appear instantly.
+  useEffect(() => {
+    CATEGORIES.forEach((cat) => {
+      cat.members.forEach((m) => {
+        if (m.photo) {
+          const img = new Image();
+          img.src = `/team/${m.photo}`;
+        }
+      });
+    });
+  }, []);
 
   return (
     <div className="relative min-h-screen md:h-screen w-full overflow-visible md:overflow-hidden bg-transparent text-white">

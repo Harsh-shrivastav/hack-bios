@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 import './PastPartners.css';
 
 // Real, properly-named sponsor logos in public/sponsors/
@@ -42,10 +42,29 @@ const COMMUNITY_LOGO_FILES = [
   { file:'entropyzero.png', name:'EntropyZero'},
   { file:'nexhack.png', name:'Nexhack'},
   { file:'techsociety.png', name:'TechSociety'},
-  { file:'OSEN.png', name:'OSEN'},
-  { file: 'GFG.png', name: 'GEEKSFORGEEKS' },];
+  { file:'OSEN.png', name:'OSEN'},];
 
 const PastPartners = () => {
+  // Each tile has its own infinite float animation plus a backdrop-blur —
+  // backdrop-filter has to keep resampling what's behind an element every
+  // frame it moves, so 13 of these running continuously even while this
+  // section is scrolled miles out of view was pure wasted cost. Pausing
+  // the animation via IntersectionObserver when the section isn't visible
+  // removes that cost without changing how it looks while it *is* in view.
+  const sectionRef = useRef(null);
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        el.classList.toggle('tiles-paused', !entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   // Randomize each tile's animation duration/delay once per mount so the
   // field reads as organic independent drifting, not a synced grid bobbing
   // in unison. useMemo keeps these stable across re-renders.
@@ -67,7 +86,7 @@ const PastPartners = () => {
 );
 
   return (
-    <section className="py-24 relative ">
+    <section ref={sectionRef} className="py-24 relative ">
       <div className="absolute inset-0 bg-circuit-pattern opacity-[0.02] pointer-events-none" />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -112,7 +131,7 @@ const PastPartners = () => {
             className="text-4xl md:text-5xl font-mono font-bold mb-4 glitch uppercase tracking-tighter"
             data-text="/ COMMUNITY SPONSORS"
             >
-            <span className="text-[#00ff41]">/</span> COMMUNITY PARTNERS
+            <span className="text-[#00ff41]">/</span> COMMUNITY SPONSORS
           </h2>
         </div>
         <div className="flex flex-wrap justify-center gap-4 md:gap-6">

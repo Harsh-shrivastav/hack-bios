@@ -20,11 +20,17 @@ const CustomCursor = () => {
     const handleMouseOver = (e) => {
       const target = e.target;
       if (!target) return;
+      // Cheap DOM checks only — this fires on every element the pointer
+      // enters, so a getComputedStyle() call here (which forces a
+      // synchronous style/layout recalculation) was competing with the
+      // rAF position loop and every other animation on the page for
+      // main-thread time every single frame. That's what made the
+      // cursor feel laggy. `.interactive` is applied consistently across
+      // the site's clickable elements, so closest() alone is enough.
       if (
-        target.closest('a') || 
-        target.closest('button') || 
-        target.closest('.interactive') || 
-        (window.getComputedStyle(target).cursor === 'pointer')
+        target.closest('a') ||
+        target.closest('button') ||
+        target.closest('.interactive')
       ) {
         if (ringRef.current) ringRef.current.classList.add('hovering');
       } else {
@@ -32,8 +38,8 @@ const CustomCursor = () => {
       }
     };
 
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('mouseover', handleMouseOver, { passive: true });
 
     let rafId;
     const update = () => {

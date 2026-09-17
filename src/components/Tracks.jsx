@@ -135,7 +135,7 @@ const Tracks = () => {
             scaleEndPosition="10%"
             baseScale={0.88}
             rotationAmount={0}
-            blurAmount={1.5}
+            blurAmount={0}
             className="w-full"
           >
             {trackData.map((track) => {

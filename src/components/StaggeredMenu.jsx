@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { HackerText } from './ui/hacker-text';
 import './StaggeredMenu.css';
@@ -7,7 +7,13 @@ import './StaggeredMenu.css';
 // Internal routes (like /team) must go through React Router so the SPA
 // swaps views client-side instead of doing a full browser reload, which
 // would reset all React state (e.g. App.jsx's `introDone`).
-// Hash links (#about, #faq) and external URLs stay as normal <a> tags.
+// Hash links (#about, #faq) and external URLs stay as normal <a> tags —
+// but ONLY while already on the home page. From any other route (e.g.
+// /team) a plain <a href="#about"> just tries to scroll to an element
+// that doesn't exist on that page and silently does nothing, which is
+// why these links looked "dead" from the Team page. From elsewhere they
+// go through the router to "/#about" instead; HomePage picks up the
+// hash on mount and scrolls to it once the section exists.
 const isInternalRoute = (link) => typeof link === 'string' && link.startsWith('/');
 
 export const StaggeredMenu = ({
@@ -30,6 +36,9 @@ export const StaggeredMenu = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const onHome = location.pathname === '/';
+  const hashHref = (link) => (onHome ? link : `/${link}`);
   const openRef = useRef(false);
   const panelRef = useRef(null);
   const preLayersRef = useRef(null);
@@ -347,7 +356,7 @@ export const StaggeredMenu = ({
                 <span>{item.label}</span>
                 <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00ff41] transition-all duration-300 group-hover:w-full"></span>
               </Link>
-            ) : (
+            ) : onHome ? (
               <a
                 key={idx}
                 href={item.link}
@@ -356,6 +365,15 @@ export const StaggeredMenu = ({
                 <span>{item.label}</span>
                 <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00ff41] transition-all duration-300 group-hover:w-full"></span>
               </a>
+            ) : (
+              <Link
+                key={idx}
+                to={hashHref(item.link)}
+                className="hover:text-[#00ff41] transition-colors relative group py-1.5"
+              >
+                <span>{item.label}</span>
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00ff41] transition-all duration-300 group-hover:w-full"></span>
+              </Link>
             )
           )}
         </nav>
@@ -404,7 +422,7 @@ export const StaggeredMenu = ({
                     >
                       <HackerText text={it.label} as="span" className="sm-panel-itemLabel" />
                     </Link>
-                  ) : (
+                  ) : onHome ? (
                     <a
                       className="sm-panel-item"
                       href={it.link}
@@ -420,6 +438,22 @@ export const StaggeredMenu = ({
                     >
                       <HackerText text={it.label} as="span" className="sm-panel-itemLabel" />
                     </a>
+                  ) : (
+                    <Link
+                      className="sm-panel-item"
+                      to={hashHref(it.link)}
+                      aria-label={it.ariaLabel}
+                      data-index={idx + 1}
+                      onClick={(e) => {
+                        if (it.onClick) {
+                          e.preventDefault();
+                          it.onClick();
+                        }
+                        closeMenu();
+                      }}
+                    >
+                      <HackerText text={it.label} as="span" className="sm-panel-itemLabel" />
+                    </Link>
                   )}
                 </li>
               ))

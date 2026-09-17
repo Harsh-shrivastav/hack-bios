@@ -316,7 +316,13 @@ export function CinematicFooter() {
         <footer className="fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-y-auto overflow-x-hidden md:overflow-hidden bg-background text-foreground cinematic-footer-wrapper">
           
           {/* Ambient Light & Grid Background */}
-          <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
+          {/* .footer-aurora's background is already a radial-gradient that
+              fades to transparent on its own — the blur-[80px] filter that
+              used to sit on top of it was mostly redundant softening at a
+              real GPU cost, recomputed every frame of the breathe
+              animation on a fixed, always-mounted element. Dropping it
+              keeps the same look for a fraction of the cost. */}
+          <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] pointer-events-none z-0" />
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
 
           {/* Giant background text */}

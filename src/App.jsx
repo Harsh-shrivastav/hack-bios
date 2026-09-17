@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Lenis from '@studio-freight/lenis';
 
 import CustomCursor from './components/CustomCursor';
@@ -29,12 +29,50 @@ import PartnerBanners from './components/PartnerBanners';
 gsap.registerPlugin(ScrollTrigger);
 
 function HomePage() {
+  // Lands on the right section when arriving via a "#about"/"#faq"/"#contact"
+  // link from another route (e.g. the Team page's nav, which now routes
+  // here instead of trying to scroll a section that doesn't exist on that
+  // page). React Router doesn't auto-scroll to a hash on client-side
+  // navigation the way a full page load does, so this does it by hand
+  // once the section has actually mounted — using the same Lenis instance
+  // the rest of the page scrolls with (exposed on window by the effect
+  // below) so it's a smooth scroll, not a jump, and doesn't fight Lenis
+  // on the next frame the way a plain scrollIntoView() would.
+  const location = useLocation();
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.slice(1);
+    const t = setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (window.__lenis) {
+        window.__lenis.scrollTo(el, { offset: -80 });
+      } else {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 400); // gives Hero/section layout + ScrollTrigger a moment to settle first
+    return () => clearTimeout(t);
+  }, [location.hash]);
+
   return (
     <main className="relative">
-      {/* Global cinematic background particles/glow could go here */}
+      {/* Global cinematic background particles/glow could go here.
+          These used to be solid-color circles with a large blur() filter
+          animating via animate-pulse — combining a big blur with a
+          continuous animation forces the browser to redo that blur
+          convolution on every pulse frame, for as long as the home page
+          is mounted. A radial-gradient is soft at the edges by
+          construction, so it gives the same glow with none of that cost;
+          the pulse animation is unchanged. */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#00ff41]/5 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#00e5ff]/5 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full animate-pulse"
+          style={{ background: 'radial-gradient(circle, rgba(0,255,65,0.05) 0%, rgba(0,255,65,0) 70%)' }}
+        ></div>
+        <div
+          className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full animate-pulse"
+          style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.05) 0%, rgba(0,229,255,0) 70%)', animationDelay: '2s' }}
+        ></div>
       </div>
 
       <div id="hero-section"><Hero /></div>
@@ -130,6 +168,10 @@ function App() {
     gsap.ticker.add(lenisTick);
     gsap.ticker.lagSmoothing(0);
     lenis.on('scroll', ScrollTrigger.update);
+    // Exposed so other components (e.g. HomePage's #about/#faq/#contact
+    // landing scroll) can drive the same smoothed scroll instead of
+    // fighting it with a raw scrollIntoView().
+    window.__lenis = lenis;
 
     // Layout (webfonts, images) can still be settling on first mount;
     // re-measure once things stabilize so the Hero pin's scroll distance
@@ -181,6 +223,7 @@ function App() {
       window.removeEventListener('resize', handleViewportChange);
       gsap.ticker.remove(lenisTick);
       lenis.destroy();
+      if (window.__lenis === lenis) window.__lenis = null;
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, [introDone]);

@@ -137,7 +137,7 @@ function App() {
     { label: 'About', link: '#about' },
     // { label: 'Tracks', link: '#tracks' },
     // { label: 'Timeline', link: '#timeline' },
-    { label: 'Team', link: '/team' },
+    //{ label: 'Team', link: '/team' },
     { label: 'FAQ', link: '#faq' },
     { label: 'Contact', link: '#contact' }
   ];
@@ -278,7 +278,7 @@ function App() {
    
                <Routes>
                  <Route path="/" element={<HomePage />} />
-                 <Route path="/team" element={<TeamPage />} />
+                 {/* <Route path="/team" element={<TeamPage />} /> */}
                </Routes>
              </>
            )}

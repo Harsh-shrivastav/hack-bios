@@ -38,6 +38,7 @@ const LOGO_FILES = [
   { file: 'quillbot.png', name: 'QuillBot' },];
 const COMMUNITY_LOGO_FILES = [
   { file: 'GDG.png', name: 'GDG' },
+  { file:'GFG.png', name:'GFG'},
   { file:'syntaxLogo.png', name:'Syntax'},
   { file:'entropyzero.png', name:'EntropyZero'},
   { file:'nexhack.png', name:'Nexhack'},

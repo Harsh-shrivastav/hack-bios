@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import CodonStream from './CodonStream';
 
 // ============ EDIT YOUR TEAM HERE ============
@@ -7,72 +7,21 @@ import CodonStream from './CodonStream';
 // Leave any social field as "" to hide that icon for that person.
 const CATEGORIES = [
   {
-    label: 'Organisers',
+    label: 'Organising Leads',
     members: [
       { name: 'Yuvraj Singh Sahu', role: 'Lead Organiser', photo: 'yuvraj.png', github: 'https://github.com/Theonlyunknowncoder', linkedin: 'https://www.linkedin.com/in/yuvraj-sahu--/', instagram: 'https://www.instagram.com/silents_creation?stkn=bnNlb3llaDNlN3Jp' },
      { name: 'Priyanshu Yadav', role: 'Lead Organiser', photo: 'priyanshu.png', github: 'https://github.com/Priyanshu124-tech', linkedin: 'www.linkedin.com/in/priyanshu-yadav-258ba6290' , instagram: 'https://www.instagram.com/priyanshu_yadav.124/?utm_source=ig_web_button_share_sheet' },
       { name: 'Harsh Shrivastava', role: 'Lead Organiser', photo: 'harsh.png', github: 'https://github.com/Harsh-shrivastav', linkedin: 'https://www.linkedin.com/in/harsh-shrivastava' , instagram: 'https://www.instagram.com/harsh_shrivastav_3?stkn=MWEwY3doeG9tYmc1cQ==' },
     ],
   },
-  {
-    label: 'Technical Team',
-    members: [
-      { name: 'Praptee Miller', role: 'Developer', photo: 'Miller.png', github: 'https://github.com/iammissmiller', linkedin: 'https://www.linkedin.com/in/praptee-miller-896a50323/', instagram: 'https://www.instagram.com/i_am.miller?stkn=bnB0ZGh2dTVudnJj' },
-      { name: 'Prashant Kumar Sahu', role: 'Developer', photo: 'prashant.png', github: 'https://github.com/Prashant-ARKM', linkedin: 'https://www.linkedin.com/in/prashant-kumar-sahu-b3757539b/', instagram: 'https://www.instagram.com/prnoisy?stkn=a3F2ZHVjczFlaWxu' },
-      { name: 'Aashirvad Jaiswal', role: 'Developer', photo: 'aashirvad.png', linkedin: 'https://www.linkedin.com/in/aashirvadj', instagram: 'https://www.instagram.com/aashi.ipynb', },
-    ],
-  },
-  {
-    label: 'Media Team',
-    members: [
-      { name: 'Arpan Singh', role: 'Media CO Lead', photo: 'arpan.png', instagram: 'https://www.instagram.com/arpann.singh?stkn=MWc0Mmd1Yjd2bHk1Mw==' ,linkedin: ' https://www.linkedin.com/in/arpannsingh?utm_source=share_via&utm_content=profile&utm_medium=member_android'},
-      { name: 'Divyansh Kaiwart', role: 'Media Team', photo: 'divyansh.png', linkedin: '' },
-      { name: 'Harsh Kumar Netam', role: 'Media Team', photo: 'harshkumar.png', linkedin: 'https://www.linkedin.com/in/harshkumarnetam' },
-      { name: 'Shreya Sharma', role: 'Media Team', photo: 'shreya.png', linkedin: '' },
-      { name: 'Suraj Dewangan', role: 'Media Team', photo: 'suraj.png', linkedin: '' },
-    ],
-  },
-  {
-    label: 'Graphics Team',
-    members: [
-      { name: 'Ashish Chandra', role: 'Graphics Team Lead', photo: 'ashish.png', linkedin: 'https://www.linkedin.com/in/ashish-chandra-552528296' },
-      { name: 'Amit Poddar', role: 'Graphics Team', photo: 'amit.png', linkedin: 'https://www.linkedin.com/in/amit-poddar-77b8b2328' },
-      { name: 'Akchhansh', role: 'Graphics Team', photo: 'akchhansh.png', linkedin: '' },
-    ],
-  },
-  {
-    label: 'Sponsorship Team',
-    members: [
-      { name: 'Nidhi Sahu', role: 'Sponsorship Team', photo: 'nidhi.png', linkedin: 'https://www.linkedin.com/in/nidhi-sahu-96bb76290' },
-      { name: 'Lelushi Barley', role: 'Sponsorship Team', photo: 'lelushi.png', linkedin: '' },
-      { name: 'B. Sakshi', role: 'Sponsorship Team', photo: 'sakshi.png', linkedin: '' },
-      { name: 'Rupesh Kumar Sidar', role: 'Sponsorship Team', photo: 'rupesh.png', linkedin: 'https://www.linkedin.com/in/rupesh-kumar-sidar-0b6234291' },
-      { name: 'Seema Sahu', role: 'Sponsorship Team', photo: 'seema.png', linkedin: '' },
-      { name: 'Antriksha', role: 'Sponsorship Team', photo: 'antriksha.png', linkedin: 'https://www.linkedin.com/in/antriksha-v-a85476320' },
-    ],
-  },
-  {
-    label: 'Management Team',
-    members: [
-      { name: 'MD Ashhab Alam', role: 'Management', photo: 'mdashhab.png', linkedin: 'https://www.linkedin.com/in/md-ashhab-alam-8275a2356' },
-      { name: 'Syed Mahin Sabry', role: 'Management', photo: 'syedmahin.png', linkedin: '' },
-    ],
-  },
-  {
-    label: 'PR Team',
-    members: [
-      { name: 'Ayush Sahu', role: 'PR Team', photo: 'ayush.png', linkedin: 'https://www.linkedin.com/in/ayush-sahu-b829a4429' },
-      { name: 'Bhumika Turker', role: 'PR Team', photo: 'bhumika.png', linkedin: 'https://www.linkedin.com/in/bhumika-turker-895907391' },
-    ],
-  },
-  {
-    label: 'Decoration Team',
-    members: [
-      { name: 'Malvee Vaishnav', role: 'Decoration Team', photo: 'malvee.png', linkedin: '' },
-      { name: 'Ashwani Singh', role: 'Core Team', photo: 'ashwani.png', linkedin: '' },
-    ],
-  },
-];
+  { label: 'Core Team', members: [{ name: 'Ashish Chandra', role: 'Graphics Team Lead', photo: 'ashish.png', linkedin: 'https://www.linkedin.com/in/ashish-chandra-552528296' }, { name: 'Akchhansh', role: 'Graphics Team Co-lead', photo: 'akchhansh.png', linkedin: '' },{ name: 'Chinmay Nishad', role: 'Media Lead', photo: 'chinmay.png', linkedin: '' }, { name: 'Nidhi Sahu', role: 'Sponsorship Team Lead', photo: 'nidhi.png', linkedin: 'https://www.linkedin.com/in/nidhi-sahu-96bb76290' },{ name: 'Antriksha', role: 'Sponsorship Team CO-Lead', photo: 'antriksha.png', linkedin: 'https://www.linkedin.com/in/antriksha-v-a85476320' }, { name: 'Arpan Singh', role: 'Media CO Lead', photo: 'arpan.png', instagram: 'https://www.instagram.com/arpann.singh?stkn=MWc0Mmd1Yjd2bHk1Mw==', linkedin: ' https://www.linkedin.com/in/arpannsingh?utm_source=share_via&utm_content=profile&utm_medium=member_android' }, { name: 'Praptee Miller', role: 'Developer', photo: 'Miller.png', github: 'https://github.com/iammissmiller', linkedin: 'https://www.linkedin.com/in/praptee-miller-896a50323/', instagram: 'https://www.instagram.com/i_am.miller?stkn=bnB0ZGh2dTVudnJj' },
+  { name: 'Prashant Kumar Sahu', role: 'Developer', photo: 'prashant.png', github: 'https://github.com/Prashant-ARKM', linkedin: 'https://www.linkedin.com/in/prashant-kumar-sahu-b3757539b/', instagram: 'https://www.instagram.com/prnoisy?stkn=a3F2ZHVjczFlaWxu' }, { name: 'Aashirvad Jaiswal', role: 'Developer', photo: 'aashirvad.png', linkedin: 'https://www.linkedin.com/in/aashirvadj', instagram: 'https://www.instagram.com/aashi.ipynb' },
+  { name: 'Divyansh Kaiwart', role: 'Media Team', photo: 'divyansh.png', linkedin: '' }, { name: 'Harsh Kumar Netam', role: 'Media Team', photo: 'harshkumar.png', linkedin: 'https://www.linkedin.com/in/harshkumarnetam' }, { name: 'Shreya Sharma', role: 'Media Team', photo: 'shreya.png', linkedin: '' }, { name: 'Suraj Dewangan', role: 'Media Team', photo: 'suraj.png', linkedin: '' }, 
+   { name: 'Amit Poddar', role: 'Graphics Team', photo: 'amit.png', linkedin: 'https://www.linkedin.com/in/amit-poddar-77b8b2328' },  
+   { name: 'Lelushi Barley', role: 'Sponsorship Team', photo: 'lelushi.png', linkedin: '' }, { name: 'B. Sakshi', role: 'Sponsorship Team', photo: 'sakshi.png', linkedin: '' }, { name: 'Rupesh Kumar Sidar', role: 'Sponsorship Team', photo: 'rupesh.png', linkedin: 'https://www.linkedin.com/in/rupesh-kumar-sidar-0b6234291' }, { name: 'Seema Sahu', role: 'Sponsorship Team', photo: 'seema.png', linkedin: '' },  
+  { name: 'MD Ashhab Alam', role: 'Management', photo: 'mdashhab.png', linkedin: 'https://www.linkedin.com/in/md-ashhab-alam-8275a2356' }, { name: 'Syed Mahin Sabry', role: 'Management', photo: 'syedmahin.png', linkedin: '' }, 
+  { name: 'Ayush Sahu', role: 'PR Team', photo: 'ayush.png', linkedin: 'https://www.linkedin.com/in/ayush-sahu-b829a4429' }, { name: 'Bhumika Turker', role: 'PR Team', photo: 'bhumika.png', linkedin: 'https://www.linkedin.com/in/bhumika-turker-895907391' }, 
+  { name: 'Malvee Vaishnav', role: 'Decoration Team', photo: 'malvee.png', linkedin: '' }, { name: 'Ashwani Singh', role: 'Core Team', photo: 'ashwani.png', linkedin: '' }, { name: 'Prachi Dewangan', role: 'Core Team', photo: 'prachi.png', linkedin: '' }, { name: 'Bhavesh', role: 'Core Team', photo: 'bhavesh.png', linkedin: '' }, { name: 'Suryash', role: 'Core Team', photo: 'suryash.png', linkedin: '' } ], }, ];
 // ===============================================
 
 const getInitials = (name) =>
@@ -83,7 +32,7 @@ const Github = (p) => (
 );
 const Linkedin = (p) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...p}><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z" /></svg>
-);
+);  
 const Instagram = (p) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...p}><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none" /></svg>
 );
@@ -123,12 +72,13 @@ const Photo = ({ m, className }) =>
 // flex-wrap + fixed-width cards (instead of a CSS grid) so that when a
 // category has fewer members than a full row, they center instead of
 // hugging the left edge.
+
 const TeamGrid = ({ members }) => (
   <div className="flex flex-wrap justify-center gap-4">
     {members.map((m, i) => (
       <div
         key={`${m.photo || m.name}-${i}`}
-        className="relative w-[45%] sm:w-[30%] lg:w-[22%] min-w-[120px] sm:min-w-[150px] h-[220px] sm:h-[300px] lg:h-[500px] overflow-hidden group interactive cursor-pointer"
+        className="relative w-[45%] sm:w-[30%] lg:w-[22%] aspect-square min-w-[120px] sm:min-w-[150px] overflow-hidden group interactive cursor-pointer"
       >
         <Photo
           m={m}
@@ -156,17 +106,11 @@ const TeamGrid = ({ members }) => (
   </div>
 );
 
-const TeamPage = () => {
-  const [categoryIndex, setCategoryIndex] = useState(0);
-  const activeCategory = CATEGORIES[categoryIndex];
 
-  // Warm the browser's cache for every member's photo up front. Without
-  // this, switching category tabs would key-remount fresh <img>s (see the
-  // key change on TeamGrid above — needed so a stale photo from the old
-  // category never sits under the new person's name) but each one would
-  // still show blank/broken until it finished loading over the network
-  // for the first time. Preloading here means that by the time someone
-  // taps a tab, the images are already cached and just appear instantly.
+
+const TeamPage = () => {
+  // Warm the browser's cache for every member's photo up front, so
+  // photos never take a beat to pop in as someone scrolls down the page.
   useEffect(() => {
     CATEGORIES.forEach((cat) => {
       cat.members.forEach((m) => {
@@ -179,18 +123,21 @@ const TeamPage = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen md:h-screen w-full overflow-visible md:overflow-hidden bg-transparent text-white">
+    <div className="relative min-h-screen w-full bg-transparent text-white">
 
-      {/* Background */}
+      {/* Background — CodonStream's own canvas is already `fixed inset-0`
+          internally, so it stays pinned behind the content no matter how
+          tall this page ends up (it no longer has to fit one screen). */}
       <div className="pointer-events-none absolute inset-0 z-0">
         <CodonStream />
       </div>
 
-      {/* Foreground */}
-      <div className="relative z-10 flex h-auto md:h-full flex-col px-6 md:px-16 lg:px-24 pt-12 md:pt-16 pb-10 md:pb-14">
+      {/* Foreground — one continuously scrolling page (no more tabs / no
+          more single-screen-with-internal-scrollbox) */}
+      <div className="relative z-10 flex flex-col px-6 md:px-16 lg:px-24 pt-12 md:pt-16 pb-20 md:pb-28">
 
         {/* Header */}
-        <div className="shrink-0 mb-6">
+        <div className="mb-10 md:mb-14">
           <h1 className="font-black font-mono uppercase text-white text-3xl md:text-4xl leading-none">
             The{" "}
             <span className="text-[#5dff3a] drop-shadow-[0_0_14px_rgba(93,255,58,0.5)]">
@@ -199,36 +146,16 @@ const TeamPage = () => {
           </h1>
         </div>
 
-        {/* Category nav */}
-        <div className="shrink-0 flex flex-wrap justify-center gap-2 border-b border-[#1e2621] pb-3 mb-6">
-          {CATEGORIES.map((cat, i) => (
-            <button
-              key={i}
-              onClick={() => setCategoryIndex(i)}
-              className={`interactive px-4 py-2 font-mono text-xs uppercase tracking-widest transition-colors ${
-                categoryIndex === i
-                  ? "text-[#5dff3a] border-b-2 border-[#5dff3a]"
-                  : "text-gray-400 border-b-2 border-transparent hover:text-white"
-              }`}
-            >
+        {/* Organising Leads, then Core Team, stacked — each with its own
+            "ENTER THE OMNIVERSE"-style title above its grid. */}
+        {CATEGORIES.map((cat, i) => (
+          <section key={cat.label} className={i > 0 ? 'mt-16 md:mt-24' : ''}>
+            <h2 className="team-section-title text-center mb-8 md:mb-12">
               {cat.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Scrollable team area — data-lenis-prevent tells the site-wide
-            Lenis smooth-scroll instance to leave this box alone, so the
-            mouse wheel scrolls it natively instead of Lenis swallowing the
-            wheel event for the whole page (only the drag-the-scrollbar
-            path was working before, since that bypasses Lenis entirely). */}
-        <div
-          data-lenis-prevent
-          className="relative z-20 overflow-visible md:flex-1 md:min-h-0 md:overflow-y-auto md:overflow-x-hidden overscroll-y-contain pr-1 pointer-events-auto"
-        >
-          <div className="w-full py-2">
-            <TeamGrid members={activeCategory.members} />
-          </div>
-        </div>
+            </h2>
+            <TeamGrid members={cat.members} />
+          </section>
+        ))}
 
       </div>
     </div>

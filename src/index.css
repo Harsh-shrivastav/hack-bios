@@ -479,3 +479,26 @@ html.lenis {
 .omniverse-enter:hover span {
   transform: scale(1.03);
 }
+
+/* Team page section titles ("ORGANISING LEADS", "CORE TEAM") — same
+   typographic treatment as the "ENTER THE OMNIVERSE" button text above
+   (Impact, italic, thick black comic-style outline) minus the button's
+   frame/skew/background, since this is a static section heading rather
+   than a clickable CTA. */
+.team-section-title {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: clamp(25px, 3vw, 44px);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+
+  color: white;
+  text-transform: uppercase;
+
+  -webkit-text-stroke: 6px #000;
+  paint-order: stroke fill;
+
+  text-shadow: 5px 5px 0 #000;
+
+  letter-spacing: 1px;
+}

@@ -28,6 +28,28 @@ import PartnerBanners from './components/PartnerBanners';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Plain client-side navigation (clicking "Team", or "The Team"/logo back to
+// Home) doesn't reload the page, so neither the browser nor Lenis reset
+// scroll position on their own — the new page just renders wherever the
+// old page happened to be scrolled to. A plain window.scrollTo(0,0) isn't
+// enough here either, since Lenis tracks its own scroll position and would
+// just override that back on the next frame. This resets Lenis itself
+// (immediately, not a visible scroll-up animation) on every route change —
+// except when the navigation is landing on a #section hash, in which case
+// HomePage's own hash-scroll effect below handles positioning instead.
+function ScrollToTop() {
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash) return;
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
+  return null;
+}
+
 function HomePage() {
   // Lands on the right section when arriving via a "#about"/"#faq"/"#contact"
   // link from another route (e.g. the Team page's nav, which now routes
@@ -276,6 +298,7 @@ function App() {
                  socialItems={socialItems}
                />
    
+               <ScrollToTop />
                <Routes>
                  <Route path="/" element={<HomePage />} />
                  <Route path="/team" element={<TeamPage />} />

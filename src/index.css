@@ -502,3 +502,72 @@ html.lenis {
 
   letter-spacing: 1px;
 }
+/* PPT Submission section — the section-wide "wow" lives here instead of
+   on a single button. Same discipline as the homepage/footer glow fix:
+   radial-gradient (not blur) so the aura can safely animate every frame
+   without the browser repainting a large blur convolution, and the
+   frame/scan effects only ever touch transform/opacity/box-shadow. */
+@keyframes submission-aura-breathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.65; }
+  50% { transform: translate(-50%, -50%) scale(1.18); opacity: 1; }
+}
+.submission-aura {
+  animation: submission-aura-breathe 7s ease-in-out infinite;
+}
+
+@keyframes submission-scan-sweep {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(220%); }
+}
+.submission-scan {
+  animation: submission-scan-sweep 3.2s linear infinite;
+}
+
+@keyframes submission-frame-glow {
+  0%, 100% {
+    box-shadow: 0 0 60px rgba(0, 255, 65, 0.08), inset 0 0 0 rgba(0, 255, 65, 0);
+    border-color: rgba(0, 255, 65, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 100px rgba(0, 255, 65, 0.22), inset 0 0 50px rgba(0, 255, 65, 0.05);
+    border-color: rgba(0, 255, 65, 0.4);
+  }
+}
+.submission-frame-glow {
+  animation: submission-frame-glow 4.5s ease-in-out infinite;
+}
+
+/* Submission section, round 2 — radar sweep (rotate only), drifting
+   particle motes (transform + opacity only), and a typewriter command
+   line (width animates to a fixed ch value, not a %, so the caret always
+   hugs the actual end of the text instead of drifting past it). */
+@keyframes submission-radar-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.submission-radar {
+  animation: submission-radar-spin 9s linear infinite;
+}
+
+@keyframes submission-particle-drift {
+  0%, 100% { transform: translateY(0); opacity: 0.15; }
+  50% { transform: translateY(-18px); opacity: 0.9; }
+}
+.submission-particle {
+  animation: submission-particle-drift ease-in-out infinite;
+}
+
+@keyframes submission-typewriter {
+  0% { width: 0; }
+  45% { width: 28ch; }
+  90% { width: 28ch; }
+  100% { width: 0; }
+}
+.submission-typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  border-right: 2px solid #00ff41;
+  animation: submission-typewriter 6s steps(28, end) infinite;
+}

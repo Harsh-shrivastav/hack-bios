@@ -218,17 +218,14 @@ const Submission = () => {
                   </span>
                 </a>
 
-                {/* Guidelines */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    document
-                      .getElementById('submission-guidelines')
-                      ?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center',
-                      });
-                  }}
+                {/* Guidelines — opens /guidelines.pdf in a new tab. That
+                    file needs to live in your project's public/ folder
+                    (same pattern as everything under /team, /sponsors,
+                    etc.) — see the file handed back alongside this one. */}
+                <a
+                  href="/guidelines.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="
                     interactive
                     group
@@ -304,7 +301,7 @@ const Submission = () => {
                       transition-all
                     "
                   ></span>
-                </button>
+                </a>
 
               </div>
 

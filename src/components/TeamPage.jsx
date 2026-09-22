@@ -5,7 +5,11 @@ import CodonStream from './CodonStream';
 // photo: leave as "" for a placeholder avatar, or put a filename that
 //        exists in public/team/ (e.g. "harsh.jpg") to use a real photo.
 // Leave any social field as "" to hide that icon for that person.
-const CATEGORIES = [
+//
+// Exported so the home-page "Organisers" teaser section can reuse the
+// exact same data instead of a second, easily-out-of-sync copy — edit a
+// person's photo/socials here and it updates in both places.
+export const CATEGORIES = [
   {
     label: 'Organising Leads',
     members: [
@@ -14,14 +18,14 @@ const CATEGORIES = [
       { name: 'Harsh Shrivastava', role: 'Lead Organiser', photo: 'harsh.png', github: 'https://github.com/Harsh-shrivastav', linkedin: 'https://www.linkedin.com/in/harsh-shrivastava' , instagram: 'https://www.instagram.com/harsh_shrivastav_3?stkn=MWEwY3doeG9tYmc1cQ==' },
     ],
   },
-  { label: 'Core Team', members: [{ name: 'Ashish Chandra', role: 'Graphics Team Lead', photo: 'ashish.png', linkedin: 'https://www.linkedin.com/in/ashish-chandra-552528296' }, { name: 'Akchhansh', role: 'Graphics Team Lead', photo: 'akchhansh.png', linkedin: '' },{ name: 'Chinmay Nishad', role: 'Media Lead', photo: 'chinmay.png', linkedin: '' }, { name: 'Nidhi Sahu', role: 'Sponsorship Team Lead', photo: 'nidhi.png', linkedin: 'https://www.linkedin.com/in/nidhi-sahu-96bb76290' },{ name: 'Antriksha', role: 'Sponsorship Team CO-Lead', photo: 'antriksha.png', linkedin: 'https://www.linkedin.com/in/antriksha-v-a85476320' }, { name: 'Arpan Singh', role: 'Media CO Lead', photo: 'arpan.png', instagram: 'https://www.instagram.com/arpann.singh?stkn=MWc0Mmd1Yjd2bHk1Mw==', linkedin: ' https://www.linkedin.com/in/arpannsingh?utm_source=share_via&utm_content=profile&utm_medium=member_android' }, { name: 'Praptee Miller', role: 'Developer', photo: 'Miller.png', github: 'https://github.com/iammissmiller', linkedin: 'https://www.linkedin.com/in/praptee-miller-896a50323/', instagram: 'https://www.instagram.com/i_am.miller?stkn=bnB0ZGh2dTVudnJj' },
+  { label: 'Core Team', members: [{ name: 'Ashish Chandra', role: 'Graphics Team Lead', photo: 'ashish.png', linkedin: 'https://www.linkedin.com/in/ashish-chandra-552528296', instagram: 'https://www.instagram.com/ashish.chandra_/', github: 'https://github.com/c0derashish' }, { name: 'Akchhansh', role: 'Graphics Team Lead', photo: 'akchhansh.png', linkedin: '' },{ name: 'Chinmay Nishad', role: 'Media Lead', photo: 'chinmay.png', linkedin: '' }, { name: 'Nidhi Sahu', role: 'Sponsorship Team Lead', photo: 'nidhi.png', linkedin: 'https://www.linkedin.com/in/nidhi-sahu-96bb76290' },{ name: 'Antriksha', role: 'Sponsorship Team CO-Lead', photo: 'antriksha.png', linkedin: 'https://www.linkedin.com/in/antriksha-v-a85476320' },  { name: 'Praptee Miller', role: 'UI/UX Designer', photo: 'Miller.png', github: 'https://github.com/iammissmiller', linkedin: 'https://www.linkedin.com/in/praptee-miller-896a50323/', instagram: 'https://www.instagram.com/i_am.miller?stkn=bnB0ZGh2dTVudnJj' },
   { name: 'Prashant Kumar Sahu', role: 'Developer', photo: 'prashant.png', github: 'https://github.com/Prashant-ARKM', linkedin: 'https://www.linkedin.com/in/prashant-kumar-sahu-b3757539b/', instagram: 'https://www.instagram.com/prnoisy?stkn=a3F2ZHVjczFlaWxu' }, { name: 'Aashirvad Jaiswal', role: 'Tech Team', photo: 'aashirvad.png', linkedin: 'https://www.linkedin.com/in/aashirvadj', instagram: 'https://www.instagram.com/aashi.ipynb' },
   { name: 'Divyansh Kaiwart', role: 'Media Team', photo: 'divyansh.png', linkedin: '' }, { name: 'Harsh Kumar Netam', role: 'Media Team', photo: 'harshkumar.png', linkedin: 'https://www.linkedin.com/in/harshkumarnetam' }, { name: 'Shreya Sharma', role: 'Media Team', photo: 'shreya.png', linkedin: '' }, { name: 'Suraj Dewangan', role: 'Media Team', photo: 'suraj.png', linkedin: '' }, 
    { name: 'Amit Poddar', role: 'Graphics Team', photo: 'amit.png', linkedin: 'https://www.linkedin.com/in/amit-poddar-77b8b2328' },  
    { name: 'Lelushi Barley', role: 'Sponsorship Team', photo: 'lelushi.png', linkedin: '' }, { name: 'B. Sakshi', role: 'Sponsorship Team', photo: 'sakshi.png', linkedin: '' }, { name: 'Rupesh Kumar Sidar', role: 'Sponsorship Team', photo: 'rupesh.png', linkedin: 'https://www.linkedin.com/in/rupesh-kumar-sidar-0b6234291' }, { name: 'Seema Sahu', role: 'Sponsorship Team', photo: 'seema.png', linkedin: '' },  
   { name: 'MD Ashhab Alam', role: 'Management', photo: 'mdashhab.png', linkedin: 'https://www.linkedin.com/in/md-ashhab-alam-8275a2356' }, { name: 'Syed Mahin Sabry', role: 'Management', photo: 'syedmahin.png', linkedin: '' }, 
   { name: 'Ayush Sahu', role: 'PR Team', photo: 'ayush.png', linkedin: 'https://www.linkedin.com/in/ayush-sahu-b829a4429' }, { name: 'Bhumika Turker', role: 'PR Team', photo: 'bhumika.png', linkedin: 'https://www.linkedin.com/in/bhumika-turker-895907391' }, 
-  { name: 'Malvee Vaishnav', role: 'Decoration Team', photo: 'malvee.png', linkedin: '' }, { name: 'Ashwani Singh', role: 'PR Team', photo: 'ashwani.png', linkedin: '' }, { name: 'Prachi Dewangan', role: 'PR Team', photo: 'prachi.png', linkedin: '' }, { name: 'Bhavesh', role: 'PR Team', photo: 'bhavesh.png', linkedin: '' }, { name: 'Suryash', role: 'PR Team', photo: 'suryash.png', linkedin: '' } ], }, ];
+  { name: 'Malvee Vaishnav', role: 'Decoration Team', photo: 'malvee.png', linkedin: '' }, { name: 'Ashwani Singh', role: 'Decoration Team', photo: 'ashwani.png', linkedin: '' }, { name: 'Prachi Dewangan', role: 'Sponsorship Team', photo: 'prachi.png', linkedin: ' https://www.linkedin.com/in/prachi-dewangan-22015b413?utm_source=share_via&utm_content=profile&utm_medium=member_android' }, { name: 'Bhavesh', role: 'PR Team', photo: 'bhavesh.png', linkedin: '' }, { name: 'Suryash', role: 'PR Team', photo: 'suryash.png', linkedin: '' }, { name: 'Krishna Singh', role: 'Media Team', photo: 'Krishna.png', linkedin: '' }, {name: 'Karuna Sahu', role: 'PR Team', photo: 'karuna.png', linkedin: '' } ], }, ];
 // ===============================================
 
 const getInitials = (name) =>
@@ -72,8 +76,11 @@ const Photo = ({ m, className }) =>
 // flex-wrap + fixed-width cards (instead of a CSS grid) so that when a
 // category has fewer members than a full row, they center instead of
 // hugging the left edge.
-
-const TeamGrid = ({ members }) => (
+//
+// Exported so the home-page "Organisers" teaser section renders these
+// with the exact same card look (hover reveal, receded photo, etc.)
+// instead of a second component that could drift out of style over time.
+export const TeamGrid = ({ members }) => (
   <div className="flex flex-wrap justify-center gap-4">
     {members.map((m, i) => (
       <div

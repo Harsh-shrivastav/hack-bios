@@ -23,6 +23,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MLHBadge from './components/MLHBadge';
 import PartnerBanners from './components/PartnerBanners';
+import HackBiosIDCard from './components/HackBiosIDCard';
 
 
 
@@ -255,6 +256,7 @@ function App() {
          <CustomCursor />
    <FloatingSocials />
    <MLHBadge />
+   <HackBiosIDCard />
 
    {/* One shared mute control — covers the intro's dial/transform sounds
        AND the theme music. Persists across the whole session (not inside

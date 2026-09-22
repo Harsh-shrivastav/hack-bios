@@ -1,0 +1,1258 @@
+/* ---------- Launcher: sits right next to the volume button ----------
+   The mute button is 56px, 20px (28px from md up) from the bottom-right
+   corner, so this one goes 12px to its left, same size and look. It stays
+   BELOW the intro screen (z 100) and the site menu (z 50-55). */
+.hb-id-widget {
+  position: fixed;
+  right: 88px;
+  bottom: 20px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-family: "Share Tech Mono", "JetBrains Mono", monospace;
+}
+@media (min-width: 768px) {
+  .hb-id-widget { right: 96px; bottom: 28px; }
+}
+
+.hb-id-launcher {
+  width: 56px;
+  height: 56px;
+  border: 1px solid rgba(0, 255, 65, .4);
+  background: rgba(1, 4, 1, .6);
+  color: #00ff41;
+  display: grid;
+  place-items: center;
+  position: relative;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.hb-id-launcher:hover { background: rgba(0, 255, 65, .1); border-color: rgba(0, 255, 65, .7); }
+.hb-id-launcher:focus-visible { outline: 2px solid #00e5ff; outline-offset: 2px; }
+
+.hb-id-launcher-icon { font-size: 12px; letter-spacing: .14em; font-weight: 700; }
+
+.hb-id-launcher-dot {
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border-radius: 50%;
+  background: #00ff41;
+  box-shadow: 0 0 8px #00ff41;
+  animation: hb-id-pulse 1.8s ease-in-out infinite;
+}
+
+/* ---------- Centred popup: the whole page behind it is blurred and dimmed ----------
+   z-index sits above everything on the site (the MLH badge is 10000); while
+   it's open the custom cursor is lifted above it too (last rules of this block).
+   On short screens (landscape phones, small windows) the popup scrolls
+   instead of shrinking to nothing. */
+.hb-id-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  background: rgba(2, 6, 2, .55);
+  -webkit-backdrop-filter: blur(14px) saturate(.85);
+  backdrop-filter: blur(14px) saturate(.85);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .28s ease, visibility .28s;
+}
+.hb-id-overlay.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
+
+.hb-id-dialog {
+  /* 400px max, the screen width, or what the screen height allows (never below 300px) */
+  --w: min(400px, calc(100vw - 32px), max(300px, calc((100vh - 190px) * 0.7195)));
+  --w: min(400px, calc(100vw - 32px), max(300px, calc((100dvh - 190px) * 0.7195)));
+  position: relative;
+  margin: auto; /* centres it, and still lets the overlay scroll when it's taller than the screen */
+  flex: none;
+  width: var(--w);
+  transform: translateY(14px) scale(.96);
+  transition: transform .4s cubic-bezier(.16, 1, .3, 1);
+}
+.hb-id-overlay.is-open .hb-id-dialog { transform: none; }
+
+.hb-id-close {
+  position: absolute;
+  z-index: 5;
+  top: -14px;
+  right: -14px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(118, 247, 21, .6);
+  background: #050805;
+  color: #fff;
+  font: 20px/1 Arial, sans-serif;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+.hb-id-close:hover { background: #0d1a06; border-color: #76f715; }
+.hb-id-close:focus-visible { outline: 2px solid #00e5ff; outline-offset: 2px; }
+
+/* The badge modal clips overflow for its effects, so its close button must sit
+   inside the modal instead of using the ID card's outside-the-corner position. */
+.hb-badge-modal .hb-id-close {
+  top: 14px;
+  right: 14px;
+  z-index: 20;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-color: rgba(118, 247, 21, .72);
+  background: rgba(3, 7, 3, .92);
+  color: #fff;
+  box-shadow: 0 0 16px rgba(118, 247, 21, .14);
+}
+.hb-badge-modal .hb-id-close:hover {
+  background: rgba(118, 247, 21, .12);
+  border-color: #76f715;
+  box-shadow: 0 0 22px rgba(118, 247, 21, .28);
+}
+
+body.hb-id-modal-open #custom-cursor-dot { z-index: 10061 !important; }
+body.hb-id-modal-open #custom-cursor-ring { z-index: 10060 !important; }
+
+/* ---------- The card: the graphics team's artwork + what we program over it ----------
+   Everything is positioned in % of the artwork (1080 x 1501) and text uses
+   container units (1cqw = 1% of the card's width), so it all scales together.
+   Layers, bottom to top:  skeleton/shadow  >  tilt  >  flipper (front/back)  >  glare. */
+.hb-id-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1080 / 1501;
+  container-type: inline-size;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Soft shadow behind the card. Before the artwork has loaded it's also a
+   shimmering placeholder, so people never see a half-built card. */
+.hb-id-skeleton {
+  position: absolute;
+  inset: 0;
+  border-radius: 2.6cqw;
+  box-shadow: 0 0 22px rgba(118, 247, 21, .16), 0 24px 44px rgba(0, 0, 0, .6);
+  background: linear-gradient(110deg, #070c07 30%, #111d0e 50%, #070c07 70%) 200% 0 / 200% 100%;
+  animation: hb-id-shimmer 1.3s linear infinite;
+}
+.hb-id-scene.is-ready .hb-id-skeleton,
+.hb-id-scene.art-missing .hb-id-skeleton { background: none; animation: none; }
+
+/* Desktop tilt (set from JS): the card leans toward the mouse. */
+.hb-id-tilt {
+  position: absolute;
+  inset: 0;
+  perspective: 1400px;
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .35s ease-out;
+}
+
+.hb-id-flipper {
+  position: absolute;
+  inset: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transition: transform .8s cubic-bezier(.2, .75, .2, 1);
+}
+.hb-id-scene.is-flipped .hb-id-flipper { transform: rotateY(180deg); }
+
+.hb-id-face {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.hb-id-back { transform: rotateY(180deg); }
+
+/* The front stays invisible until its artwork has arrived. */
+.hb-id-front { transition: opacity .35s ease; }
+.hb-id-scene:not(.is-ready):not(.art-missing) .hb-id-front { opacity: 0; }
+
+.hb-id-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 2.6cqw;
+  pointer-events: none;
+  opacity: var(--glare, 0);
+  transition: opacity .3s ease;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .15), transparent 46%);
+}
+
+/* The photo sits behind the artwork and shows through its transparent window
+   (window: x 238-842, y 139-~900 of the 1080 x 1501 file; this box is a bit
+   bigger so the artwork's frame always covers the edges). */
+.hb-id-photo-layer {
+  position: absolute;
+  left: 21.11%;
+  top: 8.59%;
+  width: 57.59%;
+  height: 58.03%;
+  overflow: hidden;
+  background: #050805;
+}
+/* If the artwork file is ever missing, at least outline the photo window. */
+.hb-id-scene.art-missing .hb-id-photo-layer { border: .6cqw solid #76f715; border-radius: 3cqw; box-sizing: border-box; }
+.hb-id-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.hb-id-photo-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding-bottom: 14%;
+  box-sizing: border-box;
+  font-family: var(--font-mono, "Share Tech Mono", monospace);
+  font-size: 22cqw;
+  color: #76f715;
+  background: radial-gradient(circle at 50% 38%, rgba(118, 247, 21, .2), #050805 68%);
+}
+
+.hb-id-art {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* The person's details: the empty black area under the logo. */
+.hb-id-data {
+  position: absolute;
+  z-index: 3;
+  left: 15%;
+  right: 7%;
+  top: 75.5%;
+  bottom: 4.6%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: var(--font-mono, "Share Tech Mono", "JetBrains Mono", monospace);
+  color: #fff;
+}
+
+.hb-id-label {
+  display: block;
+  margin-bottom: 1.4cqw;
+  color: #76f715;
+  opacity: .85;
+  font-size: 2cqw;
+  letter-spacing: .3em;
+}
+
+.hb-id-data h2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere; /* a very long single word wraps instead of being cut off */
+  margin: 0;
+  font-size: var(--hb-name-size, 7cqw);
+  line-height: 1.02;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.hb-id-handle {
+  display: inline-block;
+  margin-top: 1.6cqw;
+  color: #76f715;
+  font-size: 3.3cqw;
+  letter-spacing: .04em;
+  text-decoration: none;
+}
+.hb-id-handle:hover,
+.hb-id-handle:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+
+.hb-id-uid {
+  margin-right: 14cqw; /* keeps the line and the text clear of the flip button */
+  padding-top: 1.8cqw;
+  border-top: 1px solid rgba(255, 255, 255, .14);
+  color: rgba(255, 255, 255, .7);
+  font-size: 2.5cqw;
+  letter-spacing: .14em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hb-id-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Back of the card (built to match the artwork: black, lime, mono) ---------- */
+.hb-id-back {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-sizing: border-box;
+  padding: 9cqw 8cqw 5.5cqw;
+  border-radius: 2.6cqw;
+  border: 1px solid rgba(118, 247, 21, .35);
+  color: #fff;
+  font-family: var(--font-mono, "Share Tech Mono", "JetBrains Mono", monospace);
+  background:
+    radial-gradient(circle at 88% 6%, rgba(118, 247, 21, .16), transparent 32%),
+    radial-gradient(circle at 8% 96%, rgba(118, 247, 21, .08), transparent 30%),
+    #030503;
+  overflow: hidden;
+}
+
+.hb-id-logo {
+  display: block;
+  width: 78%;
+  height: auto;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.hb-id-rows { margin: auto 0; } /* centred between the logo and the barcode */
+.hb-id-row {
+  display: grid;
+  grid-template-columns: 19cqw 1fr;
+  align-items: baseline;
+  gap: 2cqw;
+  padding: 2.4cqw 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .09);
+  font-size: 3.3cqw;
+  letter-spacing: .05em;
+}
+.hb-id-row:first-child { border-top: 1px solid rgba(255, 255, 255, .09); }
+.hb-id-row span { color: #76f715; opacity: .85; font-size: 2.4cqw; letter-spacing: .22em; }
+.hb-id-row strong,
+.hb-id-row a {
+  font-weight: 400;
+  color: rgba(255, 255, 255, .92);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.hb-id-row a { color: #76f715; }
+.hb-id-row a:hover,
+.hb-id-row a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+
+/* A real Code 39 barcode of the UID (white bars on black, like the front). */
+.hb-id-barcode { text-align: center; }
+.hb-id-barcode svg {
+  display: block;
+  width: 100%;
+  height: 12cqw;
+  fill: #fff;
+}
+.hb-id-barcode span {
+  display: block;
+  margin-top: 2cqw;
+  color: rgba(255, 255, 255, .7);
+  font-size: 2.5cqw;
+  letter-spacing: .16em;
+}
+.hb-id-foot {
+  margin-top: 4cqw;
+  text-align: center;
+  color: rgba(255, 255, 255, .5);
+  font-size: 2.3cqw;
+  letter-spacing: .3em;
+}
+
+/* ---------- Flip button: bottom-right corner of the card (same spot on both sides) ---------- */
+.hb-id-flipfab {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 6;
+  right: 3.6cqw;
+  bottom: 3.6cqw;
+  width: max(40px, 11.5cqw);
+  height: max(40px, 11.5cqw);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  color: #76f715;
+  background: rgba(3, 5, 3, .82);
+  border: 1px solid rgba(118, 247, 21, .55);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transition: background .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+.hb-id-flipfab svg { width: 46%; height: 46%; transition: transform .5s cubic-bezier(.2, .75, .2, 1); }
+.hb-id-flipfab:hover { background: rgba(118, 247, 21, .16); box-shadow: 0 0 18px rgba(118, 247, 21, .3); }
+.hb-id-flipfab:hover svg { transform: rotate(180deg); }
+.hb-id-flipfab:focus-visible { outline: 2px solid #00e5ff; outline-offset: 2px; }
+/* until it's been used once, a soft ring pulses around it so people notice it */
+.hb-id-flipfab.is-hint::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid rgba(118, 247, 21, .7);
+  animation: hb-id-ring 1.9s ease-out infinite;
+  pointer-events: none;
+}
+
+/* ---------- Save / share rail: same look as the site's social column ----------
+   A column of round icons to the right of the card; under the card on phones. */
+.hb-id-rail {
+  position: absolute;
+  left: calc(100% + 18px);
+  top: 0;
+  height: calc(var(--w) * 1.3895); /* as tall as the card, icons centred */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: .8rem;
+}
+.hb-id-railitem { position: relative; }
+
+.hb-id-round {
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  color: #6b6b6b;
+  background-color: #111811;
+  border: 1px solid rgba(0, 255, 65, .15);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .3s ease-in-out;
+}
+.hb-id-round:hover,
+.hb-id-round:focus-visible { box-shadow: 0 0 20px rgba(0, 255, 65, .2); border-color: transparent; }
+.hb-id-round:focus-visible { outline: 2px solid #00e5ff; outline-offset: 2px; }
+.hb-id-round:disabled { opacity: .5; cursor: default; }
+.hb-id-round svg { position: relative; z-index: 1; width: 22px; height: 22px; transition: transform .3s ease-in-out; }
+.hb-id-round:hover:not(:disabled) svg,
+.hb-id-round:focus-visible svg { color: #fff; transform: scale(1.15); }
+.hb-id-round .filled {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0;
+  background: #000;
+  transition: all .3s cubic-bezier(.16, 1, .3, 1);
+}
+.hb-id-round:hover:not(:disabled) .filled,
+.hb-id-round:focus-visible .filled { height: 100%; }
+
+/* brand colours (same as the site's column) */
+.hb-id-round[data-brand="instagram"] .filled,
+.hb-id-tip[data-brand="instagram"] { background: linear-gradient(45deg, #405de6, #5b51db, #b33ab4, #c135b4, #e1306c, #fd1f1f); }
+.hb-id-round[data-brand="linkedin"] .filled,
+.hb-id-tip[data-brand="linkedin"] { background: #0077b5; }
+.hb-id-round[data-brand="whatsapp"] .filled,
+.hb-id-tip[data-brand="whatsapp"] { background: #25d366; }
+.hb-id-round[data-brand="download"] .filled,
+.hb-id-tip[data-brand="download"] { background: #76f715; }
+.hb-id-round[data-brand="download"]:hover:not(:disabled) svg,
+.hb-id-round[data-brand="download"]:focus-visible svg,
+.hb-id-round[data-brand="whatsapp"]:hover:not(:disabled) svg { color: #000; }
+
+/* tooltips (desktop only — there's no room beside the rail on smaller screens) */
+.hb-id-tip {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%) translateX(10px);
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: #fff;
+  font: 700 13px "Share Tech Mono", "JetBrains Mono", monospace;
+  letter-spacing: .05em;
+  white-space: nowrap;
+  display: none; /* only shown from 900px up, see below */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, .5);
+  transition: all .3s cubic-bezier(.16, 1, .3, 1);
+}
+.hb-id-tip[data-brand="download"],
+.hb-id-tip[data-brand="whatsapp"] { color: #000; }
+@media (min-width: 900px) {
+  .hb-id-tip { display: block; }
+  .hb-id-railitem:hover .hb-id-tip,
+  .hb-id-railitem:focus-within .hb-id-tip { opacity: 1; visibility: visible; transform: translateY(-50%) translateX(16px); }
+}
+
+/* phones and narrow windows: the rail moves under the card, as a row */
+@media (max-width: 599px) {
+  .hb-id-rail {
+    position: static;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .hb-id-round { width: 44px; height: 44px; }
+  .hb-id-tip { display: none; }
+}
+
+/* ---------- Small tools under the card: edit, delete, and messages ---------- */
+.hb-id-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  min-height: 36px;
+}
+.hb-id-iconbtn {
+  box-sizing: border-box;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, .6);
+  background: rgba(17, 24, 17, .8);
+  border: 1px solid rgba(0, 255, 65, .18);
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease, border-color .2s ease;
+}
+.hb-id-iconbtn svg { width: 16px; height: 16px; }
+.hb-id-iconbtn:hover { color: #76f715; border-color: rgba(118, 247, 21, .6); background: rgba(118, 247, 21, .08); }
+.hb-id-iconbtn:focus-visible { outline: 2px solid #00e5ff; outline-offset: 2px; }
+.hb-id-iconbtn-danger:hover { color: #ff7a7a; border-color: rgba(255, 90, 90, .6); background: rgba(255, 90, 90, .08); }
+.hb-id-iconbtn-danger.is-armed { color: #fff; background: #c93636; border-color: #ff7a7a; }
+
+.hb-id-status {
+  flex: 1;
+  margin: 0;
+  color: rgba(255, 255, 255, .7);
+  font-family: "Share Tech Mono", "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .06em;
+  line-height: 1.35;
+  text-align: right;
+}
+.hb-id-status.is-warning { color: #ff9a9a; }
+
+/* ---------- Input form (shown until the visitor generates their ID) ---------- */
+.hb-id-form-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1080 / 1501;
+}
+
+.hb-id-form {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 26px 22px 18px;
+  box-sizing: border-box;
+  color: #fff;
+  font-family: "Share Tech Mono", "JetBrains Mono", monospace;
+  background:
+    radial-gradient(circle at 80% 12%, rgba(118, 247, 21, .08), transparent 30%),
+    linear-gradient(145deg, #0a100b 0%, #050805 52%, #030603 100%);
+  border: 1px solid rgba(118, 247, 21, .5);
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .55), 0 0 28px rgba(118, 247, 21, .09);
+  scrollbar-width: thin;
+}
+
+.hb-id-form .hb-id-label { margin-bottom: 4px; font-size: 10px; letter-spacing: .2em; } /* fixed size: the card's cqw units don't apply inside the form */
+.hb-id-form-head h2 {
+  margin: 2px 0 0;
+  font-family: "Share Tech Mono", "JetBrains Mono", monospace;
+  font-size: 22px;
+  letter-spacing: .06em;
+  font-weight: 700;
+}
+
+.hb-id-field { display: block; }
+.hb-id-field > span {
+  display: block;
+  margin-bottom: 5px;
+  color: rgba(118, 247, 21, .85);
+  font-size: 10px;
+  letter-spacing: .2em;
+}
+.hb-id-field > span em {
+  font-style: normal;
+  color: rgba(255, 255, 255, .55);
+  letter-spacing: .06em;
+  text-transform: none;
+  margin-left: 4px;
+}
+
+.hb-id-field input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 12px;
+  color: #fff;
+  font: 14px "Share Tech Mono", "JetBrains Mono", monospace;
+  letter-spacing: .04em;
+  background: rgba(118, 247, 21, .04);
+  border: 1px solid rgba(118, 247, 21, .3);
+  border-radius: 0;
+  outline: none;
+  transition: border-color .2s ease, background .2s ease;
+}
+.hb-id-field input::placeholder { color: rgba(255, 255, 255, .35); }
+.hb-id-field input:focus { border-color: rgba(118, 247, 21, .85); background: rgba(118, 247, 21, .08); }
+
+.hb-id-photo-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.hb-id-thumb {
+  width: 40px;
+  height: 50px;
+  object-fit: cover;
+  object-position: center top;
+  border: 1px solid rgba(118, 247, 21, .5);
+}
+.hb-id-hint { color: rgba(255, 255, 255, .55); font-size: 10px; letter-spacing: .06em; }
+
+.hb-id-mini {
+  height: 30px;
+  padding: 0 12px;
+  color: #76f715;
+  font: 10px "Share Tech Mono", "JetBrains Mono", monospace;
+  letter-spacing: .14em;
+  background: rgba(118, 247, 21, .04);
+  border: 1px solid rgba(118, 247, 21, .3);
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+.hb-id-mini:hover { background: rgba(118, 247, 21, .1); border-color: rgba(118, 247, 21, .65); }
+.hb-id-mini:disabled { opacity: .5; cursor: default; }
+
+/* Landscape / Portrait choice that drops down under the rail when Download is clicked */
+.hb-id-formatchoice {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  animation: hb-id-format-fade .15s ease-out;
+}
+.hb-id-formatchoice .hb-id-mini { flex: 1; text-align: center; }
+@keyframes hb-id-format-fade { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.hb-id-danger { color: rgba(255, 120, 120, .9); border-color: rgba(255, 90, 90, .28); background: rgba(255, 90, 90, .03); }
+.hb-id-danger:hover { background: rgba(255, 90, 90, .1); border-color: rgba(255, 90, 90, .6); }
+
+.hb-id-error {
+  min-height: 14px;
+  margin: 0;
+  color: #ff7a7a;
+  font-size: 10px;
+  letter-spacing: .05em;
+  line-height: 1.3;
+}
+
+.hb-id-form-actions { display: flex; align-items: center; gap: 10px; margin-top: auto; }
+.hb-id-submit {
+  flex: 1;
+  height: 42px;
+  color: #76f715;
+  font: 700 12px "Share Tech Mono", "JetBrains Mono", monospace;
+  letter-spacing: .16em;
+  background: rgba(118, 247, 21, .12);
+  border: 1px solid rgba(118, 247, 21, .65);
+  cursor: pointer;
+  transition: background .2s ease, box-shadow .2s ease;
+}
+.hb-id-submit:hover { background: rgba(118, 247, 21, .2); box-shadow: 0 0 18px rgba(118, 247, 21, .2); }
+.hb-id-submit:disabled { opacity: .5; cursor: default; }
+
+.hb-id-note {
+  margin: 0;
+  color: rgba(255, 255, 255, .55);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-align: center;
+}
+
+.hb-id-form input:focus-visible,
+.hb-id-form button:focus-visible,
+.hb-id-handle:focus-visible,
+.hb-id-row a:focus-visible { outline: 1px solid #00e5ff; outline-offset: 2px; }
+
+@keyframes hb-id-pulse {
+  0%, 100% { opacity: .45; transform: scale(.85); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+@keyframes hb-id-ring {
+  0% { transform: scale(1); opacity: .9; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+@keyframes hb-id-shimmer {
+  to { background-position: -200% 0; }
+}
+
+@media (max-width: 480px) {
+  .hb-id-form { padding: 22px 18px 16px; gap: 11px; }
+  .hb-id-field input[type="text"] { height: 38px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hb-id-overlay,
+  .hb-id-dialog,
+  .hb-id-launcher,
+  .hb-id-flipper,
+  .hb-id-tilt,
+  .hb-id-front { transition-duration: .01ms; }
+
+  .hb-id-launcher-dot,
+  .hb-id-skeleton,
+  .hb-id-flipfab.is-hint::after { animation: none; }
+}
+
+
+/* ---------- Warnings, "show image" fallback, and the on-screen image view ---------- */
+.hb-id-notice {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 190, 80, .4);
+  border-radius: 6px;
+  background: rgba(255, 190, 80, .07);
+  color: #ffd79a;
+  font: 10px/1.45 "Share Tech Mono", "JetBrains Mono", monospace;
+  letter-spacing: .04em;
+}
+.hb-id-linkbtn {
+  margin-left: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #76f715;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* Shown over the card in in-app browsers (where downloads often don't work), or on request. */
+.hb-id-preview {
+  position: absolute;
+  z-index: 8;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc(var(--w) * 1.3895);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(118, 247, 21, .5);
+  background: rgba(3, 5, 3, .97);
+  animation: hb-id-fade .2s ease-out;
+}
+.hb-id-preview img {
+  flex: 1;
+  min-height: 0;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  -webkit-touch-callout: default; /* iOS: allow press-and-hold to save */
+  -webkit-user-select: auto;
+  user-select: auto;
+}
+.hb-id-preview p {
+  margin: 0;
+  color: rgba(255, 255, 255, .75);
+  font: 11px/1.4 "Share Tech Mono", "JetBrains Mono", monospace;
+  text-align: center;
+}
+.hb-id-preview-actions { display: flex; gap: 8px; }
+.hb-id-preview-actions .hb-id-mini { display: inline-grid; place-items: center; text-decoration: none; }
+@keyframes hb-id-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Phones and touch screens: a lighter blur is far cheaper to draw (and the page behind is dimmed a bit more to compensate). */
+@media (pointer: coarse), (max-width: 767px) {
+  .hb-id-overlay {
+    -webkit-backdrop-filter: blur(7px) saturate(.85);
+    backdrop-filter: blur(7px) saturate(.85);
+    background: rgba(2, 6, 2, .66);
+  }
+}
+
+/* links shown after a download: front only / back only / show image */
+.hb-id-savelinks { display: block; margin-top: 4px; }
+.hb-id-savelinks .hb-id-linkbtn { margin: 0 0 0 10px; }
+.hb-id-savelinks .hb-id-linkbtn:first-child { margin-left: 0; }
+
+/* ---------- Share helper (LinkedIn / WhatsApp on a computer): steps first, then open ---------- */
+.hb-id-helper {
+  background: #030503; /* solid, so the card behind doesn't show through */
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 10px;
+  padding: 16px 14px 14px;
+  overflow-y: auto;
+  text-align: left;
+}
+.hb-id-helper h3 {
+  margin: 0;
+  color: #fff;
+  font: 700 15px "Share Tech Mono", "JetBrains Mono", monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.hb-id-helper-thumb {
+  flex: none !important;
+  width: 100%;
+  height: auto !important;
+  max-height: 38%;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid rgba(118, 247, 21, .25);
+}
+.hb-id-helper ol {
+  margin: 0;
+  padding-left: 20px;
+  color: rgba(255, 255, 255, .85);
+  font: 11.5px/1.5 "Share Tech Mono", "JetBrains Mono", monospace;
+}
+.hb-id-helper li { margin-bottom: 5px; }
+.hb-id-helper li.is-done { color: #76f715; }
+.hb-id-helper li.is-warn { color: #ffd79a; }
+.hb-id-helper strong { color: #fff; padding: 1px 6px; border: 1px solid rgba(255, 255, 255, .35); border-radius: 4px; white-space: nowrap; }
+.hb-id-helper-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.hb-id-helper-actions .hb-id-mini { display: inline-grid; place-items: center; text-decoration: none; }
+.hb-id-primary { color: #050805 !important; background: #76f715 !important; border-color: #76f715 !important; font-weight: 700; }
+.hb-id-primary:hover { box-shadow: 0 0 18px rgba(118, 247, 21, .45); }
+.hb-id-helper .hb-id-helper-note { margin: 0; color: rgba(255, 255, 255, .55); font: 10px/1.45 "Share Tech Mono", "JetBrains Mono", monospace; text-align: left; }
+.hb-id-helper-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(118, 247, 21, .4);
+  background: rgba(3, 5, 3, .9);
+  color: #fff;
+  font: 16px/1 Arial, sans-serif;
+  cursor: pointer;
+}
+
+.hb-id-strong { color: #76f715 !important; border-color: rgba(118, 247, 21, .7) !important; background: rgba(118, 247, 21, .12) !important; }
+
+
+/* ---------- Form tabs + team fields ---------- */
+.hb-id-tabs { display: flex; border: 1px solid rgba(118, 247, 21, .3); }
+.hb-id-tab {
+  flex: 1;
+  height: 32px;
+  padding: 0;
+  color: rgba(255, 255, 255, .55);
+  font: 10px "Share Tech Mono", "JetBrains Mono", monospace;
+  letter-spacing: .16em;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+.hb-id-tab + .hb-id-tab { border-left: 1px solid rgba(118, 247, 21, .3); }
+.hb-id-tab:hover { color: #fff; }
+.hb-id-tab.is-active { color: #76f715; background: rgba(118, 247, 21, .14); }
+.hb-id-tab:focus-visible { outline: 1px solid #00e5ff; outline-offset: -3px; }
+
+.hb-id-mate { margin-bottom: 6px; }
+.hb-id-field select {
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 12px;
+  color: #fff;
+  font: 14px "Share Tech Mono", "JetBrains Mono", monospace;
+  letter-spacing: .04em;
+  background: rgba(118, 247, 21, .04);
+  border: 1px solid rgba(118, 247, 21, .3);
+  border-radius: 0;
+  outline: none;
+  cursor: pointer;
+}
+.hb-id-field select:focus { border-color: rgba(118, 247, 21, .85); background: rgba(118, 247, 21, .08); }
+.hb-id-field select option { background: #050805; color: #fff; }
+.hb-id-check { display: flex; align-items: center; gap: 10px; color: rgba(255, 255, 255, .8); font: 12px "Share Tech Mono", "JetBrains Mono", monospace; letter-spacing: .05em; cursor: pointer; }
+.hb-id-check input { width: 16px; height: 16px; accent-color: #76f715; cursor: pointer; }
+
+/* ---------- Back of the card: team ---------- */
+.hb-id-team { margin: auto 0; }
+.hb-id-team-head span { display: block; color: #76f715; opacity: .85; font-size: 2.4cqw; letter-spacing: .22em; }
+.hb-id-team-head h3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  margin: 1.6cqw 0 4cqw;
+  color: #fff;
+  font-family: inherit;
+  font-size: 6cqw;
+  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.hb-id-members { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, .09); }
+.hb-id-members li {
+  display: grid;
+  grid-template-columns: 9cqw 1fr auto;
+  align-items: center;
+  height: 8.6cqw;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, .09);
+  font-size: 3.4cqw;
+  letter-spacing: .05em;
+}
+.hb-id-members i { font-style: normal; color: rgba(118, 247, 21, .85); font-size: 2.7cqw; letter-spacing: .08em; }
+.hb-id-members b { font-weight: 400; color: rgba(255, 255, 255, .92); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hb-id-members em {
+  font-style: normal;
+  padding: .5cqw 1.2cqw;
+  color: #76f715;
+  font-size: 2.1cqw;
+  font-weight: 700;
+  letter-spacing: .14em;
+  background: rgba(118, 247, 21, .16);
+  border: 1px solid rgba(118, 247, 21, .7);
+  border-radius: 1cqw;
+}
+.hb-id-team-meta { margin: 3cqw 0 0 !important; }
+
+.hb-id-help { display: block; margin-top: 5px; color: rgba(255, 255, 255, .5); font: 10px/1.4 "Share Tech Mono", "JetBrains Mono", monospace; letter-spacing: .04em; }
+/* ---------- Participation badge modal ---------- */
+.hb-id-dialog-badge {
+  --w: min(820px, calc(100vw - 28px), calc(100dvh - 34px));
+  width: var(--w);
+}
+
+.hb-badge-modal {
+  position: relative;
+  width: 100%;
+  max-height: calc(100dvh - 34px);
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 34px 38px 28px;
+  color: #fff;
+  text-align: center;
+  font-family: "Share Tech Mono", "JetBrains Mono", monospace;
+  border: 1px solid rgba(118, 247, 21, .42);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(118,247,21,.075), transparent 31%),
+    linear-gradient(155deg, #09110a 0%, #040804 58%, #020402 100%);
+  box-shadow: 0 18px 70px rgba(0,0,0,.58), 0 0 42px rgba(118,247,21,.12), inset 0 0 45px rgba(118,247,21,.025);
+  animation: hb-badge-modal-in .45s cubic-bezier(.16,1,.3,1) both,
+             hb-badge-modal-glow 4s ease-in-out .45s infinite;
+}
+.hb-badge-modal::before,
+.hb-badge-modal::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 49%;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+.hb-badge-modal::before {
+  width: min(570px, 74vw);
+  aspect-ratio: 1;
+  border: 1px solid rgba(118,247,21,.10);
+  animation: hb-badge-ring-spin 20s linear infinite;
+}
+.hb-badge-modal::after {
+  width: min(470px, 62vw);
+  aspect-ratio: 1;
+  border: 1px dashed rgba(118,247,21,.07);
+  animation: hb-badge-ring-spin-reverse 28s linear infinite;
+}
+.hb-badge-header { position: relative; z-index: 3; }
+.hb-badge-kicker {
+  display: block;
+  color: #76f715;
+  font-size: 9px;
+  letter-spacing: .42em;
+  margin: 0 0 9px;
+  text-shadow: 0 0 12px rgba(118,247,21,.45);
+}
+.hb-badge-header h2 {
+  margin: 0;
+  font-size: clamp(21px, 3vw, 30px);
+  line-height: 1.05;
+  letter-spacing: .12em;
+  font-weight: 700;
+}
+.hb-badge-header p {
+  margin: 10px 0 0;
+  color: rgba(255,255,255,.48);
+  font-size: 10px;
+  letter-spacing: .08em;
+}
+.hb-badge-art-wrap {
+  position: relative;
+  z-index: 2;
+  width: min(430px, 64vw);
+  aspect-ratio: 1;
+  margin: 18px auto 18px;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  animation: hb-badge-float 7s ease-in-out infinite;
+}
+.hb-badge-art-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: rgba(118,247,21,.16);
+  filter: blur(38px);
+  z-index: -2;
+  animation: hb-badge-aura 3.2s ease-in-out infinite;
+}
+.hb-badge-art-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  box-shadow: 0 0 26px rgba(118,247,21,.28), 0 0 70px rgba(118,247,21,.10);
+  z-index: -1;
+  animation: hb-badge-aura 3.2s ease-in-out infinite reverse;
+}
+.hb-badge-art {
+  width: 94%;
+  height: 94%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(118,247,21,.48)) drop-shadow(0 0 34px rgba(118,247,21,.13));
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.hb-badge-orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hb-badge-orbit-one {
+  width: 105%;
+  height: 32%;
+  border: 1px solid rgba(118,247,21,.17);
+  transform: translate(-50%, -50%) rotate(-18deg);
+  box-shadow: 0 0 12px rgba(118,247,21,.10);
+  animation: hb-badge-orbit-ring 8s linear infinite;
+}
+.hb-badge-orbit-two {
+  width: 32%;
+  height: 105%;
+  border: 1px solid rgba(118,247,21,.10);
+  transform: translate(-50%, -50%) rotate(18deg);
+  animation: hb-badge-orbit-ring-reverse 11s linear infinite;
+}
+.hb-badge-actions {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 570px;
+  margin: 0 auto;
+}
+.hb-badge-action {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 18px;
+  border: 1px solid rgba(118,247,21,.48);
+  border-radius: 8px;
+  color: #76f715;
+  background: rgba(118,247,21,.045);
+  font: 700 10px "Share Tech Mono", "JetBrains Mono", monospace;
+  letter-spacing: .14em;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.hb-badge-action svg { width: 18px; height: 18px; flex: none; }
+.hb-badge-action:hover:not(:disabled),
+.hb-badge-action:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(118,247,21,.105);
+  border-color: rgba(118,247,21,.9);
+  box-shadow: 0 0 22px rgba(118,247,21,.14);
+}
+.hb-badge-linkedin { color: #fff; border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.035); }
+.hb-badge-linkedin:hover:not(:disabled),
+.hb-badge-linkedin:focus-visible {
+  color: #fff;
+  background: rgba(255,255,255,.075);
+  border-color: rgba(255,255,255,.5);
+  box-shadow: 0 0 22px rgba(255,255,255,.08);
+}
+.hb-badge-action:disabled { opacity: .55; cursor: default; }
+.hb-badge-note {
+  position: relative;
+  z-index: 3;
+  margin: 13px auto 0;
+  max-width: 560px;
+  color: rgba(255,255,255,.30);
+  font-size: 8px;
+  line-height: 1.45;
+  letter-spacing: .07em;
+}
+.hb-id-round[data-brand="badge"] .filled,
+.hb-id-tip[data-brand="badge"] { background: linear-gradient(145deg, #76f715, #00ff41); }
+.hb-id-round[data-brand="badge"]:hover:not(:disabled) svg,
+.hb-id-round[data-brand="badge"]:focus-visible svg { color: #020502; }
+
+@keyframes hb-badge-modal-in {
+  from { opacity: 0; transform: translateY(18px) scale(.975); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes hb-badge-modal-glow {
+  0%, 100% { box-shadow: 0 18px 70px rgba(0,0,0,.58), 0 0 38px rgba(118,247,21,.09), inset 0 0 45px rgba(118,247,21,.02); }
+  50% { box-shadow: 0 18px 70px rgba(0,0,0,.58), 0 0 54px rgba(118,247,21,.16), inset 0 0 55px rgba(118,247,21,.035); }
+}
+@keyframes hb-badge-float {
+  0%, 100% { transform: translateY(0) rotate(-.4deg); }
+  50% { transform: translateY(-7px) rotate(.4deg); }
+}
+@keyframes hb-badge-aura { 0%, 100% { opacity: .48; transform: scale(.96); } 50% { opacity: .82; transform: scale(1.04); } }
+@keyframes hb-badge-ring-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+@keyframes hb-badge-ring-spin-reverse { to { transform: translate(-50%, -50%) rotate(-360deg); } }
+@keyframes hb-badge-orbit-ring { to { transform: translate(-50%, -50%) rotate(-378deg); } }
+@keyframes hb-badge-orbit-ring-reverse { to { transform: translate(-50%, -50%) rotate(-342deg); } }
+
+@media (max-width: 600px) {
+  .hb-id-dialog-badge { --w: min(calc(100vw - 16px), calc(100dvh - 20px)); }
+  .hb-badge-modal { max-height: calc(100dvh - 20px); padding: 30px 15px 20px; border-radius: 18px; }
+  .hb-badge-art-wrap { width: min(330px, 76vw); margin: 16px auto 15px; }
+  .hb-badge-actions { grid-template-columns: 1fr; max-width: 340px; }
+  .hb-badge-action { min-height: 46px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hb-badge-modal,
+  .hb-badge-art-wrap,
+  .hb-badge-art-wrap::before,
+  .hb-badge-art-wrap::after,
+  .hb-badge-orbit,
+  .hb-badge-modal::before,
+  .hb-badge-modal::after { animation: none; }
+}
+
+
+/* Badge LinkedIn share instructions live INSIDE the badge modal. */
+.hb-badge-share-helper {
+  position: relative;
+  z-index: 5;
+  width: min(570px, 100%);
+  margin: 14px auto 0;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  text-align: left;
+  border: 1px solid rgba(118,247,21,.28);
+  border-radius: 10px;
+  background: rgba(1,5,2,.92);
+  box-shadow: 0 0 24px rgba(118,247,21,.08);
+  animation: hb-badge-share-in .22s ease-out both;
+}
+.hb-badge-share-helper h3 {
+  margin: 0 0 8px;
+  color: #76f715;
+  font: 700 11px "Share Tech Mono", "JetBrains Mono", monospace;
+  letter-spacing: .14em;
+}
+.hb-badge-share-status,
+.hb-badge-share-steps {
+  margin: 0;
+  color: rgba(255,255,255,.72);
+  font: 10px/1.5 "Share Tech Mono", "JetBrains Mono", monospace;
+  letter-spacing: .04em;
+}
+.hb-badge-share-status.is-done { color: #76f715; }
+.hb-badge-share-status.is-warn { color: #ffd79a; }
+.hb-badge-share-steps { margin-top: 6px; }
+.hb-badge-share-steps strong { color: #fff; }
+.hb-badge-share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.hb-badge-share-actions .hb-id-mini {
+  display: inline-grid;
+  place-items: center;
+  text-decoration: none;
+}
+.hb-badge-share-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid rgba(118,247,21,.28);
+  border-radius: 50%;
+  color: rgba(255,255,255,.72);
+  background: rgba(118,247,21,.04);
+  font: 16px/1 Arial, sans-serif;
+  cursor: pointer;
+}
+.hb-badge-share-close:hover {
+  color: #fff;
+  border-color: rgba(118,247,21,.75);
+  background: rgba(118,247,21,.10);
+}
+@keyframes hb-badge-share-in {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 600px) {
+  .hb-badge-share-actions { display: grid; grid-template-columns: 1fr; }
+  .hb-badge-share-actions .hb-id-mini { width: 100%; }
+}

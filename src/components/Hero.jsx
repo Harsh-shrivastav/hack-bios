@@ -228,16 +228,6 @@ useEffect(() => {
           </div>
         </div>
 
-        <a
-          href="#about"
-          className="hero-animate absolute bottom-4 right-6 md:right-16 lg:right-24 z-20 flex items-center gap-3 interactive group"
-        >
-          <p className="text-white font-mono text-xs uppercase tracking-[0.3em] animate-pulse drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] group-hover:opacity-80 transition-opacity">
-            Scroll to explore
-          </p>
-          <div className="w-8 h-[1px] bg-gradient-to-l from-white to-transparent"></div>
-        </a>
-
         {/* ---- window frame chrome, child of the window, fades in with reveal ---- */}
         <div ref={frameRef} className="absolute inset-0 z-30 opacity-0 pointer-events-none">
           <div

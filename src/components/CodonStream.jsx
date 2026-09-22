@@ -231,6 +231,14 @@ const CodonStream = () => {
     let frameCount = 0;
     function animate() {
       frameCount++;
+      // While the ID-card popup is open the page behind it is blurred. Redrawing this
+      // canvas underneath a live blur is very expensive, so we keep the last frame
+      // and simply skip drawing until the popup closes (t doesn't advance, so the
+      // animation carries on from where it stopped).
+      if (document.body.classList.contains('hb-id-modal-open')) {
+        raf = requestAnimationFrame(animate);
+        return;
+      }
       // On mobile, only actually draw every Nth tick (t still advances every
       // tick so motion speed looks the same, just less frequently painted) —
       // this is a straightforward way to cut GPU/CPU work roughly in half

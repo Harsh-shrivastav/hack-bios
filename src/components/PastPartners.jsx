@@ -35,7 +35,8 @@ const LOGO_FILES = [
   { file: 'github.png', name: 'GitHub' },
   { file: 'elevenlabs.png', name: 'ElevenLabs' },
   { file: 'purebutton.png', name: 'PureButton', href: 'https://mlh.link/MLHPureButtons-hackathons' },
-  { file: 'quillbot.png', name: 'QuillBot' },];
+  { file: 'quillbot.png', name: 'QuillBot' },
+  { file: 'tin.png', name: 'Tin' },];
 const COMMUNITY_LOGO_FILES = [
   { file: 'GDG.png', name: 'GDG' },
   { file:'GFG.png', name:'GFG'},

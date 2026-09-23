@@ -19,6 +19,7 @@ import PastPartners from './components/PastPartners';
 import TeamPage from './components/TeamPage';
 import Tracks from './components/Tracks';
 import Submission from './components/Submission';
+import CreateIDSection from './components/CreateIDSection';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MLHBadge from './components/MLHBadge';
@@ -102,6 +103,7 @@ function HomePage() {
       <div className="relative z-10">
         {/* EventIntro — merged into Hero */}
         <Submission />
+        <CreateIDSection />
         <Stats />
         <About />
         <Tracks />
@@ -123,10 +125,19 @@ function HomePage() {
 
 
 function App() {
-  const [introDone, setIntroDone] = useState(false);
+  const location = useLocation();
+  const [introDone, setIntroDone] = useState(
+    () => window.location.pathname === '/create-id'
+  );
   const [muted, setMuted] = useState(false);
   const themeIntroRef = useRef(null);
   const themeLoopRef = useRef(null);
+  useEffect(() => {
+    if (location.pathname === '/create-id') {
+      setIntroDone(true);
+    }
+  }, [location.pathname]);
+
 
   useEffect(() => {
     const intro = new Audio('/audio/theme-intro.m4a');
@@ -256,7 +267,7 @@ function App() {
          <CustomCursor />
    <FloatingSocials />
    <MLHBadge />
-   <HackBiosIDCard />
+   <HackBiosIDCard autoOpen={location.pathname === '/create-id'} />
 
    {/* One shared mute control — covers the intro's dial/transform sounds
        AND the theme music. Persists across the whole session (not inside
@@ -304,6 +315,7 @@ function App() {
                <Routes>
                  <Route path="/" element={<HomePage />} />
                  <Route path="/team" element={<TeamPage />} />
+                 <Route path="/create-id" element={<HomePage />} />
                </Routes>
              </>
            )}

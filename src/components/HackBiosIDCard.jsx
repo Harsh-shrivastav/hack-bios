@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import './HackBiosIDCard.css';
 
 // The graphics team's card design (1080 x 1501 PNG). Its photo window is
@@ -13,6 +14,9 @@ const CARD_LOGO = '/id-card/hackbios-logo.png';
 const BADGE_ART = '/badge.png';
 
 const EVENT_NAME = 'HACKBIOS 2026';
+// Any button on the site can open this modal by firing this window event
+// (the "Create your ID" section does). The listener is set up in the widget below.
+const OPEN_EVENT = 'hackbios:open-id';
 // What the LinkedIn / WhatsApp buttons pre-fill (the site link is added after it).
 const SHARE_TEXT = 'I’m participating in HackBIOS 2026! 🚀 Here’s my ID card. #HackBIOS2026';
 const BADGE_SHARE_TEXT = 'I’m participating in HackBIOS 2026! 🚀 Proud to be part of the HackBIOS community. #HackBIOS2026';
@@ -1257,7 +1261,8 @@ function IdCard({ data, artReady, flipped, onFlip, tiltOn, hintFlip }) {
 // ---------------------------------------------------------------------------
 // The widget
 // ---------------------------------------------------------------------------
-export default function HackBiosIDCard({ participant }) {
+export default function HackBiosIDCard({ participant, autoOpen = false }) {
+  const navigate = useNavigate();
   const locked = !!participant; // a backend-supplied participant: show it, no form
   const reducedMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
@@ -1328,6 +1333,49 @@ export default function HackBiosIDCard({ participant }) {
   useEffect(() => {
     if (open) setArtReady(true);
   }, [open]);
+
+  // Open the modal when another part of the site asks for it (see OPEN_EVENT).
+  // preventDefault() tells the sender the modal answered, so it doesn't need a fallback.
+  useEffect(() => {
+    const openFromEvent = (event) => {
+      event.preventDefault();
+      setBadgeOpen(false);
+      setOpen(true);
+      setFlipped(false);
+      setConfirmDelete(false);
+      setShowFormatChoice(false);
+      setShareHelper(null);
+      setArtReady(true);
+    };
+    window.addEventListener(OPEN_EVENT, openFromEvent);
+    return () => window.removeEventListener(OPEN_EVENT, openFromEvent);
+  }, []);
+
+  // /create-id is a public entry route for the generator. However the modal is
+  // closed (×, backdrop, Esc, or a share button), return to the homepage URL,
+  // so visiting /create-id again opens it again.
+  const wasOpen = useRef(false);
+  useEffect(() => {
+    if (wasOpen.current && !open && window.location.pathname === '/create-id') {
+      navigate('/', { replace: true });
+    }
+    wasOpen.current = open;
+  }, [open, navigate]);
+
+  // Open the existing Create Your ID modal when the public /create-id URL
+  // is visited. This does not create a second modal.
+  useEffect(() => {
+    if (!autoOpen || locked) return;
+
+    setBadgeOpen(false);
+    setOpen(true);
+    setEditing(true);
+    setFlipped(false);
+    setConfirmDelete(false);
+    setShowFormatChoice(false);
+    setShareHelper(null);
+    setArtReady(true);
+  }, [autoOpen, locked]);
 
   // While the card is open: Esc closes it, Tab stays inside it, the page behind
   // it stops scrolling, and focus goes back to the ID button when it closes.

@@ -20,6 +20,14 @@
   color: #fff;
 }
 
+/* Padding counts inside widths, so width: 100% + padding never overflows the screen. */
+.create-id-section,
+.create-id-section *,
+.create-id-section *::before,
+.create-id-section *::after {
+  box-sizing: border-box;
+}
+
 /* subtle HUD grid */
 .create-id-grid {
   position: absolute;
@@ -93,7 +101,7 @@
   margin: 0 auto;
   padding: clamp(90px, 10vh, 130px) clamp(28px, 5vw, 90px) 70px;
   display: grid;
-  grid-template-columns: minmax(390px, .9fr) minmax(560px, 1.1fr);
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
   align-items: center;
   gap: clamp(20px, 3vw, 65px);
 }
@@ -138,6 +146,7 @@
 .create-id-title span,
 .create-id-title strong {
   display: block;
+  white-space: nowrap;
 }
 
 .create-id-title span {
@@ -188,19 +197,21 @@
   outline-offset: 3px;
 }
 
-.create-id-button:hover {
-  transform: translateY(-3px);
-  background: #fff;
-  box-shadow: 0 0 38px rgba(0,255,65,.3);
+@media (hover: hover) {
+  .create-id-button:hover {
+    transform: translateY(-3px);
+    background: #fff;
+    box-shadow: 0 0 38px rgba(0,255,65,.3);
+  }
+
+  .create-id-button:hover .create-id-arrow {
+    transform: translateX(5px);
+  }
 }
 
 .create-id-arrow {
   font-size: 19px;
   transition: transform .25s ease;
-}
-
-.create-id-button:hover .create-id-arrow {
-  transform: translateX(5px);
 }
 
 .create-id-time {
@@ -607,18 +618,25 @@
 /* Responsive                                                                 */
 /* -------------------------------------------------------------------------- */
 
-@media (max-width: 1050px) {
+/* Small laptops / large tablets: still two columns, just tighter. */
+@media (max-width: 1100px) {
   .create-id-shell {
-    grid-template-columns: minmax(340px, .9fr) minmax(430px, 1.1fr);
     gap: 10px;
+    padding-left: clamp(24px, 4vw, 48px);
+    padding-right: clamp(24px, 4vw, 48px);
   }
 
   .create-id-title {
     font-size: clamp(46px, 6vw, 70px);
   }
 
+  .create-id-actions {
+    flex-wrap: wrap;
+    gap: 14px 24px;
+  }
+
   .create-id-feature {
-    min-width: 120px;
+    min-width: 0;
     padding-right: 15px;
     margin-right: 15px;
   }
@@ -628,92 +646,162 @@
   }
 }
 
-@media (max-width: 800px) {
+/* Tablets and phones: stack text above the card, let the section grow. */
+@media (max-width: 900px) {
   .create-id-section {
-    min-height: 680px;
-    height: 100svh;
+    height: auto;
+    min-height: 100svh;
+    max-height: none;
+    background:
+      radial-gradient(circle at 50% 74%, rgba(0, 255, 65, 0.12), transparent 40%),
+      #020602;
   }
 
   .create-id-shell {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    height: auto;
+    min-height: 100svh;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
     align-content: center;
-    gap: 12px;
-    padding: 78px 24px 48px;
+    gap: 8px;
+    padding: 96px 24px 56px;
   }
 
   .create-id-copy {
-    text-align: center;
-    max-width: 650px;
+    max-width: 600px;
     margin: 0 auto;
+    text-align: center;
     transform: none;
   }
 
   .create-id-eyebrow {
     justify-content: center;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
 
   .create-id-title {
-    font-size: clamp(40px, 10vw, 64px);
+    font-size: clamp(40px, 9vw, 64px);
   }
 
   .create-id-description {
-    margin: 17px auto 0;
-    max-width: 560px;
-    line-height: 1.55;
+    max-width: 540px;
+    margin: 18px auto 0;
+    font-size: 15px;
+    line-height: 1.6;
   }
 
   .create-id-actions {
+    flex-direction: column;
     justify-content: center;
-    margin-top: 20px;
+    gap: 12px;
+    margin-top: 26px;
+  }
+
+  .create-id-button {
+    width: 100%;
+    max-width: 340px;
+    min-width: 0;
   }
 
   .create-id-features {
     justify-content: center;
-    margin-top: 20px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    margin-top: 26px;
   }
 
   .create-id-feature {
-    min-width: auto;
-    padding: 0 13px;
+    padding: 0 14px;
     margin: 0;
   }
 
-  .create-id-feature-icon {
-    display: none;
-  }
-
+  .create-id-feature-icon,
   .create-id-feature-title span {
     display: none;
   }
 
   .create-id-stage {
-    min-height: 270px;
-    height: 34vh;
-    max-height: 330px;
+    width: 100%;
+    max-width: 520px;
+    height: clamp(300px, 70vw, 420px);
+    min-height: 0;
+    margin: 0 auto;
   }
 
-  .create-id-card-wrap {
-    width: min(190px, 42vw);
-  }
-
-  .create-id-ghost-card {
-    width: 140px;
-  }
-
-  .create-id-platform {
-    bottom: 5%;
-    width: 60%;
+  .create-id-card-wrap,
+  .create-id-card-caption {
+    width: clamp(170px, 42vw, 240px);
   }
 
   .create-id-card-caption {
-    width: min(190px, 42vw);
-    bottom: 1%;
+    bottom: 2%;
+  }
+
+  .create-id-ghost-card {
+    width: clamp(110px, 28vw, 160px);
+  }
+
+  .create-id-ghost-left { left: 2%; }
+  .create-id-ghost-right { right: 2%; }
+
+  .create-id-platform {
+    bottom: 6%;
+    width: 70%;
+  }
+
+  /* fixed-size side decorations would sit on top of the text */
+  .create-id-circuit {
+    display: none;
+  }
+
+  .create-id-glow {
+    width: 80vw;
+    height: 80vw;
   }
 }
 
-@media (max-height: 720px) and (min-width: 801px) {
+/* Small phones */
+@media (max-width: 420px) {
+  .create-id-shell {
+    padding: 88px 18px 44px;
+  }
+
+  .create-id-eyebrow {
+    letter-spacing: .16em;
+  }
+
+  .create-id-title {
+    font-size: clamp(34px, 11vw, 44px);
+  }
+
+  .create-id-description {
+    font-size: 14px;
+  }
+
+  .create-id-time {
+    letter-spacing: .12em;
+  }
+
+  .create-id-feature {
+    padding: 0 9px;
+  }
+
+  .create-id-feature-title {
+    font-size: 9px;
+    letter-spacing: .05em;
+  }
+
+  .create-id-stage {
+    height: clamp(260px, 80vw, 330px);
+  }
+
+  .create-id-ghost-card {
+    opacity: .1;
+  }
+}
+
+/* Short desktop screens (e.g. 1366x768 laptops) */
+@media (max-height: 720px) and (min-width: 901px) {
   .create-id-shell {
     padding-top: 78px;
     padding-bottom: 45px;
@@ -738,6 +826,7 @@
 
   .create-id-stage {
     height: 70vh;
+    min-height: 0;
   }
 
   .create-id-card-wrap {

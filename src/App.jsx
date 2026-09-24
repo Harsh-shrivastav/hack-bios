@@ -14,7 +14,6 @@ import PreviousEdition from './components/PreviousEdition';
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import { CinematicFooter } from './components/ui/motion-footer';
-//import Sponsors from './components/PastPartners';
 import PastPartners from './components/PastPartners';
 import TeamPage from './components/TeamPage';
 import Tracks from './components/Tracks';
@@ -101,18 +100,12 @@ function HomePage() {
 
       <div id="hero-section"><Hero /></div>
       <div className="relative z-10">
-        {/* EventIntro — merged into Hero */}
         <Submission />
         <CreateIDSection />
         <Stats />
         <About />
         <Tracks />
-        {/* PrizePool, Timeline — not currently used on the site;
-            see src/components/ if reintroducing them (Timeline in
-            particular pulls in three.js — only import it if it's
-            actually going back on the page) */}
         <PartnerBanners />
-        {/* <Sponsors /> */}
         <PastPartners />
         <PreviousEdition />
         <Contact />
@@ -170,7 +163,6 @@ function App() {
   const menuItems = [
     { label: 'About', link: '#about' },
     // { label: 'Tracks', link: '#tracks' },
-    // { label: 'Timeline', link: '#timeline' },
     { label: 'Team', link: '/team' },
     { label: 'FAQ', link: '#faq' },
     { label: 'Contact', link: '#contact' }

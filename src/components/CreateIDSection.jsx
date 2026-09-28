@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CreateIDSection.css';
 
@@ -22,7 +22,30 @@ const features = [
 
 export default function CreateIDSection() {
   const cardWrapRef = useRef(null);
+  const sectionRef = useRef(null);
   const navigate = useNavigate();
+
+  // The floating-card CSS animation (cardFloat/cardGlow) ran continuously
+  // forever, even scrolled far out of view — a 3D-transform layer that
+  // never stops being composited. On a weaker phone GPU, real-device
+  // testing showed this causing brief rendering glitches (a stale frame
+  // of this section flashing back in) while scrolling past it repeatedly.
+  // Matches the existing off-screen-pause pattern already used in
+  // PastPartners.jsx for the same class of issue.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        el.classList.toggle('card-paused', !entry.isIntersecting);
+      },
+      { rootMargin: '200px 0px' }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Ask the site-wide HackBiosIDCard modal to open. If it isn't on this page
   // (nothing answers the event), fall back to the /create-id route.
@@ -64,7 +87,7 @@ export default function CreateIDSection() {
   };
 
   return (
-    <section id="create-id" className="create-id-section">
+    <section id="create-id" ref={sectionRef} className="create-id-section">
       <div className="create-id-grid" aria-hidden="true" />
       <div className="create-id-noise" aria-hidden="true" />
 
@@ -144,11 +167,11 @@ export default function CreateIDSection() {
         <div className="create-id-stage">
           {/* distant cards */}
           <div className="create-id-ghost-card create-id-ghost-left">
-            <img src="/id-card/hackbios-id.png" alt="" />
+            <img src="/id-card/hackbios-id.webp" alt="" />
           </div>
 
           <div className="create-id-ghost-card create-id-ghost-right">
-            <img src="/id-card/hackbios-id.png" alt="" />
+            <img src="/id-card/hackbios-id.webp" alt="" />
           </div>
 
           {/* orbital rings */}
@@ -182,7 +205,7 @@ export default function CreateIDSection() {
             <div className="create-id-card-glow" />
             <div className="create-id-card">
               <img
-                src="/id-card/hackbios-id.png"
+                src="/id-card/hackbios-id.webp"
                 alt="HackBIOS participant ID card"
                 draggable="false"
               />

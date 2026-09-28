@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import ScrollStack, { ScrollStackItem } from './ui/ScrollStack';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { requestScrollRefresh } from '../lib/scrollRefresh';
 
 const trackData = [
   {
@@ -67,7 +68,7 @@ const Tracks = () => {
   useEffect(() => {
     // Refresh ScrollTrigger after ScrollStack has rendered
     const refresh = () => {
-      ScrollTrigger.refresh(true);
+      requestScrollRefresh(true);
     };
 
     const timer1 = setTimeout(refresh, 500);

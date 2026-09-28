@@ -7,9 +7,9 @@ import './HackBiosIDCard.css';
 // TRANSPARENT and fades to black at the bottom, so the visitor's photo is
 // simply placed behind it; the name / GitHub / UID are written over the empty
 // black area at the bottom. Put the files in public/id-card/.
-const CARD_ART = '/id-card/hackbios-id.png';
+const CARD_ART = '/id-card/hackbios-id.webp';
 // The HackBiOS logo, cut out of that artwork, used on the back of the card.
-const CARD_LOGO = '/id-card/hackbios-logo.png';
+const CARD_LOGO = '/id-card/hackbios-logo.webp';
 // Standalone HackBIOS participation badge. Put badge.png in public/.
 const BADGE_ART = '/badge.webp';
 

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState, startTransition } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { HackerText } from './ui/hacker-text';
 import './StaggeredMenu.css';
@@ -37,8 +37,22 @@ export const StaggeredMenu = ({
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const onHome = location.pathname === '/';
   const hashHref = (link) => (onHome ? link : `/${link}`);
+  // Internal route changes (e.g. tapping "Teams") were showing up as ~500ms
+  // interactions in real-device profiling: React Router's default navigate()
+  // mounts the destination page synchronously inside the click handler,
+  // which blocks the browser from painting the tap feedback / menu-close
+  // animation until the whole new page (TeamPage's 33 photos, etc.) is
+  // built. Wrapping the navigation in startTransition marks that mount as
+  // interruptible/low-priority so the click response paints immediately
+  // and the heavy page mount happens just after, without blocking input.
+  const goToRoute = useCallback((link) => {
+    startTransition(() => {
+      navigate(link);
+    });
+  }, [navigate]);
   const openRef = useRef(false);
   const panelRef = useRef(null);
   const preLayersRef = useRef(null);
@@ -327,7 +341,7 @@ export const StaggeredMenu = ({
       {/* Glassmorphic Cyberpunk Top Bar */}
          <header className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 pr-24 md:px-10 md:pr-40 py-4 pointer-events-auto transition-all duration-300 ${
         scrolled
-          ? 'bg-[#050a05]/85 backdrop-blur-md border-b border-[#00ff41]/20 shadow-[0_4px_30px_rgba(0,0,0,0.9)]'
+          ? 'bg-[#050a05]/85 md:backdrop-blur-md border-b border-[#00ff41]/20 shadow-[0_4px_30px_rgba(0,0,0,0.9)]'
           : 'bg-transparent border-b border-transparent'
       }`}>
 
@@ -351,6 +365,10 @@ export const StaggeredMenu = ({
               <Link
                 key={idx}
                 to={item.link}
+                onClick={(e) => {
+                  e.preventDefault();
+                  goToRoute(item.link);
+                }}
                 className="hover:text-[#00ff41] transition-colors relative group py-1.5"
               >
                 <span>{item.label}</span>
@@ -413,11 +431,12 @@ export const StaggeredMenu = ({
                       aria-label={it.ariaLabel}
                       data-index={idx + 1}
                       onClick={(e) => {
+                        e.preventDefault();
                         if (it.onClick) {
-                          e.preventDefault();
                           it.onClick();
                         }
                         closeMenu();
+                        goToRoute(it.link);
                       }}
                     >
                       <HackerText text={it.label} as="span" className="sm-panel-itemLabel" />

@@ -293,7 +293,7 @@ export function LocationMap({
 
             {/* Status indicator */}
             <motion.div
-              className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-foreground/5 backdrop-blur-sm"
+              className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-foreground/5 md:backdrop-blur-sm"
               animate={{
                 scale: isHovered ? 1.05 : 1,
                 backgroundColor: isHovered ? "hsl(var(--foreground) / 0.08)" : "hsl(var(--foreground) / 0.05)",

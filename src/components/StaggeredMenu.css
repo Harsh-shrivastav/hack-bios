@@ -136,7 +136,9 @@
   font-family: 'Share Tech Mono', monospace;
   font-size: 1rem;
   text-decoration: none;
-  transition: color 0.3s, transform 0.3s;
+  /* No transform transition: GSAP animates these links' transform on menu
+     open, and a CSS transition on the same property fights every frame. */
+  transition: color 0.3s;
   display: inline-block;
 }
 

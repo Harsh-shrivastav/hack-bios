@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import CodonStream from './CodonStream';
 
 // ============ EDIT YOUR TEAM HERE ============
 // photo: leave as "" for a placeholder avatar, or put a filename that
 //        exists in public/team/ (e.g. "harsh.jpg") to use a real photo.
+//        Also put a 400px-wide copy under the same name in public/team/sm/
+//        (what phones load; they fall back to the full one if it's missing).
 // Leave any social field as "" to hide that icon for that person.
 //
 // Exported so the home-page "Organisers" teaser section can reuse the
@@ -64,7 +66,19 @@ const SocialRow = ({ m, className = '' }) => (
 
 const Photo = ({ m, className }) =>
   m.photo ? (
-    <img src={`/team/${m.photo}`} alt={m.name} className={`object-cover object-top ${className}`} />
+    // Phones get the 400px copy in public/team/sm/: a card is ~160 CSS px
+    // there, and decoding 33 full 900px photos (~96MB of bitmaps) is more
+    // than a budget phone's image cache holds, so fast scrolling outran
+    // decoding and showed blank cards. A photo added without its sm/ copy
+    // 404s there, so fall back to the original instead of a broken image.
+    <img
+      src={`/team/${m.photo}`}
+      srcSet={`/team/sm/${m.photo} 400w, /team/${m.photo} 900w`}
+      sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
+      onError={(e) => e.currentTarget.removeAttribute('srcset')}
+      alt={m.name}
+      className={`object-cover object-top ${className}`}
+    />
   ) : (
     <div className={`flex items-center justify-center bg-[#0d120f] font-mono font-black text-[#5dff3a]/70 ${className}`}
       style={{ textShadow: '0 0 12px rgba(93,255,58,0.35)' }}>
@@ -116,19 +130,9 @@ export const TeamGrid = ({ members }) => (
 
 
 const TeamPage = () => {
-  // Warm the browser's cache for every member's photo up front, so
-  // photos never take a beat to pop in as someone scrolls down the page.
-  useEffect(() => {
-    CATEGORIES.forEach((cat) => {
-      cat.members.forEach((m) => {
-        if (m.photo) {
-          const img = new Image();
-          img.src = `/team/${m.photo}`;
-        }
-      });
-    });
-  }, []);
-
+  // No separate preload: every <img> below is eager and in the DOM on mount,
+  // so all photos already start downloading at once. A new Image() warm-up
+  // of the full-size files would only fetch 900px copies phones never use.
   return (
     <div className="relative min-h-screen w-full bg-transparent text-white">
 

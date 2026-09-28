@@ -12,7 +12,7 @@ const Submission = () => {
       className="py-32 md:py-44 relative overflow-hidden"
     >
       {/* Subtle glass layer */}
-      <div className="absolute inset-0 bg-[#050a05]/35 backdrop-blur-[2px] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[#050a05]/35 md:backdrop-blur-[2px] pointer-events-none"></div>
 
       {/* Subtle circuit texture */}
       <div className="absolute inset-0 bg-circuit-pattern opacity-[0.015] pointer-events-none"></div>
@@ -73,7 +73,7 @@ const Submission = () => {
 
           {/* Terminal window — the frame itself slowly breathes (border +
               box-shadow only, no blur), so the whole panel feels alive */}
-          <div className="submission-frame-glow relative bg-[#050a05]/60 backdrop-blur-md border-2 border-[#00ff41]/20 rounded-xl overflow-hidden">
+          <div className="submission-frame-glow relative bg-[#050a05]/60 md:backdrop-blur-md border-2 border-[#00ff41]/20 rounded-xl overflow-hidden">
 
 
             {/* Title bar */}

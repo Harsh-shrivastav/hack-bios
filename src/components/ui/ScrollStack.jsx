@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useCallback } from 'react';
 import Lenis from '@studio-freight/lenis';
+import { useNearViewport } from '../../lib/useNearViewport';
 import './ScrollStack.css';
 
 export const ScrollStackItem = ({ children, itemClassName = '' }) => (
@@ -32,6 +33,7 @@ const ScrollStack = ({
   const isUpdatingRef = useRef(false);
   const cardOffsetsRef = useRef([]);
   const endElementOffsetRef = useRef(0);
+  const near = useNearViewport(scrollerRef);
 
   const calculateProgress = useCallback((scrollTop, start, end) => {
     if (scrollTop < start) return 0;
@@ -235,9 +237,12 @@ const ScrollStack = ({
     }
   }, [handleScroll, useWindowScroll]);
 
+  // Card spacing lives in CSS (--scroll-stack-gap) so the stack's height is
+  // correct on first render; only the measuring, style writes and scroll
+  // listener below wait until the stack is near the viewport.
   useLayoutEffect(() => {
     const scroller = scrollerRef.current;
-    if (!scroller && !useWindowScroll) return;
+    if (!near || (!scroller && !useWindowScroll)) return;
 
     const wrappers = Array.from(
       useWindowScroll
@@ -248,10 +253,7 @@ const ScrollStack = ({
     cardsRef.current = wrappers;
     const transformsCache = lastTransformsRef.current;
 
-    wrappers.forEach((wrapper, i) => {
-      if (i < wrappers.length - 1) {
-        wrapper.style.marginBottom = `${itemDistance}px`;
-      }
+    wrappers.forEach((wrapper) => {
       const card = wrapper.querySelector('.scroll-stack-card');
       if (card) {
         card.style.willChange = 'transform, filter';
@@ -287,7 +289,7 @@ const ScrollStack = ({
       isUpdatingRef.current = false;
     };
   }, [
-    itemDistance,
+    near,
     useWindowScroll,
     setupLenis,
     updateCachedOffsets,
@@ -295,9 +297,11 @@ const ScrollStack = ({
     handleScroll
   ]);
 
+  const gapStyle = { '--scroll-stack-gap': `${itemDistance}px` };
+
   if (useWindowScroll) {
      return (
-       <div className={`${className}`.trim()} ref={scrollerRef}>
+       <div className={`${className}`.trim()} ref={scrollerRef} style={gapStyle}>
          <div className="scroll-stack-inner">
            {children}
            <div className="scroll-stack-end" />
@@ -307,7 +311,7 @@ const ScrollStack = ({
   }
 
   return (
-    <div className={`scroll-stack-scroller ${className}`.trim()} ref={scrollerRef}>
+    <div className={`scroll-stack-scroller ${className}`.trim()} ref={scrollerRef} style={gapStyle}>
       <div className="scroll-stack-inner">
         {children}
         {/* Spacer so the last pin can release cleanly */}

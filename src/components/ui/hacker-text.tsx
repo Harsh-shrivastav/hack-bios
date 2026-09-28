@@ -36,7 +36,11 @@ export const HackerText = ({ text, className = "", as: Component = "span" }) => 
 
   return (
     <Component 
-      className={cn("whitespace-nowrap transition-all duration-300", className)} 
+      // No CSS transition here: StaggeredMenu animates this element's
+      // transform with GSAP, and a `transition-all` restarts a 300ms tween on
+      // every GSAP frame — the label lags far behind, then snaps (the
+      // menu-open shake). Only the text changes on hover, which can't transition.
+      className={cn("whitespace-nowrap", className)}
       onMouseEnter={() => setIsHovered(true)} 
       onMouseLeave={() => setIsHovered(false)}
     >

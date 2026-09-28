@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, startTransition } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Lenis from '@studio-freight/lenis';
 
@@ -8,21 +8,22 @@ import FloatingSocials from './components/FloatingSocials';
 import CodonStream from './components/CodonStream';
 import IntroGate from './components/IntroGate';
 import Hero from './components/Hero';
-import Stats from './components/Stats';
-import About from './components/About';
-import PreviousEdition from './components/PreviousEdition';
-import Faq from './components/Faq';
-import Contact from './components/Contact';
-import { CinematicFooter } from './components/ui/motion-footer';
-import PastPartners from './components/PastPartners';
-import TeamPage from './components/TeamPage';
-import Tracks from './components/Tracks';
 import Submission from './components/Submission';
 import CreateIDSection from './components/CreateIDSection';
+import TeamPage from './components/TeamPage';
+import Stats from './components/Stats';
+import About from './components/About';
+import Tracks from './components/Tracks';
+import PartnerBanners from './components/PartnerBanners';
+import PastPartners from './components/PastPartners';
+import PreviousEdition from './components/PreviousEdition';
+import Contact from './components/Contact';
+import Faq from './components/Faq';
+import { CinematicFooter } from './components/ui/motion-footer';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { requestScrollRefresh } from './lib/scrollRefresh';
 import MLHBadge from './components/MLHBadge';
-import PartnerBanners from './components/PartnerBanners';
 import HackBiosIDCard from './components/HackBiosIDCard';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -34,15 +35,15 @@ gsap.registerPlugin(ScrollTrigger);
 // the old page happened to be scrolled to. A plain window.scrollTo(0,0)
 // isn't enough here either, since Lenis tracks its own scroll position and
 // would just override that back on the next frame. This resets Lenis itself
-// (immediately, not a visible scroll-up animation) on every route change —
-// except when the navigation is landing on a #section hash, in which case
-// HomePage's own hash-scroll effect below handles positioning instead.
+// (immediately, not a visible scroll-up animation) on every route change.
+// That includes landing on a #section hash (e.g. /team → /#about): without
+// the reset, Home first appears at the Team page's old offset (an instant
+// jump into mid-page), and HomePage's hash effect below then smooth-scrolls
+// from that arbitrary spot instead of from the top.
 function ScrollToTop() {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.hash) return;
-
     if (window.__lenis) {
       window.__lenis.scrollTo(0, { immediate: true });
     } else {
@@ -145,6 +146,18 @@ function App() {
   const [muted, setMuted] = useState(false);
   const themeIntroRef = useRef(null);
   const themeLoopRef = useRef(null);
+  // Mirrors `muted` for use inside the 'ended' listener below, which is
+  // attached once on mount and would otherwise only ever see the initial
+  // (stale) value of `muted` from that render.
+  const mutedRef = useRef(muted);
+  // Tracks whether the user has actually clicked into the site (startTheme
+  // called) — before that, nothing is playing yet, so the mute button
+  // toggling play/pause has nothing to do.
+  const themeStartedRef = useRef(false);
+
+  useEffect(() => {
+    mutedRef.current = muted;
+  }, [muted]);
 
   useEffect(() => {
     if (location.pathname === '/create-id') {
@@ -159,12 +172,18 @@ function App() {
     intro.preload = 'auto';
     loop.preload = 'auto';
     loop.loop = true;
+    intro.volume = 0.5;
+    loop.volume = 0.5;
 
-    intro.volume = muted ? 0 : 0.5;
-    loop.volume = muted ? 0 : 0.5;
-
+    // Muting used to just drop the volume to 0 while both tracks kept
+    // playing (and decoding audio) in the background — the "why is it
+    // still going" feeling the mute button was supposed to fix. This now
+    // actually pauses playback instead, so a muted session stops doing
+    // any audio work at all, same as a real pause button.
     intro.addEventListener('ended', () => {
-      loop.play().catch(() => {});
+      if (!mutedRef.current) {
+        loop.play().catch(() => {});
+      }
     });
 
     themeIntroRef.current = intro;
@@ -175,21 +194,28 @@ function App() {
   }, []);
 
   const startTheme = () => {
-    const intro = themeIntroRef.current;
+    themeStartedRef.current = true;
 
-    if (intro) {
-      intro.play().catch(() => {});
+    if (!muted) {
+      themeIntroRef.current?.play().catch(() => {});
     }
   };
 
-  // Mute toggles both the currently-playing piece and whichever one starts next.
+  // Mute now pauses/resumes actual playback instead of just silencing
+  // volume, so a muted track stops running in the background entirely.
   useEffect(() => {
-    if (themeIntroRef.current) {
-      themeIntroRef.current.volume = muted ? 0 : 0.5;
-    }
+    if (!themeStartedRef.current) return;
 
-    if (themeLoopRef.current) {
-      themeLoopRef.current.volume = muted ? 0 : 0.5;
+    const intro = themeIntroRef.current;
+    const loop = themeLoopRef.current;
+
+    if (muted) {
+      intro?.pause();
+      loop?.pause();
+    } else if (intro && !intro.ended) {
+      intro.play().catch(() => {});
+    } else {
+      loop?.play().catch(() => {});
     }
   }, [muted]);
 
@@ -211,38 +237,51 @@ function App() {
   ];
 
   useEffect(() => {
-    // Initialize Lenis for cinematic smooth scrolling
-    const lenis = new Lenis({
-      duration: 1.5,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1.1,
-      lerp: 0.08,
-    });
+    // Touch devices already get smooth, GPU-composited native scrolling
+    // for free — running Lenis's JS-driven scroll simulation on top of
+    // that (via a continuous GSAP-ticker RAF loop, for the entire page
+    // lifetime) only adds main-thread work that competes with everything
+    // else on the page, which is what made scrolling feel laggy on phones.
+    // Desktop wheel/trackpad scrolling isn't smoothed by the browser the
+    // same way, so Lenis stays on there.
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+    // Initialize Lenis for cinematic smooth scrolling (desktop only)
+    const lenis = isTouch
+      ? null
+      : new Lenis({
+          duration: 1.5,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          orientation: 'vertical',
+          smoothWheel: true,
+          wheelMultiplier: 1.1,
+          lerp: 0.08,
+        });
 
     // Keep GSAP ScrollTrigger in sync with Lenis's smoothed scroll —
     // required for the Hero pin/scrub reveal to track accurately.
     // Driving Lenis through GSAP's own ticker (instead of a separate rAF
     // loop) is the documented-correct integration — running both at once
     // is what was causing the Hero pin to mis-measure and never engage.
-    const lenisTick = (time) => lenis.raf(time * 1000);
+    const lenisTick = lenis ? (time) => lenis.raf(time * 1000) : null;
 
-    gsap.ticker.add(lenisTick);
-    gsap.ticker.lagSmoothing(0);
+    if (lenis) {
+      gsap.ticker.add(lenisTick);
+      gsap.ticker.lagSmoothing(0);
 
-    lenis.on('scroll', ScrollTrigger.update);
+      lenis.on('scroll', ScrollTrigger.update);
 
-    // Exposed so other components (e.g. HomePage's #about/#faq/#contact
-    // landing scroll) can drive the same smoothed scroll instead of
-    // fighting it with a raw scrollIntoView().
-    window.__lenis = lenis;
+      // Exposed so other components (e.g. HomePage's #about/#faq/#contact
+      // landing scroll) can drive the same smoothed scroll instead of
+      // fighting it with a raw scrollIntoView().
+      window.__lenis = lenis;
+    }
 
     // Layout (webfonts, images) can still be settling on first mount;
     // re-measure once things stabilize so the Hero pin's scroll distance
     // is calculated correctly.
     const refreshTimer = setTimeout(
-      () => ScrollTrigger.refresh(),
+      () => requestScrollRefresh(),
       300
     );
 
@@ -252,7 +291,7 @@ function App() {
     // the section-reveal triggers below fire at stale positions, which is
     // what causes content (e.g. Stats) to stay invisible for a stretch of
     // scroll before suddenly popping in.
-    const handleViewportChange = () => ScrollTrigger.refresh();
+    const handleViewportChange = () => requestScrollRefresh();
 
     window.visualViewport?.addEventListener(
       'resize',
@@ -261,7 +300,7 @@ function App() {
 
     window.addEventListener('resize', handleViewportChange);
 
-    document.fonts?.ready.then(() => ScrollTrigger.refresh());
+    document.fonts?.ready.then(() => requestScrollRefresh());
 
     // Global Scroll Transitions
     // NOTE: scoped to `main section` only — NOT the structural wrapper divs
@@ -277,23 +316,49 @@ function App() {
     // height, address-bar collapse, and font load timing), which is why the
     // empty gap before Stats showed up differently — but always — across
     // phones.
+    // Setting up a scroll-reveal ScrollTrigger for every section was
+    // running synchronously in the same breath as the rest of the site
+    // mounting (right after the "Enter" tap) — real-device profiling
+    // showed this contending with the user's very next scroll for main-
+    // thread time, adding to that tap-to-scroll delay. requestIdleCallback
+    // pushes this setup to run only once the browser is actually free,
+    // so it no longer competes with an in-flight scroll gesture. Safari
+    // has no requestIdleCallback, hence the setTimeout fallback.
+    const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+    const cancelIdle = window.cancelIdleCallback || clearTimeout;
+    let idleHandle = null;
+
     if (introDone) {
-      const sections = document.querySelectorAll('main section');
+      idleHandle = idle(() => {
+        const sections = document.querySelectorAll('main section');
 
-      sections.forEach((section) => {
-        section.classList.add('section-reveal');
+        sections.forEach((section) => {
+          // #create-id sizes itself with `100svh`, which shifts as a
+          // phone's address bar collapses/expands while scrolling —
+          // exactly during the user's very first scroll, right below
+          // Hero. Every re-measure (see the visualViewport listener
+          // above) could land its trigger boundary on a slightly
+          // different position, flipping "revealed" on/off repeatedly —
+          // seen as the section popping in and out while scrolling.
+          // It's effectively above-the-fold content anyway, so it just
+          // doesn't need a scroll-triggered reveal at all.
+          if (section.id === 'create-id') return;
 
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top 85%',
-          onEnter: () => section.classList.add('revealed'),
-          onLeaveBack: () => section.classList.remove('revealed'),
+          section.classList.add('section-reveal');
+
+          ScrollTrigger.create({
+            trigger: section,
+            start: 'top 85%',
+            onEnter: () => section.classList.add('revealed'),
+            onLeaveBack: () => section.classList.remove('revealed'),
+          });
         });
       });
     }
 
     return () => {
       clearTimeout(refreshTimer);
+      if (idleHandle != null) cancelIdle(idleHandle);
 
       window.visualViewport?.removeEventListener(
         'resize',
@@ -302,12 +367,13 @@ function App() {
 
       window.removeEventListener('resize', handleViewportChange);
 
-      gsap.ticker.remove(lenisTick);
+      if (lenis) {
+        gsap.ticker.remove(lenisTick);
+        lenis.destroy();
 
-      lenis.destroy();
-
-      if (window.__lenis === lenis) {
-        window.__lenis = null;
+        if (window.__lenis === lenis) {
+          window.__lenis = null;
+        }
       }
 
       ScrollTrigger.getAll().forEach((t) => t.kill());
@@ -333,7 +399,7 @@ function App() {
       <button
         onClick={() => setMuted((m) => !m)}
         aria-label={muted ? 'Unmute' : 'Mute'}
-        className="interactive fixed bottom-5 right-5 md:bottom-7 md:right-7 z-[200] w-14 h-14 flex items-center justify-center border border-[#00ff41]/40 text-[#00ff41] bg-[#010401]/60 backdrop-blur-sm hover:bg-[#00ff41]/10 transition-colors duration-200"
+        className="interactive fixed bottom-5 right-5 md:bottom-7 md:right-7 z-[200] w-14 h-14 flex items-center justify-center border border-[#00ff41]/40 text-[#00ff41] bg-[#010401]/60 md:backdrop-blur-sm hover:bg-[#00ff41]/10 transition-colors duration-200"
       >
         {muted ? (
           <svg
@@ -371,7 +437,17 @@ function App() {
           muted={muted}
           onEnter={() => {
             startTheme();
-            setIntroDone(true);
+            // Flipping introDone mounts the ENTIRE rest of the site in one
+            // go — background canvas, nav, and every section on the page —
+            // all inside this one tap's event handler. That was measured
+            // as the single largest INP (tap-to-response delay) hit on the
+            // whole site. startTransition tells React this update is allowed
+            // to take a while, so it renders it without blocking the main
+            // thread in one synchronous chunk, keeping the tap itself
+            // responsive instead of freezing until everything's mounted.
+            startTransition(() => {
+              setIntroDone(true);
+            });
           }}
         />
       )}

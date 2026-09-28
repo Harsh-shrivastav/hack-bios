@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { MessageCircle, Terminal, ArrowUpRight } from "lucide-react";
 import { LocationMap } from "./expand-map";
 import { ShinyText } from "@/components/ui/shiny-text";
+import { useNearViewport } from "@/lib/useNearViewport";
 
 const InstagramIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -131,7 +132,10 @@ const STYLES = `
 
 /* Giant Background Text Masking */
 .footer-giant-bg-text {
-  font-size: 26vw;
+  /* "HACKBIOS" in Share Tech Mono at -0.05em spacing is ~3.92em wide, so
+     25vw spans ~98% of the screen. The old 13rem cap stopped it growing past
+     ~830px wide, leaving it half-width on large monitors. */
+  font-size: max(5rem, 25vw);
   line-height: 0.75;
   font-weight: 900;
   letter-spacing: -0.05em;
@@ -247,19 +251,21 @@ export function CinematicFooter() {
   const giantTextRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
+  const near = useNearViewport(wrapperRef);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (!wrapperRef.current) return;
+    if (!near || !wrapperRef.current) return;
 
     // React strict mode compatible GSAP context cleanup
     const ctx = gsap.context(() => {
       // Background Parallax
       gsap.fromTo(
         giantTextRef.current,
-        { y: "10vh", scale: 0.8, opacity: 0 },
+        { y: "10vh", xPercent: -50, scale: 0.8, opacity: 0 },
         {
           y: "0vh",
+          xPercent: -50,
           scale: 1,
           opacity: 1,
           ease: "power1.out",
@@ -292,7 +298,7 @@ export function CinematicFooter() {
     }, wrapperRef);
 
     return () => ctx.revert();
-  },[]);
+  }, [near]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -322,19 +328,22 @@ export function CinematicFooter() {
               real GPU cost, recomputed every frame of the breathe
               animation on a fixed, always-mounted element. Dropping it
               keeps the same look for a fraction of the cost. */}
-          <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] pointer-events-none z-0" />
+          <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] max-h-[650px] max-w-[1100px] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] pointer-events-none z-0" />
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
 
           {/* Giant background text */}
           <div
             ref={giantTextRef}
-            className="footer-giant-bg-text absolute -bottom-[5vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none glitch" data-text="HACKBIOS"
+            // `absolute!`: index.css's un-layered `.glitch { position: relative }`
+            // otherwise beats Tailwind's layered `absolute`, turning this into
+            // a full-width flex item at the top of the footer, word left-aligned.
+            className="footer-giant-bg-text absolute! top-24 left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none glitch" data-text="HACKBIOS"
           >
             HACKBIOS
           </div>
 
           {/* 1. Diagonal Sleek Marquee (Top of footer) */}
-          <div className="absolute top-12 left-0 w-full overflow-hidden border-y border-[#00ff41]/20 bg-background/60 backdrop-blur-md py-4 z-10 -rotate-2 scale-110 shadow-2xl">
+          <div className="absolute top-12 left-0 w-full overflow-hidden border-y border-[#00ff41]/20 bg-background/60 md:backdrop-blur-md py-4 z-10 -rotate-2 scale-110 shadow-2xl">
             <div className="flex w-max animate-footer-scroll-marquee text-xs md:text-sm font-bold tracking-[0.3em] text-[#00ff41]/80 uppercase">
               <MarqueeItem />
               <MarqueeItem />

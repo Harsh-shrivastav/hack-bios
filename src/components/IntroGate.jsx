@@ -77,10 +77,19 @@ const IntroGate = ({ onEnter, muted }) => {
         )}
 
         <button
-        onClick={handleEnter}
-        className="omniverse-enter interactive"
+          onClick={handleEnter}
+          className="omniverse-enter interactive"
         >
-        <span>ENTER THE OMNIVERSE</span>
+          <svg
+            className="omniverse-enter-frame"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <polygon points="5,0 95,0 100,25 100,75 95,100 5,100 0,75 0,25" />
+          </svg>
+          <span className="omniverse-enter-scan" aria-hidden="true"></span>
+          <span className="omniverse-enter-label">ENTER THE OMNIVERSE</span>
         </button>
       </div>
 

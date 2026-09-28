@@ -10,10 +10,10 @@ const ALIEN_COUNT = 19;
 
 const alienSrcs = Array.from({ length: ALIEN_COUNT }, (_, i) => {
   const num = String(i + 1).padStart(2, "0");
-  return `${ASSET_BASE}/aliens/alien_${num}_green_diamond_cropped.png`;
+  return `${ASSET_BASE}/aliens/alien_${num}_green_diamond_cropped.webp`;
 });
 
-const idleSrc = `${ASSET_BASE}/idle-icon-cropped.png`;
+const idleSrc = `${ASSET_BASE}/idle-icon-cropped.webp`;
 const sequence = [idleSrc, ...alienSrcs];
 
 const ROTATE_MS = 400; // quick snap between the ring's 4 positions
@@ -83,7 +83,7 @@ export default function OmniWatch({ muted = false }) {
       <div className="omniwatch-glow" />
 
       <div className="omniwatch-watch">
-        <img className="omniwatch-base" src={`${ASSET_BASE}/base-static.png`} alt="" />
+        <img className="omniwatch-base" src={`${ASSET_BASE}/base-static.webp`} alt="" />
 
         <div className="omniwatch-dial-slot">
           <img
@@ -98,11 +98,11 @@ export default function OmniWatch({ muted = false }) {
           />
         </div>
 
-        <img className="omniwatch-frame" src={`${ASSET_BASE}/frame-top.png`} alt="" />
+        <img className="omniwatch-frame" src={`${ASSET_BASE}/frame-top.webp`} alt="" />
 
         <img
           className="omniwatch-gems"
-          src={`${ASSET_BASE}/gems-ring.png`}
+          src={`${ASSET_BASE}/gems-ring.webp`}
           alt=""
           style={{ transform: `rotate(${rotation}deg)` }}
         />

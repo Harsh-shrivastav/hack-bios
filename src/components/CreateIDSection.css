@@ -303,6 +303,14 @@
   animation: cardGlow 3.5s ease-in-out infinite;
 }
 
+/* Stops these continuous 3D-transform animations while the section is
+   scrolled out of view — see the IntersectionObserver in
+   CreateIDSection.jsx for why. */
+.card-paused .create-id-card-wrap,
+.card-paused .create-id-card-glow {
+  animation-play-state: paused;
+}
+
 .create-id-card {
   position: relative;
   overflow: hidden;

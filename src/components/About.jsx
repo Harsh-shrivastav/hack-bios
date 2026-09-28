@@ -9,7 +9,7 @@ const About = () => {
 
       {/* Large low-opacity background illustration */}
       <img
-        src="/decor/plumbers-base.png"
+        src="/decor/plumbers-base.webp"
         alt=""
         aria-hidden="true"
         className="absolute inset-0 w-full h-full object-cover opacity-[0.3] pointer-events-none select-none"
@@ -29,7 +29,7 @@ const About = () => {
           {/* Max — MOBILE/TABLET */}
           <div className="lg:hidden flex justify-center relative z-20 -mb-6 pointer-events-none select-none">
             <img
-              src="/characters/max.png"
+              src="/characters/max.webp"
               alt=""
               aria-hidden="true"
               className="w-36 sm:w-48 h-auto object-contain drop-shadow-[0_0_20px_rgba(0,255,65,0.15)]"
@@ -37,7 +37,7 @@ const About = () => {
           </div>
 
           {/* Floating glass panel */}
-          <div className="relative bg-[#050a05]/85 backdrop-blur-xl border border-[#00ff41]/10 rounded-xl p-8 md:p-16 max-w-4xl w-full">
+          <div className="relative bg-[#050a05]/85 md:backdrop-blur-xl border border-[#00ff41]/10 rounded-xl p-8 md:p-16 max-w-4xl w-full">
             <div className="absolute inset-0 bg-circuit-pattern opacity-[0.03] pointer-events-none rounded-xl"></div>
 
             <div className="relative">

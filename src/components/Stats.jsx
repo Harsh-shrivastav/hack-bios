@@ -58,7 +58,7 @@ const Stats = () => {
   return (
     <section className="relative pt-24 pb-12 w-full overflow-visible">
       <div className="mx-auto container px-4">
-        <div className="relative bg-[#050a05]/85 backdrop-blur-xl border border-[#00ff41]/15 rounded-xl overflow-visible">
+        <div className="relative bg-[#050a05]/85 md:backdrop-blur-xl border border-[#00ff41]/15 rounded-xl overflow-visible">
           <div className="absolute inset-0 bg-circuit-pattern opacity-[0.02] pointer-events-none rounded-xl overflow-hidden"></div>
 
           {/* Driba — sitting on the left edge, legs resting on the bar */}

@@ -29,7 +29,7 @@ import './PastPartners.css';
   { file: 'GiveMyCertificate.png', name: 'GiveMyCertificate' },
 ];*/}
 const LOGO_FILES = [
-  { file: 'devfolio.webp', name: 'Devfolio' },
+  { file: 'Devfolio.webp', name: 'Devfolio' },
   { file: 'mlh.webp', name: 'MLH' },
   { file: 'XYZ.webp', name: '.xyz' },
   { file: 'github.webp', name: 'GitHub' },
@@ -114,7 +114,7 @@ const PastPartners = () => {
               <Tile
                 key={partner.file}
                 {...tileProps}
-                className="float-tile w-[45%] sm:w-[30%] md:w-[22%] bg-[#0a120a]/70 backdrop-blur-sm border border-[#00ff41]/10 rounded-xl h-32 md:h-36 p-4 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 hover:border-[#00ff41]/40 hover:bg-[#00ff41]/5 group"
+                className="float-tile w-[45%] sm:w-[30%] md:w-[22%] bg-[#0a120a]/70 md:backdrop-blur-sm border border-[#00ff41]/10 rounded-xl h-32 md:h-36 p-4 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 hover:border-[#00ff41]/40 hover:bg-[#00ff41]/5 group"
                 style={{
                   animationDuration: `${timings[i].duration}s`,
                   animationDelay: `${timings[i].delay}s`,
@@ -141,7 +141,7 @@ const PastPartners = () => {
   {COMMUNITY_LOGO_FILES.map((partner, i) => (
     <div
       key={partner.file}
-      className="float-tile w-[45%] sm:w-[30%] md:w-[22%] bg-[#0a120a]/70 backdrop-blur-sm border border-[#00ff41]/10 rounded-xl h-32 md:h-36 p-4 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 hover:border-[#00ff41]/40 hover:bg-[#00ff41]/5 group"
+      className="float-tile w-[45%] sm:w-[30%] md:w-[22%] bg-[#0a120a]/70 md:backdrop-blur-sm border border-[#00ff41]/10 rounded-xl h-32 md:h-36 p-4 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 hover:border-[#00ff41]/40 hover:bg-[#00ff41]/5 group"
       style={{
         animationDuration: `${communityTimings[i].duration}s`,
         animationDelay: `${communityTimings[i].delay}s`,
@@ -155,25 +155,36 @@ const PastPartners = () => {
     </div>
   ))}
 </div>
+{/* Benson / Ben-Kai sit beside the 3-tile second community row, below the
+    first row, so they never cover a tile. In container units (W = 100%,
+    tiles 22% of W-64px, 24px gaps, 32px padding) that row spans
+    17%W-3px … 83%W+3px; +16px gap gives the 83%+19px offsets. Width is the
+    room between that and the viewport edge (−17px for the scrollbar in
+    100vw), capped so the ~200px they hang below this section stays inside
+    its bottom padding + the next section's top padding. */}
 <img
   src="/characters/benson.webp"
   alt=""
   aria-hidden="true"
-  className="hidden xl:block absolute pointer-events-none select-none z-[5]
-             xl:h-[26rem] xl:left-[-10%] xl:bottom-[-12%]
-             2xl:h-[30rem]
-             w-auto opacity-95"
-  style={{ filter: 'drop-shadow(0 0 30px rgba(0,255,65,0.15))' }}
+  className="hidden xl:block absolute h-auto pointer-events-none select-none z-[5] opacity-95"
+  style={{
+    right: 'calc(83% + 19px)',
+    top: 'calc(100% - 152px)',
+    width: 'min(14rem, calc(17% - 36px + (100vw - 100%) / 2))',
+    filter: 'drop-shadow(0 0 30px rgba(0,255,65,0.15))',
+  }}
 />
 <img
   src="/characters/ben-kai.webp"
   alt=""
   aria-hidden="true"
-  className="hidden xl:block absolute pointer-events-none select-none z-[5]
-             xl:h-[24rem] xl:right-[-15%] xl:bottom-[-15%]
-             2xl:h-[25rem]
-             w-auto opacity-95"
-  style={{ filter: 'drop-shadow(0 0 30px rgba(0,255,65,0.15))' }}
+  className="hidden xl:block absolute h-auto pointer-events-none select-none z-[5] opacity-95"
+  style={{
+    left: 'calc(83% + 19px)',
+    top: 'calc(100% - 152px)',
+    width: 'min(25rem, calc(17% - 36px + (100vw - 100%) / 2))',
+    filter: 'drop-shadow(0 0 30px rgba(0,255,65,0.15))',
+  }}
 />
       </div>
     </section>

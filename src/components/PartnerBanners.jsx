@@ -39,8 +39,16 @@ const PartnerBanners = () => {
             </div>
           </div>
 
-          {/* Sly — desktop */}
-          <div className="hidden md:block absolute md:-left-[18rem] lg:-left-[26rem] xl:-left-[30rem] md:top-[-12rem] lg:top-[-12rem] xl:top-[-12rem] pointer-events-none select-none w-64 lg:w-[30rem] xl:w-[36rem]">
+          {/* Sly — desktop. Sits wholly outside the card box (16px gap) and
+              is sized to the gutter beside it: fixed offsets can't work, since
+              the box is a fixed 48rem while the gutter shrinks with the
+              viewport — at 1280px a 36rem Sly either covers the MLH card or
+              runs off-screen. 33px = 16px gap + up to 17px scrollbar, which
+              100vw includes. Feet stay level with the card bottoms. */}
+          <div
+            className="hidden md:block absolute bottom-0 pointer-events-none select-none"
+            style={{ right: 'calc(100% + 16px)', width: 'min(36rem, calc((100vw - 100%) / 2 - 33px))' }}
+          >
 
             {/* Invisible sizer */}
             <img
@@ -87,8 +95,12 @@ const PartnerBanners = () => {
             </div>
           </div>
 
-          {/* Simian — desktop */}
-          <div className="hidden md:block absolute md:-right-[18rem] lg:-right-[26rem] xl:-right-[30rem] md:top-[-15rem] lg:top-[-15rem] xl:top-[-15rem] pointer-events-none select-none w-64 lg:w-[30rem] xl:w-[36rem]">
+          {/* Simian — desktop. Mirror of Sly; the 20% drop keeps its feet
+              hanging just below the Devfolio card at any size. */}
+          <div
+            className="hidden md:block absolute bottom-0 translate-y-[20%] pointer-events-none select-none"
+            style={{ left: 'calc(100% + 16px)', width: 'min(36rem, calc((100vw - 100%) / 2 - 33px))' }}
+          >
 
             {/* Invisible sizer */}
             <img

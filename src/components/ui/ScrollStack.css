@@ -21,6 +21,12 @@
   position: relative;
 }
 
+/* Was an inline marginBottom on every wrapper but the last, written after
+   mount; margin-top on each following wrapper collapses to the same gap. */
+.scroll-stack-card-wrapper + .scroll-stack-card-wrapper {
+  margin-top: var(--scroll-stack-gap, 0px);
+}
+
 .scroll-stack-card {
   transform-origin: top center;
   will-change: transform, filter;

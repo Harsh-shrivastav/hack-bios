@@ -46,7 +46,7 @@ const Faq = () => {
 
       <div className="container mx-auto px-4 md:px-8 relative z-10 max-w-3xl">
         {/* Floating glass panel */}
-        <div className="relative bg-[#050a05]/85 backdrop-blur-xl border border-[#00ff41]/10 rounded-xl p-8 md:p-12">
+        <div className="relative bg-[#050a05]/85 md:backdrop-blur-xl border border-[#00ff41]/10 rounded-xl p-8 md:p-12">
           <div className="absolute inset-0 bg-circuit-pattern opacity-[0.02] pointer-events-none rounded-xl"></div>
           <div className="relative">
             <div className="text-center mb-12">
@@ -84,7 +84,7 @@ const Faq = () => {
               {faqs.map((faq, index) => (
                 <div 
                   key={index} 
-                  className={`border transition-all duration-300 rounded-lg ${openIndex === index ? 'border-[#00ff41] bg-[#0a120a]/80 backdrop-blur-sm' : 'border-[#00ff41]/20 bg-[#050a05]/60 backdrop-blur-sm hover:border-[#00ff41]/50'}`}
+                  className={`border transition-all duration-300 rounded-lg ${openIndex === index ? 'border-[#00ff41] bg-[#0a120a]/80 md:backdrop-blur-sm' : 'border-[#00ff41]/20 bg-[#050a05]/60 md:backdrop-blur-sm hover:border-[#00ff41]/50'}`}
                 >
                   <button 
                     className="w-full text-left px-6 py-4 font-mono text-white flex justify-between items-center interactive focus:outline-none"

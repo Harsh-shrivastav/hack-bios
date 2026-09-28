@@ -47,7 +47,18 @@ useEffect(() => {
     // Scroll-driven reveal — reads real layout position every frame, so it
     // works correctly regardless of Lenis/any smooth-scroll library, no
     // pin/spacer measurement involved.
-    let raf;
+    //
+    // This getBoundingClientRect() read + style write every frame forces a
+    // synchronous layout recalculation each time (a "forced reflow") —
+    // unavoidable for a scroll-driven effect like this. What *is* avoidable
+    // is running it forever: without a guard, this rAF loop keeps reading
+    // and writing on every single frame for as long as the page is open,
+    // including the entire time someone's scrolled miles past Hero into
+    // Team/Sponsors/FAQ/Contact, where nothing here is even visible or
+    // changing. An IntersectionObserver (same pattern PastPartners.jsx uses
+    // for its tile animations) pauses the loop whenever this section isn't
+    // anywhere near the viewport, and resumes it when scrolling back up.
+    let raf = null;
     function update() {
       const outer = outerRef.current;
       if (outer) {
@@ -63,9 +74,33 @@ useEffect(() => {
       }
       raf = requestAnimationFrame(update);
     }
-    raf = requestAnimationFrame(update);
 
-    return () => cancelAnimationFrame(raf);
+    const outer = outerRef.current;
+    let observer;
+
+    if (outer) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            if (raf == null) raf = requestAnimationFrame(update);
+          } else if (raf != null) {
+            cancelAnimationFrame(raf);
+            raf = null;
+          }
+        },
+        // Generous margin so the loop is already running by the time the
+        // reveal zone actually reaches the viewport, not starting a frame late.
+        { rootMargin: '50% 0px' }
+      );
+      observer.observe(outer);
+    } else {
+      raf = requestAnimationFrame(update);
+    }
+
+    return () => {
+      if (raf != null) cancelAnimationFrame(raf);
+      if (observer) observer.disconnect();
+    };
   }, []);
 
   return (
@@ -184,7 +219,7 @@ useEffect(() => {
         <div className="relative z-20 w-full h-full flex flex-col justify-center px-6 md:px-16 lg:px-24 py-20 overflow-hidden">
           <div className="absolute -left-10 top-1/2 -translate-y-1/2 w-[45vw] h-[45vw] max-w-[600px] max-h-[600px] rounded-full bg-[#00ff41]/20 blur-[110px] pointer-events-none accent-breathe"></div>
 
-          <h1 className="hero-animate relative font-black font-mono uppercase leading-[0.9] tracking-tight text-white text-[11vw] md:text-[6.5vw] lg:text-[5.5vw] mb-4 md:mb-6">
+          <h1 className="hero-animate relative font-black font-mono uppercase leading-[0.9] tracking-tight text-white text-[11vw] md:text-[clamp(2.75rem,6.5vw,4rem)] lg:text-[clamp(3.5rem,5.5vw,5rem)] mb-4 md:mb-6">
             <span className="glitch-heading text-shadow-neon" data-text="Hackbios">Hackbios</span>{' '}
             <span className="glitch-heading text-[#00ff41] text-shadow-neon" data-text="3.0">3.0</span>
           </h1>

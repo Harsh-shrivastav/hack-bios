@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Phone } from 'lucide-react';
 
 const Contact = () => {
+  // The embedded Google Map is a genuinely heavy third-party widget (its own
+  // JS, tile requests, etc.) — even with loading="lazy", it was firing the
+  // moment this section scrolled into view during normal browsing, which
+  // showed up clearly in mobile performance profiling. Most visitors never
+  // interact with the map at all, so it's now click-to-load: a lightweight
+  // static placeholder renders instead, and the real iframe only mounts
+  // once someone actually asks for it.
+  const [mapLoaded, setMapLoaded] = useState(false);
+
   return (
     <section
       id="contact"
@@ -10,7 +19,7 @@ const Contact = () => {
       <div className="container mx-auto px-4 md:px-8 relative z-10">
 
         {/* Floating glass panel */}
-        <div className="relative bg-[#050a05]/85 backdrop-blur-xl border border-[#00ff41]/10 rounded-xl p-8 md:p-12">
+        <div className="relative bg-[#050a05]/85 md:backdrop-blur-xl border border-[#00ff41]/10 rounded-xl p-8 md:p-12">
 
           <div className="absolute inset-0 bg-circuit-pattern opacity-[0.03] pointer-events-none rounded-xl"></div>
 
@@ -36,7 +45,7 @@ const Contact = () => {
               <div className="space-y-8">
 
                 {/* Organizers */}
-                <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg overflow-hidden">
+                <div className="bg-[#0a120a]/80 md:backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg overflow-hidden">
 
                   <img
                     src="/characters/trio.webp"
@@ -112,10 +121,10 @@ const Contact = () => {
                 </div>
 
                 {/* Faculty Supervisors */}
-                <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg overflow-hidden">
+                <div className="bg-[#0a120a]/80 md:backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg overflow-hidden">
 
                   <img
-                    src="/decor/plumbers-base.png"
+                    src="/decor/plumbers-base.webp"
                     alt=""
                     aria-hidden="true"
                     className="absolute inset-0 w-full h-full object-cover opacity-[0.08] pointer-events-none select-none"
@@ -141,7 +150,7 @@ const Contact = () => {
               </div>
 
               {/* Map */}
-              <div className="bg-[#0a120a]/80 backdrop-blur-sm border border-[#00ff41]/30 p-2 relative h-[400px] lg:h-auto overflow-hidden group rounded-lg">
+              <div className="bg-[#0a120a]/80 md:backdrop-blur-sm border border-[#00ff41]/30 p-2 relative h-[400px] lg:h-auto overflow-hidden group rounded-lg">
 
                 <div className="absolute top-0 left-0 w-full h-1 bg-[#00ff41] z-10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500"></div>
 
@@ -159,16 +168,30 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {/* Embedded Google Map */}
-                <iframe
-                  src="https://www.google.com/maps?q=21.217218,81.307414&output=embed"
-                  className="w-full h-full grayscale-0 opacity-100 md:grayscale md:opacity-70 md:group-hover:grayscale-0 md:group-hover:opacity-100 transition-all duration-700 rounded-lg"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="SSTC Bhilai Map"
-                ></iframe>
+                {/* Embedded Google Map — click-to-load facade. See note above. */}
+                {mapLoaded ? (
+                  <iframe
+                    src="https://www.google.com/maps?q=21.217218,81.307414&output=embed"
+                    className="w-full h-full grayscale-0 opacity-100 md:grayscale md:opacity-70 md:group-hover:grayscale-0 md:group-hover:opacity-100 transition-all duration-700 rounded-lg"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="SSTC Bhilai Map"
+                  ></iframe>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setMapLoaded(true)}
+                    aria-label="Load map"
+                    className="interactive w-full h-full flex flex-col items-center justify-center gap-2 bg-[#0a120a] rounded-lg text-[#00ff41] font-mono text-sm uppercase tracking-wider hover:bg-[#00ff41]/5 transition-colors duration-300"
+                  >
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    Tap to load map
+                  </button>
+                )}
 
               </div>
 

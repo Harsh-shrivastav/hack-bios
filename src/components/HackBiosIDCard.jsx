@@ -11,7 +11,7 @@ const CARD_ART = '/id-card/hackbios-id.png';
 // The HackBiOS logo, cut out of that artwork, used on the back of the card.
 const CARD_LOGO = '/id-card/hackbios-logo.png';
 // Standalone HackBIOS participation badge. Put badge.png in public/.
-const BADGE_ART = '/badge.png';
+const BADGE_ART = '/badge.webp';
 
 const EVENT_NAME = 'HACKBIOS 2026';
 // Any button on the site can open this modal by firing this window event

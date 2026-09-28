@@ -29,22 +29,22 @@ import './PastPartners.css';
   { file: 'GiveMyCertificate.png', name: 'GiveMyCertificate' },
 ];*/}
 const LOGO_FILES = [
-  { file: 'Devfolio.png', name: 'Devfolio' },
-  { file: 'mlh.png', name: 'MLH' },
-  { file: 'XYZ.png', name: '.xyz' },
-  { file: 'github.png', name: 'GitHub' },
-  { file: 'elevenlabs.png', name: 'ElevenLabs' },
-  { file: 'purebutton.png', name: 'PureButton', href: 'https://mlh.link/MLHPureButtons-hackathons' },
-  { file: 'quillbot.png', name: 'QuillBot', href: 'https://quillbot.com' },
-  { file: 'tin.png', name: 'Tin' , href: 'https://tin.computer/' },];
+  { file: 'Devfolio.webp', name: 'Devfolio' },
+  { file: 'mlh.webp', name: 'MLH' },
+  { file: 'XYZ.webp', name: '.xyz' },
+  { file: 'github.webp', name: 'GitHub' },
+  { file: 'elevenlabs.webp', name: 'ElevenLabs' },
+  { file: 'purebutton.webp', name: 'PureButton', href: 'https://mlh.link/MLHPureButtons-hackathons' },
+  { file: 'quillbot.webp', name: 'QuillBot', href: 'https://quillbot.com' },
+  { file: 'tin.webp', name: 'Tin' , href: 'https://tin.computer/' },];
 const COMMUNITY_LOGO_FILES = [
-  { file: 'GDG.png', name: 'GDG' },
-  { file:'GFG.png', name:'GFG'},
-  { file:'syntaxLogo.png', name:'Syntax'},
-  { file:'entropyzero.png', name:'EntropyZero'},
-  { file:'nexhack.png', name:'Nexhack'},
-  { file:'techsociety.png', name:'TechSociety'},
-  { file:'OSEN.png', name:'OSEN'},];
+  { file: 'GDG.webp', name: 'GDG' },
+  { file:'GFG.webp', name:'GFG'},
+  { file:'syntaxLogo.webp', name:'Syntax'},
+  { file:'entropyzero.webp', name:'EntropyZero'},
+  { file:'nexhack.webp', name:'Nexhack'},
+  { file:'techsociety.webp', name:'TechSociety'},
+  { file:'OSEN.webp', name:'OSEN'},];
 
 const PastPartners = () => {
   // Each tile has its own infinite float animation plus a backdrop-blur —
@@ -155,7 +155,7 @@ const PastPartners = () => {
   ))}
 </div>
 <img
-  src="/characters/benson.png"
+  src="/characters/benson.webp"
   alt=""
   aria-hidden="true"
   className="hidden xl:block absolute pointer-events-none select-none z-[5]
@@ -165,7 +165,7 @@ const PastPartners = () => {
   style={{ filter: 'drop-shadow(0 0 30px rgba(0,255,65,0.15))' }}
 />
 <img
-  src="/characters/ben-kai.png"
+  src="/characters/ben-kai.webp"
   alt=""
   aria-hidden="true"
   className="hidden xl:block absolute pointer-events-none select-none z-[5]

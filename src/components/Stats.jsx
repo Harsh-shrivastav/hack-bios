@@ -63,7 +63,7 @@ const Stats = () => {
 
           {/* Driba — sitting on the left edge, legs resting on the bar */}
           <img
-            src="/characters/driba.png"
+            src="/characters/driba.webp"
             alt=""
             aria-hidden="true"
             className="block absolute -top-16 md:-top-31 left-2 md:left-35 w-16 md:w-32 h-auto object-contain z-10 pointer-events-none select-none drop-shadow-[0_0_15px_rgba(0,255,65,0.15)]"
@@ -71,7 +71,7 @@ const Stats = () => {
 
           {/* Blubik — sitting on the right edge, legs resting on the bar */}
           <img
-            src="/characters/blubik.png"
+            src="/characters/blubik.webp"
             alt=""
             aria-hidden="true"
             className="block absolute -top-16 md:-top-31 right-2 md:right-20 w-16 md:w-32 h-auto object-contain z-10 pointer-events-none select-none drop-shadow-[0_0_15px_rgba(0,255,65,0.15)]"

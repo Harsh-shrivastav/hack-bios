@@ -39,7 +39,7 @@ const Contact = () => {
                 <div className="bg-[#0a120a]/80 backdrop-blur-sm p-8 border border-[#00ff41]/30 relative rounded-lg overflow-hidden">
 
                   <img
-                    src="/characters/trio.png"
+                    src="/characters/trio.webp"
                     alt=""
                     aria-hidden="true"
                     className="absolute right-0 bottom-0 h-[85%] w-auto object-contain opacity-30 pointer-events-none select-none"

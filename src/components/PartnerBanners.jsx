@@ -31,7 +31,7 @@ const PartnerBanners = () => {
           <div className="md:hidden relative z-20 flex justify-start w-full -mb-10 pointer-events-none select-none">
             <div className="relative ml-2">
               <img
-                src="/characters/sly.png"
+                src="/characters/sly.webp"
                 alt=""
                 aria-hidden="true"
                 className="w-44 sm:w-56 h-auto object-contain drop-shadow-[0_0_20px_rgba(0,255,65,0.15)]"
@@ -44,7 +44,7 @@ const PartnerBanners = () => {
 
             {/* Invisible sizer */}
             <img
-              src="/characters/sly.png"
+              src="/characters/sly.webp"
               alt=""
               aria-hidden="true"
               className="w-full h-auto object-contain opacity-0"
@@ -52,7 +52,7 @@ const PartnerBanners = () => {
 
             {/* Body */}
             <img
-              src="/characters/sly.png"
+              src="/characters/sly.webp"
               alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_0_20px_rgba(0,255,65,0.15)]"
@@ -64,7 +64,7 @@ const PartnerBanners = () => {
 
             {/* Arm / claw */}
             <img
-              src="/characters/sly.png"
+              src="/characters/sly.webp"
               alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-contain"
@@ -79,7 +79,7 @@ const PartnerBanners = () => {
           <div className="md:hidden relative z-20 flex justify-end w-full -mb-10 pointer-events-none select-none">
             <div className="relative mr-2">
               <img
-                src="/characters/simian.png"
+                src="/characters/simian.webp"
                 alt=""
                 aria-hidden="true"
                 className="w-44 sm:w-56 h-auto object-contain drop-shadow-[0_0_20px_rgba(0,150,255,0.15)]"
@@ -92,7 +92,7 @@ const PartnerBanners = () => {
 
             {/* Invisible sizer */}
             <img
-              src="/characters/simian.png"
+              src="/characters/simian.webp"
               alt=""
               aria-hidden="true"
               className="w-full h-auto object-contain opacity-0"
@@ -100,7 +100,7 @@ const PartnerBanners = () => {
 
             {/* Body */}
             <img
-              src="/characters/simian.png"
+              src="/characters/simian.webp"
               alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_0_20px_rgba(0,150,255,0.15)]"
@@ -112,7 +112,7 @@ const PartnerBanners = () => {
 
             {/* Arm / claw */}
             <img
-              src="/characters/simian.png"
+              src="/characters/simian.webp"
               alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-contain"

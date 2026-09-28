@@ -20,7 +20,7 @@ const About = () => {
 
           {/* Max — DESKTOP */}
           <img
-            src="/characters/max.png"
+            src="/characters/max.webp"
             alt=""
             aria-hidden="true"
             className="hidden lg:block w-80 xl:w-[26rem] h-auto object-contain flex-shrink-0 -mr-20 xl:-mr-28 relative z-10 drop-shadow-[0_0_20px_rgba(0,255,65,0.15)]"

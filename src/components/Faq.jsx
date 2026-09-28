@@ -28,7 +28,7 @@ const Faq = () => {
             Got questions?<br />I've got you covered.<br />Let's break it down.
           </div>
           <img
-            src="/characters/faq-hero.png"
+            src="/characters/faq-hero.webp"
             alt=""
             aria-hidden="true"
             className="w-64 2xl:w-80 h-auto object-contain drop-shadow-[0_0_20px_rgba(0,255,65,0.15)]"
@@ -38,7 +38,7 @@ const Faq = () => {
 
       {/* Ship — right side, outside the panel, in the empty margin */}
       <img
-        src="/characters/faq-ship.png"
+        src="/characters/faq-ship.webp"
         alt=""
         aria-hidden="true"
         className="hidden xl:block absolute right-0 top-1/3 -translate-y-1/2 w-72 2xl:w-96 h-auto object-contain opacity-90 pointer-events-none select-none drop-shadow-[0_0_20px_rgba(0,255,65,0.15)]"
@@ -60,7 +60,7 @@ const Faq = () => {
                   doesn't exist below xl, so they can't just be un-hidden as-is). */}
               <div className="xl:hidden flex items-end justify-center gap-3 mt-6 pointer-events-none select-none">
                 <img
-                  src="/characters/faq-ship.png"
+                  src="/characters/faq-ship.webp"
                   alt=""
                   aria-hidden="true"
                   className="h-12 sm:h-16 w-auto object-contain opacity-80 mb-2"
@@ -71,7 +71,7 @@ const Faq = () => {
                     Got questions? I've got you.
                   </div>
                   <img
-                    src="/characters/faq-hero.png"
+                    src="/characters/faq-hero.webp"
                     alt=""
                     aria-hidden="true"
                     className="h-20 sm:h-28 w-auto object-contain drop-shadow-[0_0_16px_rgba(0,255,65,0.15)]"

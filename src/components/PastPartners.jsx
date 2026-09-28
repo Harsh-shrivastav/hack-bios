@@ -36,7 +36,8 @@ const LOGO_FILES = [
   { file: 'elevenlabs.webp', name: 'ElevenLabs' },
   { file: 'purebutton.webp', name: 'PureButton', href: 'https://mlh.link/MLHPureButtons-hackathons' },
   { file: 'quillbot.webp', name: 'QuillBot', href: 'https://quillbot.com' },
-  { file: 'tin.webp', name: 'Tin' , href: 'https://tin.computer/' },];
+  { file: 'tin.webp', name: 'Tin' , href: 'https://tin.computer/' },
+{ file: 'Solana.webp', name: 'Solana'}];
 const COMMUNITY_LOGO_FILES = [
   { file: 'GDG.webp', name: 'GDG' },
   { file:'GFG.webp', name:'GFG'},

@@ -29,7 +29,7 @@ import './PastPartners.css';
   { file: 'GiveMyCertificate.png', name: 'GiveMyCertificate' },
 ];*/}
 const LOGO_FILES = [
-  { file: 'devfolio.webp', name: 'Devfolio' },
+  { file: 'Devfolio.webp', name: 'Devfolio' },
   { file: 'mlh.webp', name: 'MLH' },
   { file: 'XYZ.webp', name: '.xyz' },
   { file: 'github.webp', name: 'GitHub' },
@@ -37,7 +37,7 @@ const LOGO_FILES = [
   { file: 'purebutton.webp', name: 'PureButton', href: 'https://mlh.link/MLHPureButtons-hackathons' },
   { file: 'quillbot.webp', name: 'QuillBot', href: 'https://quillbot.com' },
   { file: 'tin.webp', name: 'Tin' , href: 'https://tin.computer/' },
-{ file: 'Solana.webp', name: 'Solana'}, { file: 'GiveMyCertificate.webp', name: 'GiveMyCertificte'}];
+{ file: 'Solana.webp', name: 'Solana'}, { file: 'GiveMyCertificate.webp', name: 'GiveMyCertificte'}]; 
 const COMMUNITY_LOGO_FILES = [
   { file: 'GDG.webp', name: 'GDG' },
   { file:'GFG.webp', name:'GFG'},

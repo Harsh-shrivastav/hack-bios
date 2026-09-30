@@ -141,7 +141,7 @@ const Submission = () => {
               {/* Description */}
               <p className="text-gray-400 font-mono text-sm md:text-base leading-relaxed mb-12 opacity-80 max-w-xl mx-auto">
                 The submission window is open from{' '}
-                <span className="text-[#00ff41]">20–25 September</span>.
+                <span className="text-[#00ff41]">20–30 September</span>.
                 Only Team Leaders can submit the presentation on behalf of their team.
                 Please ensure your presentation is in{' '}
                 <span className="text-[#00ff41]">PDF format</span> and clearly includes

@@ -1,10 +1,8 @@
 import React from 'react';
-import { FileUp, List } from 'lucide-react';
 
-// Round 1 PPT submission section.
-// Swap SUBMISSION_LINK to the Google Form URL when it's ready.
-const SUBMISSION_LINK = 'https://forms.gle/NyehdduH8P8Ms6Me6';
-
+// Round 1 PPT submission section — now in its post-close state.
+// Submission window: 20–30 September. Update the copy below again once
+// shortlisted teams are actually announced.
 const Submission = () => {
   return (
     <section
@@ -65,15 +63,20 @@ const Submission = () => {
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="max-w-3xl mx-auto relative">
 
-          {/* Corner reticle frame — staggered pulse, like an active scan */}
-          <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-[#00ff41]/50 pointer-events-none animate-pulse"></div>
-          <div className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-[#00ff41]/50 pointer-events-none animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-          <div className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-[#00ff41]/50 pointer-events-none animate-pulse" style={{ animationDelay: '0.8s' }}></div>
-          <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-[#00ff41]/50 pointer-events-none animate-pulse" style={{ animationDelay: '1.2s' }}></div>
+          {/* Corner reticle frame — red now, staggered pulse like an
+              active scan, but signaling "alert" instead of "live" */}
+          <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-red-500/60 pointer-events-none animate-pulse"></div>
+          <div className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-red-500/60 pointer-events-none animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+          <div className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-red-500/60 pointer-events-none animate-pulse" style={{ animationDelay: '0.8s' }}></div>
+          <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-red-500/60 pointer-events-none animate-pulse" style={{ animationDelay: '1.2s' }}></div>
 
           {/* Terminal window — the frame itself slowly breathes (border +
-              box-shadow only, no blur), so the whole panel feels alive */}
-          <div className="submission-frame-glow relative bg-[#050a05]/60 md:backdrop-blur-md border-2 border-[#00ff41]/20 rounded-xl overflow-hidden">
+              box-shadow only, no blur), now in red to signal the closed
+              state at a glance instead of the usual green "live" look */}
+          <div className="submission-frame-glow-closed relative bg-[#050a05]/60 md:backdrop-blur-md border-2 border-red-500/30 rounded-xl overflow-hidden">
+
+            {/* Diagonal stamp — the loudest signal on the panel */}
+            <span className="submission-closed-stamp">CLOSED</span>
 
 
             {/* Title bar */}
@@ -99,7 +102,7 @@ const Submission = () => {
               {/* Fake boot-log line, typed on a loop */}
               <p className="font-mono text-[#00ff41]/70 text-[11px] md:text-xs tracking-wider mb-6 h-4">
                 <span className="submission-typewriter">
-                  &gt; awaiting_transmission...
+                  &gt; transmission_received // reviewing_entries...
                 </span>
               </p>
 
@@ -116,7 +119,7 @@ const Submission = () => {
                   opacity-80
                 "
               >
-                Round 01 // Checkpoint
+                Round 01 // Transmission Closed
               </p>
 
               {/* Heading */}
@@ -127,7 +130,7 @@ const Submission = () => {
                   md:text-7xl
                   font-mono
                   font-black
-                  mb-8
+                  mb-3
                   uppercase
                   tracking-tighter
                   leading-none
@@ -138,173 +141,20 @@ const Submission = () => {
                 <span className="block md:inline">Submission</span>
               </h2>
 
-              {/* Description */}
-              <p className="text-gray-400 font-mono text-sm md:text-base leading-relaxed mb-12 opacity-80 max-w-xl mx-auto">
-                The submission window is open from{' '}
-                <span className="text-[#00ff41]">20–30 September</span>.
-                Only Team Leaders can submit the presentation on behalf of their team.
-                Please ensure your presentation is in{' '}
-                <span className="text-[#00ff41]">PDF format</span> and clearly includes
-                your Team Name and Problem Statement. Verify all details before submitting.
-                <span className="inline-block w-[0.55em] h-[1em] align-middle bg-[#00ff41]/70 ml-1 animate-pulse"></span>
+              {/* Status tag — red/amber instead of green, so it reads as
+                  a system state change rather than a section redesign */}
+              <p className="font-mono text-red-400/90 text-xs md:text-sm tracking-[0.35em] uppercase mb-8">
+                STATUS: CLOSED
               </p>
 
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-
-                {/* Submit PPT */}
-                <a
-                  href={SUBMISSION_LINK || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="
-                    interactive
-                    group
-                    relative
-                    overflow-hidden
-                    inline-flex
-                    items-center
-                    justify-center
-                    gap-3
-                    px-10
-                    py-5
-                    min-w-[230px]
-                    border
-                    border-[#00ff41]/50
-                    bg-[#00ff41]/[0.015]
-                    text-[#00ff41]/90
-                    font-mono
-                    text-base
-                    md:text-lg
-                    uppercase
-                    tracking-[0.22em]
-                    transition-all
-                    duration-300
-                    hover:border-[#00ff41]
-                    hover:bg-[#00ff41]/[0.08]
-                    hover:text-[#00ff41]
-                    hover:shadow-[0_0_25px_rgba(0,255,65,0.18)]
-                  "
-                >
-                  {/* Hover sweep */}
-                  <span
-                    className="
-                      absolute
-                      inset-0
-                      -translate-x-full
-                      bg-gradient-to-r
-                      from-transparent
-                      via-[#00ff41]/10
-                      to-transparent
-                      group-hover:translate-x-full
-                      transition-transform
-                      duration-700
-                      pointer-events-none
-                    "
-                  ></span>
-
-                  <FileUp
-                    size={22}
-                    className="
-                      relative
-                      transition-transform
-                      duration-300
-                      group-hover:-translate-y-1
-                    "
-                  />
-
-                  <span className="relative">
-                    Submit Your PPT
-                  </span>
-                </a>
-
-                {/* Guidelines — opens /guidelines.pdf in a new tab. That
-                    file needs to live in your project's public/ folder
-                    (same pattern as everything under /team, /sponsors,
-                    etc.) — see the file handed back alongside this one. */}
-                <a
-                  href="/guidelines.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="
-                    interactive
-                    group
-                    relative
-                    overflow-hidden
-                    inline-flex
-                    items-center
-                    justify-center
-                    gap-3
-                    px-10
-                    py-5
-                    min-w-[230px]
-                    border
-                    border-[#00ff41]/50
-                    bg-[#00ff41]/[0.015]
-                    text-[#00ff41]/90
-                    font-mono
-                    text-base
-                    md:text-lg
-                    uppercase
-                    tracking-[0.22em]
-                    transition-all
-                    duration-300
-                    hover:border-[#00ff41]
-                    hover:bg-[#00ff41]/[0.08]
-                    hover:text-[#00ff41]
-                    hover:shadow-[0_0_25px_rgba(0,255,65,0.18)]
-                  "
-                >
-                  {/* Hover sweep */}
-                  <span
-                    className="
-                      absolute
-                      inset-0
-                      -translate-x-full
-                      bg-gradient-to-r
-                      from-transparent
-                      via-[#00ff41]/10
-                      to-transparent
-                      group-hover:translate-x-full
-                      transition-transform
-                      duration-700
-                      pointer-events-none
-                    "
-                  ></span>
-
-                  <List
-                    size={22}
-                    className="
-                      relative
-                      transition-transform
-                      duration-300
-                      group-hover:rotate-90
-                    "
-                  />
-
-                  <span className="relative">
-                    Guidelines
-                  </span>
-
-                  {/* Terminal indicator */}
-                  <span
-                    className="
-                      absolute
-                      right-3
-                      top-3
-                      w-1.5
-                      h-1.5
-                      rounded-full
-                      bg-[#00ff41]/60
-                      group-hover:bg-[#00ff41]
-                      group-hover:shadow-[0_0_8px_#00ff41]
-                      transition-all
-                    "
-                  ></span>
-                </a>
-
-              </div>
-
+              {/* Description */}
+              <p className="text-gray-400 font-mono text-sm md:text-base leading-relaxed opacity-80 max-w-xl mx-auto">
+                The submission window has closed. All received presentations are now
+                under review — the{' '}
+                <span className="text-[#00ff41]">shortlist will be announced soon</span>.
+                Didn't make it into Round 01? There's always the next hack.
+                <span className="inline-block w-[0.55em] h-[1em] align-middle bg-[#00ff41]/70 ml-1 animate-pulse"></span>
+              </p>
 
             </div>
 

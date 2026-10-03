@@ -38,8 +38,8 @@ const LOGO_FILES = [
   { file: 'quillbot.webp', name: 'QuillBot', href: 'https://quillbot.com' },
   { file: 'tin.webp', name: 'Tin' , href: 'https://tin.computer/' },
 { file: 'Solana.webp', name: 'Solana'}, { file: 'GiveMyCertificate.webp', name: 'GiveMyCertificte'},
-{ file: 'vultr.webp', name: 'Vultr' },
-{ file: 'tiger.webp', name: 'Tiger Data' },]; 
+{ file: 'vultr_logo.webp', name: 'Vultr' },
+{ file: 'tiger_logo.webp', name: 'Tiger Data' },]; 
 const COMMUNITY_LOGO_FILES = [
   { file: 'GDG.webp', name: 'GDG' },
   { file:'GFG.webp', name:'GFG'},

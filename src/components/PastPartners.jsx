@@ -29,7 +29,7 @@ import './PastPartners.css';
   { file: 'GiveMyCertificate.png', name: 'GiveMyCertificate' },
 ];*/}
 const LOGO_FILES = [
-  { file: 'Devfolio.webp', name: 'Devfolio' },
+  { file: 'devfolio_logo.webp', name: 'Devfolio' },
   { file: 'mlh.webp', name: 'MLH' },
   { file: 'XYZ.webp', name: '.xyz' },
   { file: 'github.webp', name: 'GitHub' },

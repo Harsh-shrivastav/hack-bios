@@ -124,14 +124,14 @@ function HomePage() {
         <Stats />
         <About />
         <Submission />
-        <CreateIDSection />
         <Timeline />
         <Tracks />
+        <PreviousEdition />
+        <CreateIDSection />
         <PartnerBanners />
         <PastPartners />
-        <PreviousEdition />
-        <Contact />
         <Faq />
+        <Contact />
         <CinematicFooter />
       </div>
     </main>
@@ -223,6 +223,7 @@ function App() {
 
   const menuItems = [
     { label: 'About', link: '#about' },
+    { label: 'Timeline', link: '#timeline' },
     // { label: 'Tracks', link: '#tracks' },
     { label: 'Team', link: '/team' },
     { label: 'FAQ', link: '#faq' },

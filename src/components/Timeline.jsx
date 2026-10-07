@@ -467,6 +467,7 @@ export default function Timeline({ navHeight }) {
 
   return (
     <section
+      id="timeline"
       ref={rootRef}
       className="hb-tl"
       aria-label="HackBIOS event timeline"

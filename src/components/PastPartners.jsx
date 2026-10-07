@@ -40,7 +40,8 @@ const LOGO_FILES = [
 { file: 'Solana.webp', name: 'Solana'}, { file: 'GiveMyCertificate.webp', name: 'GiveMyCertificte'},
 { file: 'vultr_logo.webp', name: 'Vultr' },
 { file: 'tiger_logo.webp', name: 'Tiger Data' },
-{ file:'OSEN.webp', name:'OSEN'},]; 
+{ file:'OSEN.webp', name:'OSEN'},
+{ file:'game_galaxy_logo.webp', name:'Game Galaxy'},]; 
 const COMMUNITY_LOGO_FILES = [
   { file: 'GDG.webp', name: 'GDG' },
   { file:'GFG.webp', name:'GFG'},

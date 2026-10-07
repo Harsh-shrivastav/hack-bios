@@ -272,7 +272,27 @@ const ScrollStack = ({
 
     window.addEventListener('resize', updateCachedOffsets);
 
+    // The card positions are measured once, so anything above this section
+    // that changes the page's height afterwards (the Timeline switching days,
+    // fonts or images loading, a section revealing) leaves them stale and the
+    // stack stops working. Re-measure whenever the page height changes.
+    let remeasureRaf = 0;
+    let resizeObserver = null;
+    if (useWindowScroll && typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(() => {
+        if (remeasureRaf) return;
+        remeasureRaf = requestAnimationFrame(() => {
+          remeasureRaf = 0;
+          updateCachedOffsets();
+          updateCardTransforms();
+        });
+      });
+      resizeObserver.observe(document.body);
+    }
+
     return () => {
+      if (remeasureRaf) cancelAnimationFrame(remeasureRaf);
+      if (resizeObserver) resizeObserver.disconnect();
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }

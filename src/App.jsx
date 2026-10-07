@@ -13,6 +13,7 @@ import CreateIDSection from './components/CreateIDSection';
 import TeamPage from './components/TeamPage';
 import Stats from './components/Stats';
 import About from './components/About';
+import Timeline from './components/Timeline';
 import Tracks from './components/Tracks';
 import PartnerBanners from './components/PartnerBanners';
 import PastPartners from './components/PastPartners';
@@ -120,10 +121,11 @@ function HomePage() {
       </div>
 
       <div className="relative z-10">
-        <Submission />
-        <CreateIDSection />
         <Stats />
         <About />
+        <Submission />
+        <CreateIDSection />
+        <Timeline />
         <Tracks />
         <PartnerBanners />
         <PastPartners />
@@ -327,10 +329,29 @@ function App() {
     const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
     const cancelIdle = window.cancelIdleCallback || clearTimeout;
     let idleHandle = null;
+    let revealObserver = null;
 
     if (introDone) {
       idleHandle = idle(() => {
         const sections = document.querySelectorAll('main section');
+
+        // Reveal with an IntersectionObserver instead of ScrollTrigger. It
+        // never relies on pre-measured positions, so it cannot go stale when
+        // a section above changes height (the Timeline does), which left the
+        // sections below it invisible as empty gaps. A section is revealed
+        // once, as soon as any part of it is within 15% of the viewport
+        // bottom, or is already above the viewport; it is never hidden again.
+        revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
+                entry.target.classList.add('revealed');
+                revealObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -15% 0px', threshold: 0 }
+        );
 
         sections.forEach((section) => {
           // #create-id sizes itself with `100svh`, which shifts as a
@@ -345,13 +366,7 @@ function App() {
           if (section.id === 'create-id') return;
 
           section.classList.add('section-reveal');
-
-          ScrollTrigger.create({
-            trigger: section,
-            start: 'top 85%',
-            onEnter: () => section.classList.add('revealed'),
-            onLeaveBack: () => section.classList.remove('revealed'),
-          });
+          revealObserver.observe(section);
         });
       });
     }
@@ -359,6 +374,7 @@ function App() {
     return () => {
       clearTimeout(refreshTimer);
       if (idleHandle != null) cancelIdle(idleHandle);
+      if (revealObserver) revealObserver.disconnect();
 
       window.visualViewport?.removeEventListener(
         'resize',

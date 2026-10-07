@@ -48,13 +48,17 @@ const IntroGate = ({ onEnter, muted }) => {
         <CodonStream />
       </div>
 
-      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
+      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6 md:pb-9">
         <div className="w-full max-w-[380px] md:max-w-[440px]">
           <OmniWatch muted={muted} />
         </div>
 
         {countdown ? (
-          <div className="mt-6 md:mt-8 flex items-center gap-4 md:gap-6 font-mono">
+          // The watch's box has ~10% empty space under the artwork, so the
+          // countdown looked far from the watch but glued to the button.
+          // Pull it up (negative top margin) and give it the same room
+          // below, so it sits midway between the watch and the button.
+          <div className="-mt-2 mb-8 md:-mt-5 md:mb-5 flex items-center gap-4 md:gap-6 font-mono">
             {[
               { v: countdown.days, l: 'DAYS' },
               { v: countdown.hours, l: 'HRS' },
@@ -73,7 +77,7 @@ const IntroGate = ({ onEnter, muted }) => {
             ))}
           </div>
         ) : (
-          <p className="mt-6 font-mono text-[#00ff41] text-lg tracking-widest">SYSTEM ONLINE // LIVE NOW</p>
+          <p className="mt-6 mb-8 font-mono text-[#00ff41] text-lg tracking-widest">SYSTEM ONLINE // LIVE NOW</p>
         )}
 
         <button

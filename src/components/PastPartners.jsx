@@ -39,7 +39,8 @@ const LOGO_FILES = [
   { file: 'tin.webp', name: 'Tin' , href: 'https://tin.computer/' },
 { file: 'Solana.webp', name: 'Solana'}, { file: 'GiveMyCertificate.webp', name: 'GiveMyCertificte'},
 { file: 'vultr_logo.webp', name: 'Vultr' },
-{ file: 'tiger_logo.webp', name: 'Tiger Data' },]; 
+{ file: 'tiger_logo.webp', name: 'Tiger Data' },
+{ file:'OSEN.webp', name:'OSEN'},]; 
 const COMMUNITY_LOGO_FILES = [
   { file: 'GDG.webp', name: 'GDG' },
   { file:'GFG.webp', name:'GFG'},
@@ -47,7 +48,7 @@ const COMMUNITY_LOGO_FILES = [
   { file:'entropyzero.webp', name:'EntropyZero'},
   { file:'nexhack.webp', name:'Nexhack'},
   { file:'techsociety.webp', name:'TechSociety'},
-  { file:'OSEN.webp', name:'OSEN'},];
+  ];
 
 const PastPartners = () => {
   // Each tile has its own infinite float animation plus a backdrop-blur —

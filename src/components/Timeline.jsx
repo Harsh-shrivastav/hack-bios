@@ -1469,6 +1469,9 @@ const CSS = `
 @media ${MOBILE_QUERY} {
   .hb-tl {
     --hb-nav: 72px;
+    /* the dial rises from the real bottom edge, so no strip is trimmed off
+       the frame (a trim here cut the dial flat, above the screen bottom) */
+    --hb-trim: 0px;
     /* the dial is a half-circle rising from the bottom edge */
     --S: min(100vw, 70svh, 760px);
     --pad: 20px;
@@ -1536,6 +1539,9 @@ const CSS = `
 
 /* short phones: keep the card compact so it never reaches the arrows */
 @media ${MOBILE_QUERY} and (max-height: 700px) {
+  /* smaller dial + tighter controls so the arrows clear the card */
+  .hb-tl { --S: min(88vw, 62svh, 760px); }
+  .hb-tl__foot { bottom: calc(var(--S) * .5 + 8px); }
   .hb-tl__title { font-size: 38px; }
   .hb-tl__focus { top: 128px; }
   .hb-tl__card.is-focus .hb-tl__card-text { display: none; }

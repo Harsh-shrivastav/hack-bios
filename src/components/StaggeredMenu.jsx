@@ -339,7 +339,7 @@ export const StaggeredMenu = ({
         })()}
       </div>
       {/* Glassmorphic Cyberpunk Top Bar */}
-         <header className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 pr-24 md:px-10 md:pr-40 py-4 pointer-events-auto transition-all duration-300 ${
+         <header className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 pr-16 md:px-10 md:pr-40 py-4 pointer-events-auto transition-all duration-300 ${
         scrolled
           ? 'bg-[#050a05]/85 md:backdrop-blur-md border-b border-[#00ff41]/20 shadow-[0_4px_30px_rgba(0,0,0,0.9)]'
           : 'bg-transparent border-b border-transparent'
@@ -359,7 +359,7 @@ export const StaggeredMenu = ({
         </div>
 
         {/* Desktop Quick Nav Links - Properly Aligned */}
-        <nav className="hidden lg:flex items-center gap-8 font-mono text-xs uppercase tracking-[0.2em] font-semibold text-gray-300 absolute left-1/2 -translate-x-1/2">
+        <nav className="hidden lg:flex items-center gap-8 font-mono text-xs uppercase tracking-[0.2em] font-semibold text-gray-300 ml-auto">
           {items.map((item, idx) =>
             isInternalRoute(item.link) ? (
               <Link

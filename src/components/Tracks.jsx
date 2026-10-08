@@ -83,12 +83,12 @@ const Tracks = () => {
   return (
     <section
       id="tracks"
-      className="py-20 md:py-32 relative overflow-hidden"
+      className="pt-10 pb-16 md:pt-14 md:pb-20 relative overflow-hidden"
     >
       <div className="container mx-auto px-4 md:px-8 relative z-10">
 
         {/* Section Header */}
-        <div className="text-center mb-14 md:mb-24">
+        <div className="text-center mb-8 md:mb-12">
           <h2
             className="
               text-3xl
@@ -137,7 +137,7 @@ const Tracks = () => {
             baseScale={0.88}
             rotationAmount={0}
             blurAmount={0}
-            className="w-full"
+            className="w-full [&_.scroll-stack-inner]:!pt-[2vh] [&_.scroll-stack-inner]:!pb-24"
           >
             {trackData.map((track) => {
               const Icon = track.icon;
